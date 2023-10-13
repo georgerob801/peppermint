@@ -1,20 +1,53 @@
-// peppermint.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
 #include <iostream>
 
-int main()
-{
-    std::cout << "Hello World!\n";
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
+#include "peppermint/include/stb_image/stb_image.h"
+
+#include <peppermint/managers/LogManager.h>
+#include <peppermint/managers/EngineManager.h>
+
+using namespace std;
+using namespace glm;
+
+using namespace peppermint;
+using namespace peppermint::managers;
+
+int width = 500;
+int height = 500;
+
+EngineManager* engineManager;
+
+int main() {
+	engineManager = new EngineManager();
+	if (engineManager->status == -1) return -1;
+
+	Window* window = engineManager->windowManager->getWindow();
+	if (engineManager->status == -1) return -1;
+
+	window->makeCurrentContext();
+	if (engineManager->status == -1) return -1;
+
+	glViewport(0, 0, width, height);
+
+	// glfwSetCursorPosCallback(window, );
+
+	glEnable(GL_CULL_FACE);
+
+	while (!window->shouldClose()) {
+		glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		window->swapBuffers();
+		glfwPollEvents();
+	}
+
+	delete engineManager;
+
+	return 0;
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
