@@ -4,6 +4,12 @@
 namespace peppermint {
 	namespace game {
 		class Component {
+		public:
+			virtual void start();
+			virtual void awake();
+			virtual void loop();
+		private:
+
 		};
 	}
 }

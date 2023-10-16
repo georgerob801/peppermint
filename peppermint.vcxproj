@@ -145,6 +145,7 @@
     <ClCompile Include="peppermint\src\classes\Window.cpp" />
     <ClCompile Include="peppermint\src\classes\RenderStack.cpp" />
     <ClCompile Include="peppermint\src\managers\WorldManager.cpp" />
+    <ClCompile Include="peppermint\src\classes\game\components\Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="peppermint\include\peppermint\classes\game\Component.h" />
@@ -157,6 +158,7 @@
     <ClInclude Include="peppermint\include\peppermint\classes\Window.h" />
     <ClInclude Include="peppermint\include\peppermint\classes\RenderStack.h" />
     <ClInclude Include="peppermint\include\peppermint\managers\WorldManager.h" />
+    <ClInclude Include="peppermint\include\peppermint\classes\game\components\Transform.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
