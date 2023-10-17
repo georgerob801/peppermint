@@ -1,5 +1,5 @@
-#ifndef PPMINT_COMPONENT_TRANSFORM_H
-#define PPMINT_COMPONENT_TRANSFORM_H
+#ifndef PPMINT_CAMERA_H
+#define PPMINT_CAMERA_H
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -12,17 +12,19 @@ using namespace glm;
 namespace peppermint {
 	namespace game {
 		namespace components {
-			class Transform : public Component {
+			class Camera : public Component {
 			public:
-				vec3 position;
-				quat rotation;
-				vec3 scale;
+				vec3 up;
 
-				Transform();
+				Camera(vec3 up);
 
-				vec3 getEulerAngles();
+				mat4 getViewMatrix();
 			private:
+				vec3 front;
+				vec3 right;
+				vec3 worldUp;
 
+				void updateCameraVectors();
 			};
 		}
 	}

@@ -46,6 +46,10 @@ EngineManager::EngineManager() {
 }
 
 EngineManager::~EngineManager() {
+	LogManager::info("Terminating peppermint");
+	LogManager::debug("Terminating GLFW");
 	glfwTerminate();
+	LogManager::debug("Terminated GLFW");
+	LogManager::debug("Deleting EngineManager");
 	delete this->windowManager;
 }

@@ -10,6 +10,7 @@ using namespace peppermint::game::components;
 namespace peppermint {
 	namespace game {
 		class GameObject {
+		public:
 			Transform* transform;
 
 			std::vector<Component*> components;
@@ -17,9 +18,11 @@ namespace peppermint {
 			GameObject();
 			~GameObject();
 
-			template<Component c> Component* addComponent();
+			template<class c> Component* addComponent();
 
-			template<Component c> Component* getComponent();
+			template<class c> Component* getComponent();
+		private:
+
 		};
 	}
 }

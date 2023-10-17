@@ -8,8 +8,11 @@ namespace peppermint {
 			virtual void start();
 			virtual void awake();
 			virtual void loop();
-		private:
 
+			Component* setGameObject(void* gameObject);
+			void* getGameObject();
+		private:
+			void* gameObject;
 		};
 	}
 }

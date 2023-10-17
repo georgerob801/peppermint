@@ -54,6 +54,9 @@
     <ClCompile Include="peppermint\src\classes\game\components\Transform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="peppermint\src\classes\game\components\Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="peppermint\include\stb_image\stb_image.h">
@@ -87,6 +90,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="peppermint\include\peppermint\classes\game\components\Transform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\Exceptions.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\classes\game\components\Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

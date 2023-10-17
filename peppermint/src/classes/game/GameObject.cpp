@@ -1,6 +1,8 @@
 #include <peppermint/classes/game/GameObject.h>
 
 #include <peppermint/Exceptions.hpp>
+#include <typeinfo>
+#include <type_traits>
 
 using namespace peppermint::game;
 using namespace peppermint::exceptions::gameObject;
@@ -17,14 +19,33 @@ GameObject::~GameObject() {
 	delete this->transform;
 }
 
-template <Component c> Component* GameObject::addComponent() {
+template <class c> Component* GameObject::addComponent() {
+	if (!std::is_base_of(Component, c)) {
+		throw IsNotComponentException();
+	}
+
 	for (int i = 0; i < this->components.size(); i++) {
 		if (typeid(this->components[i]) == typeid(c)) {
 			throw AlreadyHasComponentException();
 		}
 	}
+
+	c* newComponent = new c();
+	this->components.push_back(newComponent);
+
+	return newComponent;
 }
 
-template<Component c> Component* GameObject::getComponent() {
+template<class c> Component* GameObject::getComponent() {
+	if (!std::is_base_of(Component, c)) {
+		throw IsNotComponentException();
+	}
 
+	for (int i = 0; i < this->components.size(); i++) {
+		if (typeid(this->components[i] == typeid(c))) {
+			return this->components[i];
+		}
+	}
+
+	throw ComponentNotFoundException();
 }
