@@ -53,3 +53,37 @@ EngineManager::~EngineManager() {
 	LogManager::debug("Deleting EngineManager");
 	delete this->windowManager;
 }
+
+void EngineManager::updateDeltaTime() {
+	double time = glfwGetTime();
+	this->deltaTime = time - lastFrame;
+	this->lastFrame = time;
+}
+
+double EngineManager::vSyncTime() {
+	return glfwGetTime() - lastFrame;
+}
+
+void EngineManager::loop() {
+	while (this->windowManager->windows.size() != 0) {
+		if (this->status == -1) throw std::exception("pain");
+
+		this->updateDeltaTime();
+
+		for (int i = 0; i < this->windowManager->windows.size(); i++) {
+			this->windowManager->windows[i]->renderFrame();
+			this->windowManager->windows[i]->swapBuffers();
+
+			if (this->windowManager->windows[i]->shouldClose()) {
+				Window* windowToDelete = this->windowManager->windows[i];
+				this->windowManager->windows.erase(this->windowManager->windows.begin() + i);
+				delete windowToDelete;
+			}
+		}
+
+		while (this->vSyncTime() < 1.0f / 60.0f) { }
+		LogManager::debug(std::format("{} fps", round(1.0f / this->vSyncTime())));
+
+		glfwPollEvents();
+	}
+}

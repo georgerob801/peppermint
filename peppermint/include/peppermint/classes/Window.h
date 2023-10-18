@@ -22,6 +22,8 @@ namespace peppermint {
 
 		void swapBuffers();
 		bool shouldClose();
+
+		void renderFrame();
 	private:
 		GLFWwindow* glfwWindow;
 	};

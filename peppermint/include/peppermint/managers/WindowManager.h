@@ -30,6 +30,7 @@ namespace peppermint {
 			Window* createWindow(int width, int height, char* title, GLFWmonitor* monitor, GLFWwindow* share);
 			WindowManager* setCurrentWindow(Window* window);
 			Window* getWindow();
+			bool hasOpenWindow;
 		private:
 			Window* currentWindow = NULL;
 		};

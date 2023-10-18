@@ -1,7 +1,14 @@
 #include <peppermint/classes/Window.h>
 
+#include <format>
+
 using namespace peppermint;
 using namespace peppermint::managers;
+
+void onResize(GLFWwindow* window, int width, int height) {
+	glfwMakeContextCurrent(window);
+	glViewport(0, 0, width, height);
+}
 
 Window::Window(int width, int height, char* title, GLFWmonitor* monitor, GLFWwindow* share) {
 	status = 0;
@@ -14,14 +21,20 @@ Window::Window(int width, int height, char* title, GLFWmonitor* monitor, GLFWwin
 		LogManager::critical("Failed to create GLFW window");
 		this->status = -1;
 	} else {
-		LogManager::info(std::format("Created '{}' window successfully at {}", title, (void*)window));
+		LogManager::info(std::format("Created '{}' window successfully at {} for peppermint::Window at {}", title, (void*)window, (void*)this));
 	}
 
 	this->glfwWindow = window;
+	LogManager::debug(std::format("Creating render manager for {}", (void*)this));
 	this->renderManager = new RenderManager();
+	LogManager::debug(std::format("Created render manager for {}", (void*)this));
+
+	LogManager::debug(std::format("Setting resize handler for {}", (void*)this));
+	glfwSetFramebufferSizeCallback(this->glfwWindow, onResize);
 }
 
 Window::~Window() {
+	glfwDestroyWindow(this->glfwWindow);
 	delete this->renderManager;
 }
 
@@ -45,4 +58,9 @@ void Window::swapBuffers() {
 
 bool Window::shouldClose() {
 	return glfwWindowShouldClose(this->getAddress());
+}
+
+void Window::renderFrame() {
+	this->makeCurrentContext();
+	this->renderManager->renderFrame();
 }

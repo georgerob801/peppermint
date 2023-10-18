@@ -22,8 +22,15 @@ namespace peppermint {
 
 			EngineManager();
 			~EngineManager();
-		private:
 
+			void updateDeltaTime();
+			double vSyncTime();
+
+			void loop();
+
+			double deltaTime;
+		private:
+			double lastFrame;
 		};
 	}
 }
