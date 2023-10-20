@@ -15,6 +15,10 @@ RenderManager::~RenderManager() {
 	
 }
 
+void RenderManager::setCamera(Camera* cam) {
+	this->activeCamera = cam;
+}
+
 void RenderManager::renderFrame() {
 	glClearColor(this->backgroundColour.x, this->backgroundColour.y, this->backgroundColour.z, this->backgroundColour.z);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

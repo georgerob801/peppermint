@@ -39,7 +39,7 @@
     <ClCompile Include="peppermint\src\classes\Window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="peppermint\src\classes\RenderStack.cpp">
+    <ClCompile Include="peppermint\src\classes\rendering\RenderStack.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="peppermint\src\managers\WorldManager.cpp">
@@ -55,6 +55,27 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="peppermint\src\classes\game\components\Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="peppermint\src\classes\game\components\renderers\Renderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="peppermint\src\classes\rendering\Mesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="peppermint\src\classes\rendering\Shader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="peppermint\src\classes\rendering\Tileset.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="peppermint\src\classes\rendering\Texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="peppermint\src\classes\rendering\TextureSet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="peppermint\src\classes\game\components\renderers\TilesetRenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -77,7 +98,7 @@
     <ClInclude Include="peppermint\include\peppermint\classes\Window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="peppermint\include\peppermint\classes\RenderStack.h">
+    <ClInclude Include="peppermint\include\peppermint\classes\rendering\RenderStack.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="peppermint\include\peppermint\managers\WorldManager.h">
@@ -98,5 +119,31 @@
     <ClInclude Include="peppermint\include\peppermint\classes\game\components\Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\classes\game\components\renderers\Renderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\classes\rendering\Mesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\classes\rendering\Shader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\classes\rendering\Tileset.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\classes\rendering\Texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\classes\rendering\TextureSet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\classes\game\components\renderers\TilesetRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="peppermint\resource\shader\vertex\default.vert" />
+    <None Include="peppermint\resource\shader\fragment\default.frag" />
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

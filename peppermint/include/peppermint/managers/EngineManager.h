@@ -4,8 +4,11 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+#include <vector>
+
 #include <peppermint/managers/LogManager.h>
 #include <peppermint/managers/WindowManager.h>
+#include <peppermint/managers/WorldManager.h>
 
 namespace peppermint {
 	namespace managers {
@@ -19,6 +22,9 @@ namespace peppermint {
 			static const int minorVersion = 3;
 
 			WindowManager* windowManager;
+
+			std::vector<WorldManager*> worldManagers;
+			int activeWorldManager = NULL;
 
 			EngineManager();
 			~EngineManager();

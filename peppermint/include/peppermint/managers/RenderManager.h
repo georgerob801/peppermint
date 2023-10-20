@@ -2,7 +2,7 @@
 #define PPMINT_RENDER_MANAGER_H
 
 #include <peppermint/classes/game/components/Camera.h>
-#include <peppermint/classes/RenderStack.h>
+#include <peppermint/classes/rendering/RenderStack.h>
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -29,6 +29,7 @@ namespace peppermint {
 			~RenderManager();
 
 			void renderFrame();
+			void setCamera(Camera* cam);
 		private:
 
 		};

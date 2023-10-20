@@ -27,6 +27,16 @@ namespace peppermint {
 				}
 			};
 		}
+		namespace rendering {
+			namespace shader {
+				class CannotOpenFileException : public std::exception {
+				public:
+					char* what() {
+						return (char*)"Cannot open file.";
+					}
+				};
+			}
+		}
 	}
 }
 

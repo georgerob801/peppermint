@@ -3,12 +3,19 @@
 
 #include <vector>
 #include <peppermint/classes/game/GameObject.h>
+#include <peppermint/classes/game/components/Camera.h>
+
+using namespace peppermint::game;
 
 namespace peppermint {
-	namespace game {
+	namespace managers {
 		class WorldManager {
 		public:
 			std::vector<GameObject> gameObjects;
+
+			void awake();
+			void start();
+			void loop();
 		private:
 
 		};

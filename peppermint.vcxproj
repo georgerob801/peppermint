@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Content Include="peppermint\resource\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -136,6 +141,7 @@
     <ClCompile Include="peppermint\src\classes\game\components\Camera.cpp" />
     <ClCompile Include="peppermint\src\classes\game\Component.cpp" />
     <ClCompile Include="peppermint\src\classes\game\GameObject.cpp" />
+    <ClCompile Include="peppermint\src\classes\rendering\Mesh.cpp" />
     <ClCompile Include="peppermint\src\managers\LogManager.cpp" />
     <ClCompile Include="peppermint.cpp" />
     <ClCompile Include="peppermint\include\glad\glad.c" />
@@ -144,11 +150,18 @@
     <ClCompile Include="peppermint\src\managers\WindowManager.cpp" />
     <ClCompile Include="peppermint\src\managers\RenderManager.cpp" />
     <ClCompile Include="peppermint\src\classes\Window.cpp" />
-    <ClCompile Include="peppermint\src\classes\RenderStack.cpp" />
+    <ClCompile Include="peppermint\src\classes\rendering\RenderStack.cpp" />
     <ClCompile Include="peppermint\src\managers\WorldManager.cpp" />
     <ClCompile Include="peppermint\src\classes\game\components\Transform.cpp" />
+    <ClCompile Include="peppermint\src\classes\game\components\renderers\Renderer.cpp" />
+    <ClCompile Include="peppermint\src\classes\rendering\Shader.cpp" />
+    <ClCompile Include="peppermint\src\classes\rendering\Tileset.cpp" />
+    <ClCompile Include="peppermint\src\classes\rendering\Texture.cpp" />
+    <ClCompile Include="peppermint\src\classes\rendering\TextureSet.cpp" />
+    <ClCompile Include="peppermint\src\classes\game\components\renderers\TilesetRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="peppermint\include\peppermint\classes\rendering\Mesh.h" />
     <ClInclude Include="peppermint\include\peppermint\classes\game\components\Camera.h" />
     <ClInclude Include="peppermint\include\peppermint\classes\game\Component.h" />
     <ClInclude Include="peppermint\include\peppermint\classes\game\GameObject.h" />
@@ -159,9 +172,20 @@
     <ClInclude Include="peppermint\include\stb_image\stb_image.h" />
     <ClInclude Include="peppermint\include\peppermint\managers\RenderManager.h" />
     <ClInclude Include="peppermint\include\peppermint\classes\Window.h" />
-    <ClInclude Include="peppermint\include\peppermint\classes\RenderStack.h" />
+    <ClInclude Include="peppermint\include\peppermint\classes\rendering\RenderStack.h" />
     <ClInclude Include="peppermint\include\peppermint\managers\WorldManager.h" />
     <ClInclude Include="peppermint\include\peppermint\classes\game\components\Transform.h" />
+    <ClInclude Include="peppermint\include\peppermint\classes\game\components\renderers\Renderer.h" />
+    <ClInclude Include="peppermint\include\peppermint\classes\rendering\Shader.h" />
+    <ClInclude Include="peppermint\include\peppermint\classes\rendering\Tileset.h" />
+    <ClInclude Include="peppermint\include\peppermint\classes\rendering\Texture.h" />
+    <ClInclude Include="peppermint\include\peppermint\classes\rendering\TextureSet.h" />
+    <ClInclude Include="peppermint\include\peppermint\classes\game\components\renderers\TilesetRenderer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+    <None Include="peppermint\resource\shader\fragment\default.frag" />
+    <None Include="peppermint\resource\shader\vertex\default.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

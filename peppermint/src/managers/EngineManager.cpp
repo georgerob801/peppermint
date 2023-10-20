@@ -66,11 +66,14 @@ double EngineManager::vSyncTime() {
 
 void EngineManager::loop() {
 	while (this->windowManager->windows.size() != 0) {
-		if (this->status == -1) throw std::exception("pain");
+		if (this->status == -1) throw std::exception("Failed to start peppermint.");
 
 		this->updateDeltaTime();
 
 		for (int i = 0; i < this->windowManager->windows.size(); i++) {
+
+
+
 			this->windowManager->windows[i]->renderFrame();
 			this->windowManager->windows[i]->swapBuffers();
 
@@ -82,7 +85,7 @@ void EngineManager::loop() {
 		}
 
 		while (this->vSyncTime() < 1.0f / 60.0f) { }
-		LogManager::debug(std::format("{} fps", round(1.0f / this->vSyncTime())));
+		// LogManager::debug(std::format("{} fps", round(1.0f / this->vSyncTime())));
 
 		glfwPollEvents();
 	}

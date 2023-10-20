@@ -1,5 +1,5 @@
-#ifndef PPMINT_CAMERA_H
-#define PPMINT_CAMERA_H
+#ifndef PPMINT_COMPONENT_CAMERA_H
+#define PPMINT_COMPONENT_CAMERA_H
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
