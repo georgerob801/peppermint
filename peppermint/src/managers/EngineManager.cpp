@@ -3,6 +3,9 @@
 
 using namespace peppermint::managers;
 
+double EngineManager::deltaTime;
+double EngineManager::lastFrame;
+
 EngineManager::EngineManager() {
 	this->status = 0;
 	LogManager::info("Started peppermint");
@@ -56,12 +59,12 @@ EngineManager::~EngineManager() {
 
 void EngineManager::updateDeltaTime() {
 	double time = glfwGetTime();
-	this->deltaTime = time - lastFrame;
-	this->lastFrame = time;
+	EngineManager::deltaTime = time - EngineManager::lastFrame;
+	EngineManager::lastFrame = time;
 }
 
 double EngineManager::vSyncTime() {
-	return glfwGetTime() - lastFrame;
+	return glfwGetTime() - EngineManager::lastFrame;
 }
 
 void EngineManager::loop() {
@@ -71,8 +74,7 @@ void EngineManager::loop() {
 		this->updateDeltaTime();
 
 		for (int i = 0; i < this->windowManager->windows.size(); i++) {
-
-
+			this->worldManagers[this->activeWorldManager]->loop(this->windowManager->windows[i]);
 
 			this->windowManager->windows[i]->renderFrame();
 			this->windowManager->windows[i]->swapBuffers();

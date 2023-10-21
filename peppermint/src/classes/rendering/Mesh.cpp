@@ -9,6 +9,72 @@ using namespace peppermint::rendering;
 using namespace peppermint::managers;
 using namespace std;
 
+vector<Vertex> Mesh::SQUARE() {
+	vector<Vertex> out;
+	Vertex vert1 = {
+		.position = vec3(0.0f, 0.0f, 0.0f),
+		.uv = vec2(0.0f, 0.0f)
+	};
+	Vertex vert2 = {
+		.position = vec3(1.0f, 0.0f, 0.0f),
+		.uv = vec2(1.0f, 0.0f)
+	};
+	Vertex vert3 = {
+		.position = vec3(0.0f, 1.0f, 0.0f),
+		.uv = vec2(0.0f, 1.0f)
+	};
+	Vertex vert4 = {
+		.position = vec3(1.0f, 1.0f, 0.0f),
+		.uv = vec2(1.0f, 1.0f)
+	};
+
+	out.push_back(vert1);
+	out.push_back(vert2);
+	out.push_back(vert3);
+	out.push_back(vert4);
+
+	return out;
+}
+
+vector<Vertex> Mesh::SQUARE(vec3 transform) {
+	vector<Vertex> out;
+	Vertex vert1 = {
+		.position = vec3(0.0f, 0.0f, 0.0f) + transform,
+		.uv = vec2(0.0f, 0.0f)
+	};
+	Vertex vert2 = {
+		.position = vec3(1.0f, 0.0f, 0.0f) + transform,
+		.uv = vec2(1.0f, 0.0f)
+	};
+	Vertex vert3 = {
+		.position = vec3(0.0f, 1.0f, 0.0f) + transform,
+		.uv = vec2(0.0f, 1.0f)
+	};
+	Vertex vert4 = {
+		.position = vec3(1.0f, 1.0f, 0.0f) + transform,
+		.uv = vec2(1.0f, 1.0f)
+	};
+
+	out.push_back(vert1);
+	out.push_back(vert2);
+	out.push_back(vert3);
+	out.push_back(vert4);
+
+	return out;
+}
+
+vector<unsigned int> Mesh::SQUARE_INDICES() {
+	return vector<unsigned int> {
+		0, 1, 2, 1, 2, 3
+	};
+};
+
+vector<unsigned int> Mesh::SQUARE_INDICES(unsigned int offset) {
+	return vector<unsigned int> {
+		0 + offset, 1 + offset, 2 + offset, 1 + offset, 2 + offset, 3 + offset
+	};
+};
+
 void Mesh::draw(Shader* shader) {
 	shader->use();
 	for (unsigned int i = 0; i < this->textures.size(); i++) {

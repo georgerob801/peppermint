@@ -18,8 +18,9 @@ using namespace glm;
 using namespace peppermint;
 using namespace peppermint::managers;
 
-#include <peppermint/classes/rendering/Shader.h>
-#include <peppermint/classes/rendering/Mesh.h>
+#include <peppermint/managers/WorldManager.h>
+#include <peppermint/classes/game/GameObject.h>
+#include <peppermint/classes/game/components/renderers/TilesetRenderer.h>
 
 EngineManager* engineManager;
 
@@ -29,33 +30,24 @@ int main() {
 	engineManager = new EngineManager();
 	if (engineManager->status == -1) return -1;
 
-	Shader* shader = new Shader((char*)"peppermint/resource/shader/vertex/default.vert", (char*)"peppermint/resource/shader/fragment/default.frag");
-
-	Mesh* mesh = new Mesh();
-
-	float testData[] = {
-		0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
-		1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
-		0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-		1.0f, 1.0f, 0.0f, 1.0f, 1.0f
+	engineManager->worldManagers.push_back(new WorldManager());
+	
+	WorldManager* worldManager = engineManager->worldManagers[engineManager->activeWorldManager];
+	
+	GameObject* go = new GameObject();
+	TilesetRenderer* tileset = new TilesetRenderer(2, 6);
+	// LogManager::warn(format("{}, {}", tileset->tileTypes[0], tileset->tileTypes[1]));
+	Tileset* tilesetTex = new Tileset();
+	tilesetTex->tileSize = 1.0f;
+	tileset->tileset = tilesetTex;
+	peppermint::game::components::TilesetRenderer::TileTextureMapping test = {
+		.centre = vec2(0.5f, 0.5f)
 	};
-
-	vector<unsigned int> testIndices = {
-		0, 1, 2,
-		1, 2, 3
-	};
-
-	for (int i = 0; i < 4; i++) {
-		rendering::Vertex vert;
-		vert.position = vec3(testData[(i * 5) + 0], testData[(i * 5) + 1], testData[(i * 5) + 2]);
-		vert.uv = vec2(testData[(i * 5) + 3], testData[(i * 5) + 4]);
-
-		mesh->vertices.push_back(vert);
-	}
-
-	mesh->indices = testIndices;
-
-	mesh->setup();
+	tileset->textureMappings.push_back(test);
+	tileset->generateVertices();
+	go->components.push_back(tileset);
+	
+	worldManager->gameObjects.push_back(go);
 
 	engineManager->loop();
 

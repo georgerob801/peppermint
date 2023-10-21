@@ -23,6 +23,11 @@ namespace peppermint {
 			vector<unsigned int> indices;
 			vector<Texture> textures;
 
+			static vector<Vertex> SQUARE();
+			static vector<Vertex> SQUARE(vec3 transform);
+			static vector<unsigned int> SQUARE_INDICES();
+			static vector<unsigned int> SQUARE_INDICES(unsigned int offset);
+
 			virtual void draw(Shader* shader);
 			void setup();
 		private:

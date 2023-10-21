@@ -4,7 +4,6 @@
 #include <peppermint/classes/rendering/Shader.h>
 #include <peppermint/classes/rendering/Mesh.h>
 #include <vector>
-#include <glad/glad.h>
 
 namespace peppermint {
 	namespace rendering {

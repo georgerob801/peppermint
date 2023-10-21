@@ -34,9 +34,9 @@ namespace peppermint {
 
 			void loop();
 
-			double deltaTime;
+			static double deltaTime;
 		private:
-			double lastFrame;
+			static double lastFrame;
 		};
 	}
 }

@@ -11,6 +11,7 @@ namespace peppermint {
 		class Tileset {
 		public:
 			vector<TextureSet> textureSets;
+			float tileSize = 1.0f;
 
 			void goToTextureSet(int index);
 			void nextTextureSet();

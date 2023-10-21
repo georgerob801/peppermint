@@ -13,10 +13,32 @@ namespace peppermint {
 		namespace components {
 			class TilesetRenderer : public Renderer {
 			public:
-				Tileset tileset;
-				vector<Mesh> meshes;
-			private:
+				TilesetRenderer(unsigned int width, unsigned int height);
+				~TilesetRenderer();
+				void awake();
 
+				bool requiresRemesh = true;
+
+				Tileset* tileset;
+
+				unsigned int* tileTypes;
+
+				void generateVertices();
+
+				// tile coords is centre +- (1/2)(tileset.tileSize)
+				struct TileTextureMapping {
+					// unsigned int tileType;
+					vec2 centre;
+				};
+
+				vector<TileTextureMapping> textureMappings;
+
+				TileTextureMapping defaultTextureMapping = {
+					.centre = vec2(0.0f, 0.0f)
+				};
+			private:
+				unsigned int width;
+				unsigned int height;
 			};
 		}
 	}
