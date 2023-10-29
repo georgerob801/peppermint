@@ -21,7 +21,7 @@ namespace peppermint {
 		public:
 			vector<Vertex> vertices;
 			vector<unsigned int> indices;
-			vector<Texture> textures;
+			vector<Texture*> textures;
 
 			static vector<Vertex> SQUARE();
 			static vector<Vertex> SQUARE(vec3 transform);

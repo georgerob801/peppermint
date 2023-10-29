@@ -4,6 +4,7 @@
 #include <peppermint/classes/game/components/renderers/Renderer.h>
 #include <peppermint/classes/rendering/Mesh.h>
 #include <peppermint/classes/rendering/Tileset.h>
+#include <peppermint/classes/game/components/NavigableMap.hpp>
 #include <vector>
 
 using namespace peppermint::rendering;
@@ -24,18 +25,7 @@ namespace peppermint {
 				unsigned int* tileTypes;
 
 				void generateVertices();
-
-				// tile coords is centre +- (1/2)(tileset.tileSize)
-				struct TileTextureMapping {
-					// unsigned int tileType;
-					vec2 centre;
-				};
-
-				vector<TileTextureMapping> textureMappings;
-
-				TileTextureMapping defaultTextureMapping = {
-					.centre = vec2(0.0f, 0.0f)
-				};
+				void generateTextures();
 			private:
 				unsigned int width;
 				unsigned int height;

@@ -6,16 +6,19 @@ using namespace peppermint::game;
 using namespace peppermint::game::components;
 using namespace glm;
 
-Camera::Camera(vec3 up) {
-	this->worldUp = up;
-
-	updateCameraVectors();
+Camera::Camera() {
+	this->worldUp = vec3(0.0f, 1.0f, 0.0f);
 }
 
-mat4 Camera::getViewMatrix() {
-	Transform* transform = ((GameObject*)this->getGameObject())->transform;
+#include <format>
+#include <peppermint/managers/LogManager.h>
 
-	return lookAt(transform->position, transform->position + this->front, this->up);
+mat4 Camera::getViewMatrix() {
+	vec3 position = ((GameObject*)this->getGameObject())->transform->getGlobalPosition();
+
+	updateCameraVectors();
+
+	return lookAt(position, position + this->front, this->up) * this->viewScale;
 }
 
 void Camera::updateCameraVectors() {
@@ -23,9 +26,11 @@ void Camera::updateCameraVectors() {
 
 	Transform* transform = ((GameObject*)this->getGameObject())->transform;
 
-	newFront.x = cos(transform->getEulerAngles().z) * cos(transform->getEulerAngles().y);
-	newFront.y = sin(transform->getEulerAngles().y);
-	newFront.z = sin(transform->getEulerAngles().z) * cos(transform->getEulerAngles().y);
+	vec3 globalRotation = transform->getGlobalRotation();
+
+	newFront.x = cos(globalRotation.y) * cos(globalRotation.x);
+	newFront.y = sin(globalRotation.x);
+	newFront.z = sin(globalRotation.y) * cos(globalRotation.x);
 
 	this->front = normalize(newFront);
 

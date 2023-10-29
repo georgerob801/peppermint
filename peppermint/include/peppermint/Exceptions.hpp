@@ -36,6 +36,32 @@ namespace peppermint {
 					}
 				};
 			}
+
+			namespace tileset {
+				class InvalidTextureSetIndexException : public std::exception {
+				public:
+					char* what() {
+						return (char*)"Invalid texture set index.";
+					}
+				};
+			}
+			
+			namespace texture {
+				class CannotLoadTextureException : public std::exception {
+				public:
+					char* what() {
+						return (char*)"Cannot load texture.";
+					}
+				};
+			}
+		}
+		namespace component {
+			class InvalidCoordinateException : public std::exception {
+			public:
+				char* what() {
+					return (char*)"The coordinates provided were out of range.";
+				}
+			};
 		}
 	}
 }

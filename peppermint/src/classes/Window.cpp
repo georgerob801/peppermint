@@ -7,7 +7,17 @@ using namespace peppermint::managers;
 
 void onResize(GLFWwindow* window, int width, int height) {
 	glfwMakeContextCurrent(window);
-	glViewport(0, 0, width, height);
+	float offsetX = 0;
+	float offsetY = 0;
+	float unit;
+	if ((float)width / 16.0f < (float)height / 9.0f) {
+		unit = (float)width / 16.0f;
+		offsetY = (float)height - (9 * unit);
+	} else {
+		unit = (float)height / 9.0f;
+		offsetX = (float)width - (16 * unit);
+	}
+	glViewport((int)(offsetX / 2.0f), (int)(offsetY / 2.0f), (int)(16 * unit), (int)(9 * unit));
 }
 
 Window::Window(int width, int height, char* title, GLFWmonitor* monitor, GLFWwindow* share) {
@@ -30,6 +40,7 @@ Window::Window(int width, int height, char* title, GLFWmonitor* monitor, GLFWwin
 	LogManager::debug(std::format("Created render manager for {}", (void*)this));
 
 	LogManager::debug(std::format("Setting resize handler for {}", (void*)this));
+	onResize(this->glfwWindow, this->getSize()[0], this->getSize()[1]);
 	glfwSetFramebufferSizeCallback(this->glfwWindow, onResize);
 }
 
@@ -47,9 +58,9 @@ GLFWwindow* Window::getAddress() {
 }
 
 int* Window::getSize() {
-	int* size[2] = { 0, 0 };
-	glfwGetWindowSize(this->getAddress(), size[0], size[1]);
-	return *size;
+	int size[2] = { 0, 0 };
+	glfwGetWindowSize(this->getAddress(), &size[0], &size[1]);
+	return size;
 }
 
 void Window::swapBuffers() {
@@ -62,5 +73,6 @@ bool Window::shouldClose() {
 
 void Window::renderFrame() {
 	this->makeCurrentContext();
+	int* size = this->getSize();
 	this->renderManager->renderFrame();
 }

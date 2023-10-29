@@ -17,8 +17,8 @@ namespace peppermint {
 			std::vector<Window*> windows;
 
 			// default window settings
-			int defaultWidth = 500;
-			int defaultHeight = 500;
+			int defaultWidth = 800;
+			int defaultHeight = 450;
 			char* defaultTitle = (char*)"peppermint window";
 			GLFWmonitor* defaultMonitor = NULL;
 			GLFWwindow* defaultShare = NULL;

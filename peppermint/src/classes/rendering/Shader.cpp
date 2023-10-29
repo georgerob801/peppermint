@@ -134,3 +134,7 @@ void Shader::setMat4f(char* name, mat4 value) const {
 void Shader::setVec3f(char* name, vec3 value) const {
 	glUniform3f(glGetUniformLocation(this->id, name), value.x, value.y, value.z);
 }
+
+void Shader::setVec2f(char* name, vec2 value) const {
+	glUniform2f(glGetUniformLocation(this->id, name), value.x, value.y);
+}

@@ -16,9 +16,13 @@ namespace peppermint {
 
 			Shader* shader = new Shader((char*)"peppermint/resource/shader/vertex/default.vert", (char*)"peppermint/resource/shader/fragment/default.frag");
 
-			void awake(Window* window);
-			void start(Window* window);
+			void awake();
+			void start();
 			void loop(Window* window);
+
+			void sortByZ();
+
+			GameObject* createGameObject();
 		private:
 			
 		};

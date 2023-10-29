@@ -3,13 +3,17 @@
 
 #include <peppermint/classes/rendering/Shader.h>
 #include <peppermint/classes/rendering/Mesh.h>
+#include <peppermint/classes/game/GameObject.h>
 #include <vector>
 
 namespace peppermint {
 	namespace rendering {
 		struct RenderItem {
 			Shader* shader;
+			peppermint::game::GameObject* go;
 			Mesh* mesh;
+			vec2 uvOffset = vec2(0.0f, 0.0f);
+			int textureToUse = 0;
 		};
 
 		class RenderStack {

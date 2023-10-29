@@ -14,14 +14,14 @@ namespace peppermint {
 	namespace rendering {
 		class TextureSet {
 		public:
-			vector<Texture> textures;
-			Texture atlas;
+			vector<Texture*> textures;
+			Texture* atlas;
 
 			void addTexture(Texture tex);
 			void generateAtlas();
 			vec2 mapUVToAtlas(vec2 uv);
 		private:
-
+			bool requiresAtlasGeneration = true;
 		};
 	}
 }

@@ -19,10 +19,10 @@ namespace peppermint {
 			void enable();
 			bool isEnabled();
 		private:
-			void* gameObject;
+			void* gameObject = nullptr;
 		protected:
 			bool initialised = false;
-			bool enabled;
+			bool enabled = true;
 		};
 	}
 }

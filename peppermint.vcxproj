@@ -79,6 +79,10 @@
     <IncludePath>$(SolutionDir)peppermint\include;C:\cpp\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\cpp\libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>$(ProjectDir)peppermint\include;C:\cpp\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\cpp\libs;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -129,15 +133,20 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="peppermint\src\classes\game\components\renderers\BasicPlayerRenderer.cpp" />
+    <ClCompile Include="peppermint\src\classes\game\components\PlayerController.cpp" />
+    <ClCompile Include="peppermint\src\managers\InputManager.cpp" />
     <ClCompile Include="peppermint\src\classes\game\components\Camera.cpp" />
     <ClCompile Include="peppermint\src\classes\game\Component.cpp" />
     <ClCompile Include="peppermint\src\classes\game\GameObject.cpp" />
@@ -159,8 +168,13 @@
     <ClCompile Include="peppermint\src\classes\rendering\Texture.cpp" />
     <ClCompile Include="peppermint\src\classes\rendering\TextureSet.cpp" />
     <ClCompile Include="peppermint\src\classes\game\components\renderers\TilesetRenderer.cpp" />
+    <ClCompile Include="peppermint\src\classes\game\TilesetAnimation.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="peppermint\include\peppermint\classes\game\components\renderers\BasicPlayerRenderer.h" />
+    <ClInclude Include="peppermint\include\peppermint\classes\game\components\PlayerController.h" />
+    <ClInclude Include="peppermint\include\peppermint\classes\rendering\TilesetAnimationStateInfomation.hpp" />
+    <ClInclude Include="peppermint\include\peppermint\managers\InputManager.h" />
     <ClInclude Include="peppermint\include\peppermint\classes\rendering\Mesh.h" />
     <ClInclude Include="peppermint\include\peppermint\classes\game\components\Camera.h" />
     <ClInclude Include="peppermint\include\peppermint\classes\game\Component.h" />
@@ -181,9 +195,12 @@
     <ClInclude Include="peppermint\include\peppermint\classes\rendering\Texture.h" />
     <ClInclude Include="peppermint\include\peppermint\classes\rendering\TextureSet.h" />
     <ClInclude Include="peppermint\include\peppermint\classes\game\components\renderers\TilesetRenderer.h" />
+    <ClInclude Include="peppermint\include\peppermint\classes\game\components\NavigableMap.hpp" />
+    <ClInclude Include="peppermint\include\peppermint\classes\game\TilesetAnimation.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="peppermint\resource\shader\fragment\default.frag" />
     <None Include="peppermint\resource\shader\vertex\default.vert" />
   </ItemGroup>

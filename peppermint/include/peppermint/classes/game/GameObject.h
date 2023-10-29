@@ -18,9 +18,9 @@ namespace peppermint {
 			GameObject();
 			~GameObject();
 
-			template<class c> Component* addComponent();
+			template<class T> Component* addComponent();
 
-			template<class c> Component* getComponent();
+			template<class T> Component* getComponent();
 		private:
 
 		};

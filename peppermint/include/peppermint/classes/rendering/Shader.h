@@ -19,6 +19,7 @@ namespace peppermint {
 			void setFloat(char* name, float value) const;
 			void setMat4f(char* name, mat4 value) const;
 			void setVec3f(char* name, vec3 value) const;
+			void setVec2f(char* name, vec2 value) const;
 		};
 	}
 }

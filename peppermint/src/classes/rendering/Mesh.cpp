@@ -65,13 +65,13 @@ vector<Vertex> Mesh::SQUARE(vec3 transform) {
 
 vector<unsigned int> Mesh::SQUARE_INDICES() {
 	return vector<unsigned int> {
-		0, 1, 2, 1, 2, 3
+		0, 1, 2, 1, 3, 2
 	};
 };
 
 vector<unsigned int> Mesh::SQUARE_INDICES(unsigned int offset) {
 	return vector<unsigned int> {
-		0 + offset, 1 + offset, 2 + offset, 1 + offset, 2 + offset, 3 + offset
+		0 + offset, 1 + offset, 2 + offset, 1 + offset, 3 + offset, 2 + offset
 	};
 };
 
@@ -79,8 +79,10 @@ void Mesh::draw(Shader* shader) {
 	shader->use();
 	for (unsigned int i = 0; i < this->textures.size(); i++) {
 		glActiveTexture(GL_TEXTURE0 + i);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		shader->setInt((char*)("material.texture" + std::to_string(i)).c_str(), i);
-		this->textures[i].bind();
+		this->textures[i]->bind();
 	}
 	glActiveTexture(GL_TEXTURE0);
 

@@ -15,26 +15,32 @@ TilesetRenderer::~TilesetRenderer() {
 	delete[] this->tileTypes;
 }
 
+void TilesetRenderer::generateTextures() {
+	this->tileset->generateTextures();
+}
+
 void TilesetRenderer::generateVertices() {
 	this->vertices.clear();
 
+	vec2 scale = vec2(1.0f / (float)this->tileset->getCurrentTextureSet()->atlas->getWidth(), 1.0f / (float)this->tileset->getCurrentTextureSet()->atlas->getHeight());
+
 	for (unsigned int y = 0; y < this->height; y++) {
 		for (unsigned int x = 0; x < this->width; x++) {
-			vector<Vertex> square = Mesh::SQUARE(vec3(x + 1, y, 0.0f));
+			vector<Vertex> square = Mesh::SQUARE(vec3(x, y, 0.0f));
 			for (unsigned char i = 0; i < 4; i++) {
-				TileTextureMapping mapping = this->textureMappings[this->tileTypes[(this->width * y) + x]];
+				Tileset::TileTextureMapping mapping = this->tileset->textureMappings[this->tileTypes[(this->width * y) + x]];
 				switch (i) {
 				case 0:
-					square[i].uv = mapping.centre + vec2(-(this->tileset->tileSize / 2), -(this->tileset->tileSize / 2));
+					square[i].uv = (mapping.centre * scale) + (vec2(-(this->tileset->tileSize.x / 2), -(this->tileset->tileSize.y / 2)) * scale * 0.99f);
 					break;
 				case 1:
-					square[i].uv = mapping.centre + vec2((this->tileset->tileSize / 2), -(this->tileset->tileSize / 2));
+					square[i].uv = (mapping.centre * scale) + (vec2((this->tileset->tileSize.x / 2), -(this->tileset->tileSize.y / 2)) * scale * 0.99f);
 					break;
 				case 2:
-					square[i].uv = mapping.centre + vec2(-(this->tileset->tileSize / 2), (this->tileset->tileSize / 2));
+					square[i].uv = (mapping.centre * scale) + (vec2(-(this->tileset->tileSize.x / 2), (this->tileset->tileSize.y / 2)) * scale * 0.99f);
 					break;
 				case 3:
-					square[i].uv = mapping.centre + vec2((this->tileset->tileSize / 2), (this->tileset->tileSize / 2));
+					square[i].uv = (mapping.centre * scale) + (vec2((this->tileset->tileSize.x / 2), (this->tileset->tileSize.y / 2)) * scale * 0.99f);
 					break;
 				}
 				this->vertices.push_back(square[i]);
@@ -42,9 +48,11 @@ void TilesetRenderer::generateVertices() {
 		}
 	}
 
-	LogManager::warn(format("Size: {}", this->vertices.size()));
-	LogManager::warn(format("Starts at {} {} {}", this->vertices[0].position.x, this->vertices[0].position.y, this->vertices[0].position.z));
-	LogManager::warn(format("Starts at {} {} {}", this->vertices[1].position.x, this->vertices[1].position.y, this->vertices[1].position.z));
+	// only for testing
+	for (unsigned int i = 0; i < this->tileset->textureSets.size(); i++) {
+		this->tileset->textureSets[i]->generateAtlas();
+		this->textures.push_back(this->tileset->textureSets[i]->atlas);
+	}
 }
 
 void TilesetRenderer::awake() {

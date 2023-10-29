@@ -15,12 +15,18 @@ namespace peppermint {
 			class Transform : public Component {
 			public:
 				vec3 position;
-				quat rotation;
+				vec3 rotation;
 				vec3 scale;
+
+				Transform* parent = nullptr;
 
 				Transform();
 
-				vec3 getEulerAngles();
+				vec3 getGlobalScale();
+				vec3 getGlobalRotation();
+				vec3 getGlobalPosition();
+
+				mat4 getMatrix();
 			private:
 
 			};

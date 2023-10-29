@@ -19,30 +19,30 @@ GameObject::~GameObject() {
 	delete this->transform;
 }
 
-template <class c> Component* GameObject::addComponent() {
-	if (!std::is_base_of(Component, c)) {
+template <class T> Component* GameObject::addComponent() {
+	if (!std::is_base_of(Component, T)) {
 		throw IsNotComponentException();
 	}
 
 	for (int i = 0; i < this->components.size(); i++) {
-		if (typeid(this->components[i]) == typeid(c)) {
+		if (typeid(this->components[i]) == typeid(T)) {
 			throw AlreadyHasComponentException();
 		}
 	}
 
-	c* newComponent = new c();
+	T* newComponent = new T();
 	this->components.push_back(newComponent);
 
 	return newComponent;
 }
 
-template<class c> Component* GameObject::getComponent() {
-	if (!std::is_base_of(Component, c)) {
+template<class T> Component* GameObject::getComponent() {
+	if (!std::is_base_of(Component, T)) {
 		throw IsNotComponentException();
 	}
 
 	for (int i = 0; i < this->components.size(); i++) {
-		if (typeid(this->components[i] == typeid(c))) {
+		if (typeid(this->components[i] == typeid(T))) {
 			return this->components[i];
 		}
 	}

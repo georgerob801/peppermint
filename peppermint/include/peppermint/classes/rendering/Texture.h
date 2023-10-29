@@ -5,7 +5,6 @@ namespace peppermint {
 	namespace rendering {
 		class Texture {
 		public:
-			unsigned char* data;
 
 			Texture();
 			Texture(char* path);

@@ -15,16 +15,17 @@ namespace peppermint {
 			class Camera : public Component {
 			public:
 				vec3 up;
-
-				Camera(vec3 up);
-
-				mat4 getViewMatrix();
-			private:
 				vec3 front;
 				vec3 right;
-				vec3 worldUp;
 
+				float viewScale = 1.0f;
+
+				Camera();
+
+				mat4 getViewMatrix();
 				void updateCameraVectors();
+			private:
+				vec3 worldUp;
 			};
 		}
 	}

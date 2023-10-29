@@ -29,6 +29,8 @@ Mesh* Renderer::generateMesh() {
 		}
 	}
 
+	mesh->textures = this->textures;
+
 	mesh->setup();
 
 	return mesh;
