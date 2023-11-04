@@ -20,6 +20,39 @@ void Asset::setPath(char* path) {
 vector<byte> Asset::serialise() {
 	vector<byte> out;
 
+	void* id = this;
+	byte* idB = reinterpret_cast<byte*>(&id);
+	for (unsigned int i = 0; i < sizeof(void*); i++) {
+		out.push_back(idB[i]);
+	}
+
+	unsigned int typeCast = (unsigned int)this->type;
+	byte* typeB = reinterpret_cast<byte*>(&typeCast);
+	for (unsigned int i = 0; i < sizeof(unsigned int); i++) {
+		out.push_back(typeB[i]);
+	}
+
+	if (this->path != nullptr) {
+		std::string pathStr(this->path);
+
+		unsigned int length = pathStr.size();
+		byte* pathSizeB = reinterpret_cast<byte*>(&length);
+		for (unsigned int i = 0; i < sizeof(unsigned int); i++) {
+			out.push_back(pathSizeB[i]);
+		}
+
+		byte* pathB = reinterpret_cast<byte*>(this->path);
+		for (unsigned int i = 0; i < length * sizeof(char); i++) {
+			out.push_back(pathB[i]);
+		}
+	} else {
+		unsigned int length = 0;
+		byte* pathSizeB = reinterpret_cast<byte*>(&length);
+		for (unsigned int i = 0; i < sizeof(unsigned int); i++) {
+			out.push_back(pathSizeB[i]);
+		}
+	}
+
 	//out += "Asset:\n";
 	//out += std::format("ID: {}\n", this->id);
 	//out += "Data:\n";

@@ -1,2 +1,564 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ClassDiagram /> 
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="peppermint::Asset" Collapsed="true">
+    <Position X="17.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAACAAAgAAABAAAgAAAgAAAAAwA=</HashCode>
+      <FileName>peppermint\include\peppermint\classes\Asset.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="peppermint::Serialisable" Collapsed="true">
+    <Position X="13" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAQA=</HashCode>
+      <FileName>peppermint\include\peppermint\Serialisable.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="peppermint::Window" Collapsed="true">
+    <Position X="31.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAIAAAAAAAAAAAABABQAAAAAAEAAgCiBAAAA=</HashCode>
+      <FileName>peppermint\include\peppermint\classes\Window.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="peppermint::managers::AssetManager" Collapsed="true">
+    <Position X="0.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAgAgAAAAABAAAAAACAgAABAAAAAAQA=</HashCode>
+      <FileName>peppermint\include\peppermint\managers\AssetManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="peppermint::managers::InputManager" Collapsed="true">
+    <Position X="29.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAQAAAAECAEAAIABAAAAAAAAAAQAAAAAAAAAIAEAAAA=</HashCode>
+      <FileName>peppermint\include\peppermint\managers\InputManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="peppermint::managers::EngineManager" Collapsed="true">
+    <Position X="28" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABQAAgAAAJkACAAEAQAAQAAAAAAAAAAAAAABAEAAAAA=</HashCode>
+      <FileName>peppermint\include\peppermint\managers\EngineManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="peppermint::managers::LogManager" Collapsed="true">
+    <Position X="29.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAABAAAAGAAAAAAAAAAAAAQAABAAAAAAA=</HashCode>
+      <FileName>peppermint\include\peppermint\managers\LogManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="peppermint::managers::WindowManager" Collapsed="true">
+    <Position X="33.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAgAAABAAAYDAAgAAAAAAAAAAAAgAAAgAAAAQAAA=</HashCode>
+      <FileName>peppermint\include\peppermint\managers\WindowManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="peppermint::managers::RenderManager" Collapsed="true">
+    <Position X="33.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACQADAAAAAAAAAIAAAAAAABAAAAAAAAAAAAAABAAQAA=</HashCode>
+      <FileName>peppermint\include\peppermint\managers\RenderManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="peppermint::managers::WorldManager" Collapsed="true">
+    <Position X="23.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAADAEgAAAAAAAAAAAAAAAgAAAAQEkAAQA=</HashCode>
+      <FileName>peppermint\include\peppermint\managers\WorldManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="peppermint::game::components::BasicPlayerRenderer" Collapsed="true">
+    <Position X="9.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAACCAAgAAAAAEgAAAAJAAAgAAAAAgAAgQA=</HashCode>
+      <FileName>peppermint\include\peppermint\classes\game\components\renderers\BasicPlayerRenderer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="peppermint::game::components::PlayerController" Collapsed="true">
+    <Position X="3" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAQAESAAAAAAAABAAAAABAQAgAAAAAgAAAcA=</HashCode>
+      <FileName>peppermint\include\peppermint\classes\game\components\PlayerController.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="peppermint::game::components::Camera" Collapsed="true">
+    <Position X="5.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAFAAAAAQAAAAAAAAAAABABAgAAAAAgAAgQA=</HashCode>
+      <FileName>peppermint\include\peppermint\classes\game\components\Camera.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="peppermint::game::components::Transform" Collapsed="true">
+    <Position X="7.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgggAAAABIAACAIAQCAAABAAAgAAAAAAAAAQA=</HashCode>
+      <FileName>peppermint\include\peppermint\classes\game\components\Transform.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="peppermint::game::components::Renderer" Collapsed="true">
+    <Position X="9.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAEAAAAAAEAAAAAAEAAATAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>peppermint\include\peppermint\classes\game\components\renderers\Renderer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="peppermint::game::components::TilesetRenderer" Collapsed="true">
+    <Position X="9.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAACGAQAQAAAAAAAAAABAQAgIAAAQAAAAQA=</HashCode>
+      <FileName>peppermint\include\peppermint\classes\game\components\renderers\TilesetRenderer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="peppermint::game::components::NavigableMap" Collapsed="true">
+    <Position X="12" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAQEQAAAAAAAAAABAAAAAIAQFAAACQA=</HashCode>
+      <FileName>peppermint\include\peppermint\classes\game\components\NavigableMap.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="peppermint::rendering::TilesetAnimationStateInformation" Collapsed="true">
+    <Position X="12.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAIAEAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>peppermint\include\peppermint\classes\rendering\TilesetAnimationStateInfomation.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="peppermint::rendering::Mesh" Collapsed="true">
+    <Position X="31.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEQgAAAEAAAAgAAAIAAAAAAAAQAAAAAAAAAAAEICA=</HashCode>
+      <FileName>peppermint\include\peppermint\classes\rendering\Mesh.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="peppermint::rendering::RenderStack" Collapsed="true">
+    <Position X="28" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAA=</HashCode>
+      <FileName>peppermint\include\peppermint\classes\rendering\RenderStack.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="peppermint::rendering::Shader" Collapsed="true">
+    <Position X="29.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAIAAAAAAIACAAAAAAAAAAABgAAAAAABgA=</HashCode>
+      <FileName>peppermint\include\peppermint\classes\rendering\Shader.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="peppermint::rendering::Tileset" Collapsed="true">
+    <Position X="16.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQACAgAAAACAAAAgACAgAAAgAAgAMAAAAQg=</HashCode>
+      <FileName>peppermint\include\peppermint\classes\rendering\Tileset.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="peppermint::rendering::Texture" Collapsed="true">
+    <Position X="18.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>RAAAAIAAAIAAAAQAQAAAAAQAAAAAQAAgAAIAAAAAASA=</HashCode>
+      <FileName>peppermint\include\peppermint\classes\rendering\Texture.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="peppermint::rendering::TextureSet" Collapsed="true">
+    <Position X="21" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAAAAAAAIAAAABAAABgAAAgAAAAAAAFAQA=</HashCode>
+      <FileName>peppermint\include\peppermint\classes\rendering\TextureSet.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="peppermint::game::Component" Collapsed="true">
+    <Position X="7.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAACQAoAAGAAAAAAQABCACiAgAAQAAAIQA=</HashCode>
+      <FileName>peppermint\include\peppermint\classes\game\Component.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="peppermint::game::GameObject" Collapsed="true">
+    <Position X="25.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAAECACAAAAAAAAEAAAgAAAAAAIAAQA=</HashCode>
+      <FileName>peppermint\include\peppermint\classes\game\GameObject.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="peppermint::game::TilesetAnimation" Collapsed="true">
+    <Position X="14.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAACAAAAAAAgAAgAAAABCAAgAAAhAAAgAAAAEYA=</HashCode>
+      <FileName>peppermint\include\peppermint\classes\game\TilesetAnimation.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="peppermint::exceptions::gameObject::AlreadyHasComponentException" Collapsed="true">
+    <Position X="28" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>peppermint\include\peppermint\Exceptions.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="peppermint::exceptions::gameObject::ComponentNotFoundException" Collapsed="true">
+    <Position X="33.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>peppermint\include\peppermint\Exceptions.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="peppermint::exceptions::gameObject::IsNotComponentException" Collapsed="true">
+    <Position X="28" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>peppermint\include\peppermint\Exceptions.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="peppermint::exceptions::rendering::shader::CannotOpenFileException" Collapsed="true">
+    <Position X="31.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>peppermint\include\peppermint\Exceptions.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="peppermint::exceptions::rendering::tileset::InvalidTextureSetIndexException" Collapsed="true">
+    <Position X="33.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>peppermint\include\peppermint\Exceptions.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="peppermint::exceptions::rendering::texture::CannotLoadTextureException" Collapsed="true">
+    <Position X="29.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>peppermint\include\peppermint\Exceptions.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="peppermint::exceptions::component::InvalidCoordinateException" Collapsed="true">
+    <Position X="31.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>peppermint\include\peppermint\Exceptions.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="currentlyPressingStruct" Collapsed="true">
+    <Position X="29.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAgAAAAAAAAAAAAAAIAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>peppermint\include\peppermint\classes\game\components\PlayerController.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="currentlyMovingStruct" Collapsed="true">
+    <Position X="28" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAgAAAAAAAAAAAAAAIAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>peppermint\include\peppermint\classes\game\components\PlayerController.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="__unnamed_struct_0420_2" Collapsed="true">
+    <Position X="16.5" Y="16.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAACAEAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>peppermint\include\stb_image\stb_image.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="__unnamed_struct_0420_3" Collapsed="true">
+    <Position X="12.5" Y="17.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAEAACEAIAYAgAAgAAAAAAAhAAAAABACA=</HashCode>
+      <FileName>peppermint\include\stb_image\stb_image.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="__unnamed_struct_0420_5" Collapsed="true">
+    <Position X="16.5" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAABAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>peppermint\include\stb_image\stb_image.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="__unnamed_struct_0420_7" Collapsed="true">
+    <Position X="16.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIIAAAAAAIAAACCAAAAAAAEAAAAA=</HashCode>
+      <FileName>peppermint\include\stb_image\stb_image.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="__unnamed_struct_0420_8" Collapsed="true">
+    <Position X="4.5" Y="16.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgACBABEAAIAQEDEggMAAIBgAAgAAABAIBAQAAiAgg=</HashCode>
+      <FileName>peppermint\include\stb_image\stb_image.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="__unnamed_struct_0420_10" Collapsed="true">
+    <Position X="8.5" Y="14.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEEAAAAAAAAAAQAAAAAAAACAIABAIAAAgAA=</HashCode>
+      <FileName>peppermint\include\stb_image\stb_image.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="__unnamed_struct_0420_11" Collapsed="true">
+    <Position X="0.5" Y="14.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIIAAAAgIAAAACCAAAAAAAAAAAAA=</HashCode>
+      <FileName>peppermint\include\stb_image\stb_image.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="__unnamed_struct_0420_12" Collapsed="true">
+    <Position X="12.5" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAEAQAAAIEAJAAgAgAAAgAAAAAAIAAA=</HashCode>
+      <FileName>peppermint\include\stb_image\stb_image.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="__unnamed_struct_0420_13" Collapsed="true">
+    <Position X="12.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAEAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>peppermint\include\stb_image\stb_image.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="__unnamed_struct_0420_14" Collapsed="true">
+    <Position X="4.5" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAQAAAAAAAAAAAAAAAIAAAIAAIAAAAAA=</HashCode>
+      <FileName>peppermint\include\stb_image\stb_image.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="__unnamed_struct_0420_16" Collapsed="true">
+    <Position X="8.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAEAIAAAAACAQAAAAAAAAAAAgAAAAAKAABAAAAAAA=</HashCode>
+      <FileName>peppermint\include\stb_image\stb_image.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="__unnamed_struct_0420_17" Collapsed="true">
+    <Position X="0.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAIAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>peppermint\include\stb_image\stb_image.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="__unnamed_struct_0420_18" Collapsed="true">
+    <Position X="4.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAAAAgAAAAAAAAAgAAA=</HashCode>
+      <FileName>peppermint\include\stb_image\stb_image.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="__unnamed_struct_0420_19" Collapsed="true">
+    <Position X="0.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAEICAgAIAAARAQAgAEhAYAAgAAAAQAggAAAAJgQ=</HashCode>
+      <FileName>peppermint\include\stb_image\stb_image.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="peppermint::rendering::Vertex" Collapsed="true">
+    <Position X="33.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>peppermint\include\peppermint\classes\rendering\Mesh.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="peppermint::rendering::RenderItem" Collapsed="true">
+    <Position X="31.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAQAAAAAAABAAAAAAAAAEAAAAE=</HashCode>
+      <FileName>peppermint\include\peppermint\classes\rendering\RenderStack.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Typedef Name="PFNWGLGETPROCADDRESSPROC_PRIVATE" Collapsed="true">
+    <Position X="29.75" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>peppermint\include\glad\glad.c</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="PFNGLXGETPROCADDRESSPROC_PRIVATE" Collapsed="true">
+    <Position X="28" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>peppermint\include\glad\glad.c</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="stbi_uc" Collapsed="true">
+    <Position X="33.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>peppermint\include\stb_image\stb_image.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="stbi_us" Collapsed="true">
+    <Position X="28" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>peppermint\include\stb_image\stb_image.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="stbi_io_callbacks" Collapsed="true">
+    <Position X="16.5" Y="18.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>peppermint\include\stb_image\stb_image.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="stbi__uint16" Collapsed="true">
+    <Position X="29.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>peppermint\include\stb_image\stb_image.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="stbi__int16" Collapsed="true">
+    <Position X="33.25" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>peppermint\include\stb_image\stb_image.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="stbi__uint32" Collapsed="true">
+    <Position X="31.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>peppermint\include\stb_image\stb_image.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="stbi__int32" Collapsed="true">
+    <Position X="28" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>peppermint\include\stb_image\stb_image.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="validate_uint32" Collapsed="true">
+    <Position X="29.75" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>peppermint\include\stb_image\stb_image.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="stbi__context" Collapsed="true">
+    <Position X="12.5" Y="19.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>peppermint\include\stb_image\stb_image.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="stbi__result_info" Collapsed="true">
+    <Position X="16.5" Y="13.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>peppermint\include\stb_image\stb_image.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="stbi__huffman" Collapsed="true">
+    <Position X="16.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>peppermint\include\stb_image\stb_image.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="stbi__jpeg" Collapsed="true">
+    <Position X="4.5" Y="18.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>peppermint\include\stb_image\stb_image.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="resample_row_func" Collapsed="true">
+    <Position X="31.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>peppermint\include\stb_image\stb_image.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="stbi__resample" Collapsed="true">
+    <Position X="8.5" Y="16.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>peppermint\include\stb_image\stb_image.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="stbi__zhuffman" Collapsed="true">
+    <Position X="0.5" Y="16.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>peppermint\include\stb_image\stb_image.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="stbi__zbuf" Collapsed="true">
+    <Position X="12.5" Y="14.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>peppermint\include\stb_image\stb_image.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="stbi__pngchunk" Collapsed="true">
+    <Position X="12.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>peppermint\include\stb_image\stb_image.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="stbi__png" Collapsed="true">
+    <Position X="4.5" Y="13.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>peppermint\include\stb_image\stb_image.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="stbi__bmp_data" Collapsed="true">
+    <Position X="8.5" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>peppermint\include\stb_image\stb_image.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="stbi__pic_packet" Collapsed="true">
+    <Position X="0.5" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>peppermint\include\stb_image\stb_image.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="stbi__gif_lzw" Collapsed="true">
+    <Position X="4.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>peppermint\include\stb_image\stb_image.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="stbi__gif" Collapsed="true">
+    <Position X="0.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>peppermint\include\stb_image\stb_image.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Enum Name="__unnamed_enum_0420_1" Collapsed="true">
+    <Position X="28" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAABAAAAAAAAAAEAAABAAAAAAAIAAAAAA=</HashCode>
+      <FileName>peppermint\include\stb_image\stb_image.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="__unnamed_enum_0420_4" Collapsed="true">
+    <Position X="31.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAgAAAAAAAA=</HashCode>
+      <FileName>peppermint\include\stb_image\stb_image.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="__unnamed_enum_0420_6" Collapsed="true">
+    <Position X="33.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAAAAAAAAAAgAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>peppermint\include\stb_image\stb_image.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="__unnamed_enum_0420_15" Collapsed="true">
+    <Position X="29.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAECAAAABAAIAAAAAAAhAAAAAAAAAAAAAA=</HashCode>
+      <FileName>peppermint\include\stb_image\stb_image.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -59,6 +59,29 @@ void Texture::bind() {
 vector<byte> Texture::serialise() {
 	vector<byte> out;
 
+	void* id = this;
+	byte* idB = reinterpret_cast<byte*>(&id);
+	for (unsigned int i = 0; i < sizeof(void*); i++) {
+		out.push_back(idB[i]);
+	}
+
+	unsigned int typeCast = (unsigned int)this->type;
+	byte* typeB = reinterpret_cast<byte*>(&typeCast);
+	for (unsigned int i = 0; i < sizeof(unsigned int); i++) {
+		out.push_back(typeB[i]);
+	}
+
+	unsigned int length = 0;
+	byte* pathSizeB = reinterpret_cast<byte*>(&length);
+	for (unsigned int i = 0; i < sizeof(unsigned int); i++) {
+		out.push_back(pathSizeB[i]);
+	}
+
+	byte* imageAssetID = reinterpret_cast<byte*>(&this->imageAsset);
+	for (unsigned int i = 0; i < sizeof(void*); i++) {
+		out.push_back(imageAssetID[i]);
+	}
+
 	//out += "Texture:\n";
 	//out += std::format("ID: {}\n", (void*)this);
 	//out += std::format("ImageAssetID: {}\n", this->imageAsset->id);

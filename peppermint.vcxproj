@@ -206,6 +206,7 @@
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
     <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
     <None Include="peppermint\resource\shader\fragment\default.frag" />
     <None Include="peppermint\resource\shader\vertex\default.vert" />
   </ItemGroup>

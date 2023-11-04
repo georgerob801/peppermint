@@ -19,6 +19,54 @@ int TilesetAnimation::getTextureOffsetAtStep(int step) {
 vector<byte> TilesetAnimation::serialise() {
 	vector<byte> out;
 
+	void* id = this;
+	byte* idB = reinterpret_cast<byte*>(&id);
+	for (unsigned int i = 0; i < sizeof(void*); i++) {
+		out.push_back(idB[i]);
+	}
+
+	unsigned int typeCast = (unsigned int)this->type;
+	byte* typeB = reinterpret_cast<byte*>(&typeCast);
+	for (unsigned int i = 0; i < sizeof(unsigned int); i++) {
+		out.push_back(typeB[i]);
+	}
+
+	unsigned int length = 0;
+	byte* pathSizeB = reinterpret_cast<byte*>(&length);
+	for (unsigned int i = 0; i < sizeof(unsigned int); i++) {
+		out.push_back(pathSizeB[i]);
+	}
+
+	vector<byte*> intsToAdd;
+
+	intsToAdd.push_back(reinterpret_cast<byte*>(&this->start));
+	intsToAdd.push_back(reinterpret_cast<byte*>(&this->step));
+	intsToAdd.push_back(reinterpret_cast<byte*>(&this->end));
+	intsToAdd.push_back(reinterpret_cast<byte*>(&this->texStartOffset));
+	intsToAdd.push_back(reinterpret_cast<byte*>(&this->texStepOffset));
+
+	for (unsigned int i = 0; i < intsToAdd.size(); i++) {
+		for (unsigned int j = 0; j < sizeof(int); j++) {
+			out.push_back(intsToAdd[i][j]);
+		}
+	}
+
+	vector<byte*> floatsToAdd;
+
+	floatsToAdd.push_back(reinterpret_cast<byte*>(&this->stepTime));
+	floatsToAdd.push_back(reinterpret_cast<byte*>(&this->uvStartOffset.x));
+	floatsToAdd.push_back(reinterpret_cast<byte*>(&this->uvStartOffset.y));
+	floatsToAdd.push_back(reinterpret_cast<byte*>(&this->uvStepOffset.x));
+	floatsToAdd.push_back(reinterpret_cast<byte*>(&this->uvStepOffset.y));
+
+	for (unsigned int i = 0; i < floatsToAdd.size(); i++) {
+		for (unsigned int j = 0; j < sizeof(float); j++) {
+			out.push_back(floatsToAdd[i][j]);
+		}
+	}
+
+
+
 	//out += "TilesetAnimation:\n";
 	//out += "Data:\n";
 	//out += std::format("Start: {}\n", this->start);

@@ -44,6 +44,66 @@ void Tileset::generateDefaultTextureMappings() {
 vector<byte> Tileset::serialise() {
 	vector<byte> out;
 
+	void* id = this;
+	byte* idB = reinterpret_cast<byte*>(&id);
+	for (unsigned int i = 0; i < sizeof(void*); i++) {
+		out.push_back(idB[i]);
+	}
+
+	unsigned int typeCast = (unsigned int)this->type;
+	byte* typeB = reinterpret_cast<byte*>(&typeCast);
+	for (unsigned int i = 0; i < sizeof(unsigned int); i++) {
+		out.push_back(typeB[i]);
+	}
+
+	unsigned int length = 0;
+	byte* pathSizeB = reinterpret_cast<byte*>(&length);
+	for (unsigned int i = 0; i < sizeof(unsigned int); i++) {
+		out.push_back(pathSizeB[i]);
+	}
+
+	vector<byte*> floatsToAdd;
+
+	floatsToAdd.push_back(reinterpret_cast<byte*>(&this->tileSize.x));
+	floatsToAdd.push_back(reinterpret_cast<byte*>(&this->tileSize.y));
+
+	for (unsigned int i = 0; i < floatsToAdd.size(); i++) {
+		for (unsigned int j = 0; j < sizeof(float); j++) {
+			out.push_back(floatsToAdd[i][j]);
+		}
+	}
+
+	unsigned int numTextureSets = this->textureSets.size();
+	byte* numTextureSetsB = reinterpret_cast<byte*>(&numTextureSets);
+	for (unsigned int i = 0; i < sizeof(unsigned int); i++) {
+		out.push_back(numTextureSetsB[i]);
+	}
+
+	for (unsigned int i = 0; i < this->textureSets.size(); i++) {
+		byte* setIDB = reinterpret_cast<byte*>(&this->textureSets[i]);
+		for (unsigned int j = 0; j < sizeof(void*); j++) {
+			out.push_back(setIDB[j]);
+		}
+	}
+
+	unsigned int numTextureMappings = this->textureMappings.size();
+	byte* numTextureMappingsB = reinterpret_cast<byte*>(&numTextureMappings);
+	for (unsigned int i = 0; i < sizeof(unsigned int); i++) {
+		out.push_back(numTextureMappingsB[i]);
+	}
+
+	for (unsigned int i = 0; i < this->textureMappings.size(); i++) {
+		byte* x = reinterpret_cast<byte*>(&this->textureMappings[i].centre.x);
+		for (unsigned int j = 0; j < sizeof(float); j++) {
+			out.push_back(x[j]);
+		}
+
+		byte* y = reinterpret_cast<byte*>(&this->textureMappings[i].centre.y);
+		for (unsigned int j = 0; j < sizeof(float); j++) {
+			out.push_back(y[j]);
+		}
+	}
+
 	//out += "Tileset:\n";
 	//out += std::format("ID: {}\n", (void*)this);
 	//out += "Data:\n";

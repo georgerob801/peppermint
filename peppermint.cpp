@@ -773,7 +773,7 @@ int main() {
 	// LogManager::warn(worldManager->serialise().c_str());
 	// LogManager::warn(EngineManager::assetManager->serialise().c_str());
 
-	worldManager->saveWorldFile("peppermint/test.pmintworld");
+	worldManager->saveWorldFile("peppermint/littleroot.pmintworld");
 	EngineManager::assetManager->saveAssetFile("peppermint/.pmintassets");
 
 

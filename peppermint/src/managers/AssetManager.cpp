@@ -22,7 +22,6 @@ peppermint::Asset* AssetManager::newAsset(peppermint::Asset::ASSET_TYPE type) {
 }
 
 void AssetManager::registerAsset(Asset* asset) {
-	asset->id = ++this->currentId;
 	std::vector<Asset*>::iterator pos = std::find(this->assets.begin(), this->assets.end(), asset);
 	if (pos == this->assets.end()) this->assets.push_back(asset);
 }
@@ -30,18 +29,6 @@ void AssetManager::registerAsset(Asset* asset) {
 void AssetManager::unregisterAsset(Asset* asset) {
 	std::vector<Asset*>::iterator pos = std::find(this->assets.begin(), this->assets.end(), asset);
 	if (pos != this->assets.end()) this->assets.erase(pos);
-
-	asset->id = NULL;
-}
-
-void AssetManager::unregisterAsset(unsigned int id) {
-	std::vector<Asset*>::iterator pos = std::find_if(this->assets.begin(), this->assets.end(), [id](const Asset* x) { return x->id == id; });
-	if (pos != this->assets.end()) {
-		(*pos)->id = NULL;
-		this->assets.erase(pos);
-	}
-
-	
 }
 
 
@@ -78,7 +65,10 @@ vector<byte> AssetManager::serialise() {
 		out.push_back(sizeBytes[i]);
 	}
 
-
+	for (unsigned int i = 0; i < this->assets.size(); i++) {
+		vector<byte> serialisedAsset = this->assets[i]->serialise();
+		out.insert(out.end(), serialisedAsset.begin(), serialisedAsset.end());
+	}
 
 	//out += "AssetManager:\n";
 	//out += std::format("Assets: {}\n", this->assets.size());

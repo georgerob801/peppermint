@@ -7,9 +7,9 @@ namespace peppermint {
 	class Asset : public Serialisable {
 	public:
 		char* path;
-		unsigned int id = NULL;
 
 		enum ASSET_TYPE {
+			NONE,
 			IMAGE,
 			TILESET_ANIMATION,
 			FRAGMENT_SHADER_SOURCE,
