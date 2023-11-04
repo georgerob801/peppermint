@@ -1,6 +1,7 @@
 #include <peppermint/classes/game/components/Transform.h>
 
 #include <glm/gtx/quaternion.hpp>
+#include <format>
 
 using namespace peppermint::game::components;
 using namespace glm;
@@ -50,4 +51,76 @@ mat4 Transform::getMatrix() {
 	out = glm::translate(out, this->getGlobalPosition());
 
 	return out;
+}
+
+#include <iostream>
+
+vector<byte> Transform::serialise() {
+	vector<byte> out;
+
+	unsigned int e = this->type;
+	byte* toAdd = (byte*)reinterpret_cast<char*>(&e);
+
+	for (unsigned int i = 0; i < sizeof(unsigned int) / sizeof(byte); i++) {
+		out.push_back(toAdd[i]);
+	}
+
+	vector<byte*> thingsToAdd;
+
+	void* id = this;
+	byte* toAdd2 = (byte*)reinterpret_cast<char*>(&id);
+
+	for (unsigned int i = 0; i < sizeof(id) / sizeof(byte); i++) {
+		out.push_back(toAdd2[i]);
+	}
+
+	float xPos = this->position.x;
+	thingsToAdd.push_back(reinterpret_cast<byte*>(&xPos));
+	float yPos = this->position.x;
+	thingsToAdd.push_back(reinterpret_cast<byte*>(&yPos));
+	float zPos = this->position.x;
+	thingsToAdd.push_back(reinterpret_cast<byte*>(&zPos));
+
+	float xRot = this->rotation.x;
+	thingsToAdd.push_back(reinterpret_cast<byte*>(&xRot));
+	float yRot = this->rotation.x;
+	thingsToAdd.push_back(reinterpret_cast<byte*>(&yRot));
+	float zRot = this->rotation.x;
+	thingsToAdd.push_back(reinterpret_cast<byte*>(&zRot));
+
+	float xSca = this->scale.x;
+	thingsToAdd.push_back(reinterpret_cast<byte*>(&xSca));
+	float ySca = this->scale.x;
+	thingsToAdd.push_back(reinterpret_cast<byte*>(&ySca));
+	float zSca = this->scale.x;
+	thingsToAdd.push_back(reinterpret_cast<byte*>(&zSca));
+
+	for (unsigned int i = 0; i < thingsToAdd.size(); i++) {
+		for (unsigned int j = 0; j < sizeof(float) / sizeof(byte); j++) {
+			out.push_back(thingsToAdd[i][j]);
+		}
+	}
+
+	//out += "Component:\n";
+	//out += "Type: Transform\n";
+	//out += std::format("ID: {}\n", (void*)this);
+	//out += "Data:\n";
+	//out += "Position:\n";
+	//out += std::format("X: {}\n", this->position.x);
+	//out += std::format("Y: {}\n", this->position.y);
+	//out += std::format("Z: {}\n", this->position.z);
+	//out += "Rotation:\n";
+	//out += std::format("X: {}\n", this->rotation.x);
+	//out += std::format("Y: {}\n", this->rotation.y);
+	//out += std::format("Z: {}\n", this->rotation.z);
+	//out += "Scale:\n";
+	//out += std::format("X: {}\n", this->scale.x);
+	//out += std::format("Y: {}\n", this->scale.y);
+	//out += std::format("Z: {}\n", this->scale.z);
+
+	return out;
+}
+
+void Transform::deserialise(vector<byte> bytes) {
+
 }

@@ -9,6 +9,9 @@ using namespace peppermint::managers;
 double EngineManager::deltaTime;
 double EngineManager::lastFrame;
 
+AssetManager* EngineManager::assetManager = new AssetManager();
+WindowManager* EngineManager::windowManager = new WindowManager();
+
 EngineManager::EngineManager() {
 	this->status = 0;
 	LogManager::info("Started peppermint");
@@ -26,10 +29,6 @@ EngineManager::EngineManager() {
 	LogManager::debug("Setting OpenGL to core profile.");
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	LogManager::debug("Set OpenGL to core profile.");
-	
-	LogManager::debug("Creating window manager");
-	this->windowManager = new WindowManager();
-
 
 	if (windowManager->status == -1) {
 		LogManager::critical("Failed to create window manager");
@@ -65,7 +64,7 @@ EngineManager::~EngineManager() {
 	glfwTerminate();
 	LogManager::debug("Terminated GLFW");
 	LogManager::debug("Deleting EngineManager");
-	delete this->windowManager;
+	delete EngineManager::windowManager;
 }
 
 void EngineManager::updateDeltaTime() {
@@ -82,27 +81,27 @@ void EngineManager::loop() {
 	glEnable(GL_DEPTH_TEST);
 
 	// just for test camera
-	Transform* cam = ((GameObject*)this->windowManager->windows[0]->renderManager->activeCamera->getGameObject())->transform;
-	Camera* camComp = this->windowManager->windows[0]->renderManager->activeCamera;
-	GLFWwindow* win = this->windowManager->windows[0]->getAddress();
+	Transform* cam = ((GameObject*)EngineManager::windowManager->windows[0]->renderManager->activeCamera->getGameObject())->transform;
+	Camera* camComp = EngineManager::windowManager->windows[0]->renderManager->activeCamera;
+	GLFWwindow* win = EngineManager::windowManager->windows[0]->getAddress();
 
 	for (unsigned int i = 0; i < this->worldManagers.size(); i++) {
 		this->worldManagers[i]->awake();
 	}
 
-	while (this->windowManager->windows.size() != 0) {
+	while (EngineManager::windowManager->windows.size() != 0) {
 		if (this->status == -1) throw std::exception("Failed to start peppermint.");
 
 		this->updateDeltaTime();
 
-		for (int i = 0; i < this->windowManager->windows.size(); i++) {
-			InputManager::setWindow(this->windowManager->windows[i]);
+		for (int i = 0; i < EngineManager::windowManager->windows.size(); i++) {
+			InputManager::setWindow(EngineManager::windowManager->windows[i]);
 
-			this->worldManagers[this->activeWorldManager]->loop(this->windowManager->windows[i]);
+			this->worldManagers[this->activeWorldManager]->loop(EngineManager::windowManager->windows[i]);
 
 			// this->worldManagers[0]->gameObjects[0]->transform->position.x = sin(glfwGetTime());
 			// this->worldManagers[0]->gameObjects[0]->transform->position.y = cos(glfwGetTime());
-			// ((GameObject*)this->windowManager->windows[0]->renderManager->activeCamera->getGameObject())->transform->position = vec3(sin(glfwGetTime()), 0.0f, -1.0f);
+			// ((GameObject*)EngineManager::windowManager->windows[0]->renderManager->activeCamera->getGameObject())->transform->position = vec3(sin(glfwGetTime()), 0.0f, -1.0f);
 
 			// temporary movement
 			/*if (glfwGetKey(win, GLFW_KEY_A) == GLFW_PRESS) {
@@ -147,12 +146,12 @@ void EngineManager::loop() {
 				camComp->viewScale -= 1.0f * (float)EngineManager::deltaTime;
 			}
 
-			this->windowManager->windows[i]->renderFrame();
-			this->windowManager->windows[i]->swapBuffers();
+			EngineManager::windowManager->windows[i]->renderFrame();
+			EngineManager::windowManager->windows[i]->swapBuffers();
 
-			if (this->windowManager->windows[i]->shouldClose()) {
-				Window* windowToDelete = this->windowManager->windows[i];
-				this->windowManager->windows.erase(this->windowManager->windows.begin() + i);
+			if (EngineManager::windowManager->windows[i]->shouldClose()) {
+				Window* windowToDelete = EngineManager::windowManager->windows[i];
+				EngineManager::windowManager->windows.erase(EngineManager::windowManager->windows.begin() + i);
 				delete windowToDelete;
 			}
 		}

@@ -22,13 +22,18 @@ namespace peppermint {
 
 				Tileset* tileset;
 
-				unsigned int* tileTypes;
+				unsigned short* tileTypes;
 
 				void generateVertices();
 				void generateTextures();
+
+				vector<byte> serialise();
+				void deserialise(vector<byte> bytes);
 			private:
 				unsigned int width;
 				unsigned int height;
+			protected:
+				static const unsigned int type = 0x06;
 			};
 		}
 	}

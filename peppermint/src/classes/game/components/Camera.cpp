@@ -37,3 +37,44 @@ void Camera::updateCameraVectors() {
 	this->right = normalize(cross(this->front, this->worldUp));
 	this->up = normalize(cross(this->right, this->front));
 }
+
+vector<byte> Camera::serialise() {
+	vector<byte> out;
+
+	unsigned int e = this->type;
+	byte* toAdd = (byte*)reinterpret_cast<char*>(&e);
+
+	for (unsigned int i = 0; i < sizeof(unsigned int) / sizeof(byte); i++) {
+		out.push_back(toAdd[i]);
+	}
+
+	void* id = this;
+	byte* toAdd2 = (byte*)reinterpret_cast<char*>(&id);
+
+	for (unsigned int i = 0; i < sizeof(id) / sizeof(byte); i++) {
+		out.push_back(toAdd2[i]);
+	}
+
+	vector<byte*> thingsToAdd;
+
+	float viewScale = this->viewScale;
+	thingsToAdd.push_back(reinterpret_cast<byte*>(&viewScale));
+
+	for (unsigned int i = 0; i < thingsToAdd.size(); i++) {
+		for (unsigned int j = 0; j < sizeof(float) / sizeof(byte); j++) {
+			out.push_back(thingsToAdd[i][j]);
+		}
+	}
+
+	//out += "Component:\n";
+	//out += "Type: Camera\n";
+	//out += std::format("ID: {}\n", (void*)this);
+	//out += "Data:\n";
+	//out += std::format("ViewScale: {}\n", this->viewScale);
+
+	return out;
+}
+
+void Camera::deserialise(vector<byte> bytes) {
+
+}

@@ -9,9 +9,9 @@
 namespace peppermint {
 	namespace rendering {
 		struct RenderItem {
-			Shader* shader;
-			peppermint::game::GameObject* go;
-			Mesh* mesh;
+			Shader* shader = nullptr;
+			peppermint::game::GameObject* go = nullptr;
+			Mesh* mesh = nullptr;
 			vec2 uvOffset = vec2(0.0f, 0.0f);
 			int textureToUse = 0;
 		};

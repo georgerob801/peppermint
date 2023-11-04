@@ -7,7 +7,7 @@
 using namespace peppermint::rendering;
 
 
-Texture::Texture() {
+Texture::Texture() : Asset(ASSET_TYPE::TEXTURE) {
 	glGenTextures(1, &this->glTextureLocation);
 
 	this->height = NULL;
@@ -15,7 +15,9 @@ Texture::Texture() {
 	this->nrChannels = NULL;
 }
 
-Texture::Texture(char* path) {
+Texture::Texture(Asset* asset) : Asset(ASSET_TYPE::TEXTURE) {
+	this->imageAsset = asset;
+	char* path = asset->path;
 	unsigned char* data = stbi_load(path, &this->width, &this->height, &this->nrChannels, 0);
 
 	glGenTextures(1, &this->glTextureLocation);
@@ -36,8 +38,6 @@ Texture::Texture(char* path) {
 	stbi_image_free(data);
 }
 
-#include <iostream>
-
 int Texture::getWidth() {
 	return this->width;
 }
@@ -52,4 +52,20 @@ int Texture::getNrChannels() {
 
 void Texture::bind() {
 	glBindTexture(GL_TEXTURE_2D, this->glTextureLocation);
+}
+
+#include <format>
+
+vector<byte> Texture::serialise() {
+	vector<byte> out;
+
+	//out += "Texture:\n";
+	//out += std::format("ID: {}\n", (void*)this);
+	//out += std::format("ImageAssetID: {}\n", this->imageAsset->id);
+
+	return out;
+}
+
+void Texture::deserialise(vector<byte> bytes) {
+
 }

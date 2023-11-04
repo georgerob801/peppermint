@@ -1,5 +1,7 @@
 #include <peppermint/classes/game/Component.h>
 
+#include <format>
+
 using namespace peppermint::game;
 
 void Component::start() {}
@@ -33,4 +35,31 @@ void Component::disable() {
 
 bool Component::isEnabled() {
 	return this->enabled;
+}
+
+vector<byte> Component::serialise() {
+	vector<byte> out;
+
+	unsigned int e = this->type;
+	byte* toAdd = (byte*)reinterpret_cast<char*>(&e);
+
+	for (unsigned int i = 0; i < sizeof(unsigned int) / sizeof(byte); i++) {
+		out.push_back(toAdd[i]);
+	}
+
+	void* id = this;
+	byte* toAdd2 = (byte*)reinterpret_cast<char*>(&id);
+
+	for (unsigned int i = 0; i < sizeof(id) / sizeof(byte); i++) {
+		out.push_back(toAdd2[i]);
+	}
+
+	//out += "Component:\n";
+	//out += std::format("ID: {}\n", (void*)this);
+
+	return out;
+}
+
+void Component::deserialise(vector<byte> bytes) {
+
 }

@@ -4,12 +4,16 @@
 #include <peppermint/classes/rendering/TextureSet.h>
 #include <vector>
 
+#include <peppermint/classes/Asset.h>
+
 using namespace std;
 
 namespace peppermint {
 	namespace rendering {
-		class Tileset {
+		class Tileset : public Asset {
 		public:
+			Tileset() : Asset(ASSET_TYPE::TILESET) { }
+
 			// tile coords is centre +- (1/2)(tileset.tileSize)
 			struct TileTextureMapping {
 				// unsigned int tileType;
@@ -29,6 +33,11 @@ namespace peppermint {
 			void nextTextureSet();
 			TextureSet* getCurrentTextureSet();
 			void generateTextures();
+
+			void generateDefaultTextureMappings();
+
+			vector<byte> serialise();
+			void deserialise(vector<byte> bytes);
 		private:
 			int currentTextureSet = 0;
 		};

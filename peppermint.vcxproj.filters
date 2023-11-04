@@ -90,6 +90,12 @@
     <ClCompile Include="peppermint\src\classes\game\TilesetAnimation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="peppermint\src\managers\AssetManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="peppermint\src\classes\Asset.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="peppermint\include\stb_image\stb_image.h">
@@ -168,6 +174,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="peppermint\include\peppermint\classes\rendering\TilesetAnimationStateInfomation.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\Serialisable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\managers\AssetManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\classes\Asset.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

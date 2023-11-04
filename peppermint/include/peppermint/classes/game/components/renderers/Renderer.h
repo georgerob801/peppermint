@@ -23,6 +23,8 @@ namespace peppermint {
 				Mesh* generateMesh();
 			private:
 				Mesh* cachedMesh;
+			protected:
+				static const unsigned int type = 0x07;
 			};
 		}
 	}

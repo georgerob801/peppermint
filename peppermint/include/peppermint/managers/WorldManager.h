@@ -5,12 +5,13 @@
 #include <peppermint/classes/game/GameObject.h>
 #include <peppermint/classes/game/components/Camera.h>
 #include <peppermint/classes/Window.h>
+#include <peppermint/Serialisable.h>
 
 using namespace peppermint::game;
 
 namespace peppermint {
 	namespace managers {
-		class WorldManager {
+		class WorldManager : public Serialisable {
 		public:
 			std::vector<GameObject*> gameObjects;
 
@@ -23,6 +24,12 @@ namespace peppermint {
 			void sortByZ();
 
 			GameObject* createGameObject();
+
+			void saveWorldFile(char* filename);
+			void saveWorldFile(const char* filename);
+
+			vector<byte> serialise();
+			void deserialise(vector<byte> bytes);
 		private:
 			
 		};

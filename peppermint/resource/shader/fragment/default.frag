@@ -54,5 +54,6 @@ void main() {
 	}
 
 	if (texColour.a < 0.01) discard;
+	if (texColour.r == 1.0 && texColour.g == 0.0) discard;
 	fragColour = texColour;
 }

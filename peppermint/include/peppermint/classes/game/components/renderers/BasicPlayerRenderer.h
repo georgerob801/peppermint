@@ -25,8 +25,13 @@ namespace peppermint {
 
 				void start();
 				void loop();
+
+				vector<byte> serialise();
+				void deserialise(vector<byte> bytes);
 			private:
 
+			protected:
+				static const unsigned int type = 0x05;
 			};
 		}
 	}

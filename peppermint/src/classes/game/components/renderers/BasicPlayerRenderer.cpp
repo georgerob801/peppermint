@@ -1,6 +1,7 @@
 #include <peppermint/classes/game/components/renderers/BasicPlayerRenderer.h>
 
 #include <GLFW/glfw3.h>
+#include <format>
 
 using namespace peppermint::game::components;
 
@@ -67,4 +68,52 @@ void BasicPlayerRenderer::loop() {
 	}
 
 	this->currentUVOffset = vec2(offset.x * scale.x, offset.y * scale.y);
+}
+
+vector<byte> BasicPlayerRenderer::serialise() {
+	vector<byte> out;
+
+	unsigned int e = this->type;
+	byte* toAdd = (byte*)reinterpret_cast<char*>(&e);
+
+	for (unsigned int i = 0; i < sizeof(unsigned int) / sizeof(byte); i++) {
+		out.push_back(toAdd[i]);
+	}
+
+	void* id = this;
+	byte* toAdd2 = (byte*)reinterpret_cast<char*>(&id);
+
+	for (unsigned int i = 0; i < sizeof(id) / sizeof(byte); i++) {
+		out.push_back(toAdd2[i]);
+	}
+
+	vector<byte*> pointersToAdd;
+
+	pointersToAdd.push_back(reinterpret_cast<byte*>(&this->pc));
+	pointersToAdd.push_back(reinterpret_cast<byte*>(&this->up));
+	pointersToAdd.push_back(reinterpret_cast<byte*>(&this->down));
+	pointersToAdd.push_back(reinterpret_cast<byte*>(&this->left));
+	pointersToAdd.push_back(reinterpret_cast<byte*>(&this->right));
+
+	for (unsigned int i = 0; i < pointersToAdd.size(); i++) {
+		for (unsigned int j = 0; j < sizeof(void*); j++) {
+			out.push_back(pointersToAdd[i][j]);
+		}
+	}
+
+	//out += "Component:\n";
+	//out += "Type: BasicPlayerRenderer\n";
+	//out += "Data:\n";
+
+	//out += std::format("PlayerController: {}\n", (void*)this->pc);
+	//out += std::format("Up: {}\n", (void*)this->up);
+	//out += std::format("Down: {}\n", (void*)this->down);
+	//out += std::format("Left: {}\n", (void*)this->left);
+	//out += std::format("Right: {}\n", (void*)this->right);
+
+	return out;
+}
+
+void BasicPlayerRenderer::deserialise(vector<byte> bytes) {
+
 }

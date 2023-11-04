@@ -9,6 +9,7 @@
 #include <peppermint/managers/LogManager.h>
 #include <peppermint/managers/WindowManager.h>
 #include <peppermint/managers/WorldManager.h>
+#include <peppermint/managers/AssetManager.h>
 
 namespace peppermint {
 	namespace managers {
@@ -21,7 +22,8 @@ namespace peppermint {
 			static const int majorVersion = 3;
 			static const int minorVersion = 3;
 
-			WindowManager* windowManager;
+			static WindowManager* windowManager;
+			static AssetManager* assetManager;
 
 			std::vector<WorldManager*> worldManagers;
 			int activeWorldManager = NULL;

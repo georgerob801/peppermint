@@ -2,19 +2,15 @@
 #define PPMINT_COMPONENT_WALKABLE_MAP_H
 
 #include <peppermint/classes/game/Component.h>
-#include <peppermint/classes/rendering/Tileset.h>
 #include <peppermint/Exceptions.hpp>
 #include <bitset>
-
-using namespace peppermint::rendering;
+#include <format>
 
 namespace peppermint {
 	namespace game {
 		namespace components {
 			class NavigableMap : public Component {
 			public:
-				Tileset* parentTileset = nullptr;
-
 				unsigned int width = NULL;
 				unsigned int height = NULL;
 
@@ -59,6 +55,83 @@ namespace peppermint {
 
 					return this->data[index] == this->navigableType;
 				}
+
+				vector<byte> serialise() {
+					vector<byte> out;
+
+					unsigned int e = this->type;
+					byte* toAdd = (byte*)reinterpret_cast<char*>(&e);
+
+					for (unsigned int i = 0; i < sizeof(unsigned int) / sizeof(byte); i++) {
+						out.push_back(toAdd[i]);
+					}
+
+					void* id = this;
+					byte* toAdd2 = (byte*)reinterpret_cast<char*>(&id);
+
+					for (unsigned int i = 0; i < sizeof(id) / sizeof(byte); i++) {
+						out.push_back(toAdd2[i]);
+					}
+
+					vector<byte*> uintsToAdd;
+
+					uintsToAdd.push_back(reinterpret_cast<byte*>(&this->width));
+					uintsToAdd.push_back(reinterpret_cast<byte*>(&this->height));
+					
+					for (unsigned int j = 0; j < uintsToAdd.size(); j++) {
+						for (unsigned int i = 0; i < sizeof(unsigned int); i++) {
+							out.push_back(uintsToAdd[j][i]);
+						}
+					}
+
+					vector<byte*> boolsToAdd;
+					boolsToAdd.push_back(reinterpret_cast<byte*>(&this->navigableType));
+
+					for (unsigned int j = 0; j < boolsToAdd.size(); j++) {
+						for (unsigned int i = 0; i < sizeof(bool); i++) {
+							out.push_back(boolsToAdd[j][i]);
+						}
+					}
+
+					// add the map data
+					// compress bytes into bytes
+					vector<unsigned char> compressedData;
+
+					for (unsigned int i = 0; i < this->width * this->height; i++) {
+						if (i % 8 == 0) compressedData.push_back(0b00000000);
+						compressedData[i / 8] |= (((unsigned char)this->data[i]) << 7 - (i % 8));
+					}
+
+					
+					for (unsigned int i = 0; i < compressedData.size(); i++) {
+						byte* bytesToAdd = reinterpret_cast<byte*>(&compressedData[i]);
+						for (unsigned int j = 0; j < sizeof(unsigned char); j++) {
+							out.push_back(bytesToAdd[j]);
+						}
+					}
+
+
+					//out += "Component:\n";
+					//out += "Type: NavigableMap\n";
+					//out += std::format("ID: {}\n", (void*)this);
+					//out += "Data:\n";
+					//out += std::format("ParentTileset: {}\n", (void*)this->parentTileset);
+					//out += std::format("Width: {}\n", this->width);
+					//out += std::format("Height: {}\n", this->height);
+					//out += std::format("NavigableType: {}\n", this->navigableType);
+
+					//std::string dataString = "";
+
+					//for (unsigned int i = 0; i < this->width * this->height; i++) {
+					//	dataString += this->data[i] == this->navigableType ? "1" : "0";
+					//}
+
+					//out += std::format("Data: {}\n", dataString);
+						
+					return out;
+				}
+			protected:
+				static const unsigned int type = 0x03;
 			};
 		}
 	}

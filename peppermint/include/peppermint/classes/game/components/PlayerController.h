@@ -4,6 +4,10 @@
 #include <peppermint/classes/game/Component.h>
 #include <peppermint/classes/game/components/NavigableMap.hpp>
 
+#include <glm/glm.hpp>
+
+using namespace glm;
+
 struct currentlyPressingStruct {
 	bool forward = false;
 	bool backward = false;
@@ -46,9 +50,13 @@ namespace peppermint {
 				void loop();
 				currentlyPressingStruct getActiveKeys();
 
+				vector<byte> serialise();
+				void deserialise(vector<byte> bytes);
 			private:
 				vec3 moveStartPosition;
 				void updateInputStatus();
+			protected:
+				static const unsigned int type = 0x04;
 			};
 		}
 	}

@@ -5,6 +5,8 @@
 #include <vector>
 #include <glm/glm.hpp>
 
+#include <peppermint/classes/Asset.h>
+
 using namespace std;
 using namespace glm;
 
@@ -12,14 +14,19 @@ using namespace glm;
 
 namespace peppermint {
 	namespace rendering {
-		class TextureSet {
+		class TextureSet : public Asset {
 		public:
-			vector<Texture*> textures;
-			Texture* atlas;
+			TextureSet() : Asset(ASSET_TYPE::TEXTURE_SET) { }
 
-			void addTexture(Texture tex);
+			vector<Texture*> textures;
+			Texture* atlas = nullptr;
+
+			void addTexture(Texture* tex);
 			void generateAtlas();
 			vec2 mapUVToAtlas(vec2 uv);
+
+			vector<byte> serialise();
+			void deserialise(vector<byte> bytes);
 		private:
 			bool requiresAtlasGeneration = true;
 		};
