@@ -30,10 +30,9 @@ namespace peppermint {
 				vector<byte> serialise();
 				void deserialise(vector<byte> bytes);
 			private:
+			protected:
 				unsigned int width;
 				unsigned int height;
-			protected:
-				static const unsigned int type = 0x06;
 			};
 		}
 	}

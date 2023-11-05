@@ -19,16 +19,16 @@ void TextureSet::addTexture(Texture* tex) {
 vector<byte> TextureSet::serialise() {
 	vector<byte> out;
 
-	void* id = this;
-	byte* idB = reinterpret_cast<byte*>(&id);
-	for (unsigned int i = 0; i < sizeof(void*); i++) {
-		out.push_back(idB[i]);
-	}
-
 	unsigned int typeCast = (unsigned int)this->type;
 	byte* typeB = reinterpret_cast<byte*>(&typeCast);
 	for (unsigned int i = 0; i < sizeof(unsigned int); i++) {
 		out.push_back(typeB[i]);
+	}
+
+	void* id = this;
+	byte* idB = reinterpret_cast<byte*>(&id);
+	for (unsigned int i = 0; i < sizeof(void*); i++) {
+		out.push_back(idB[i]);
 	}
 
 	unsigned int length = 0;
@@ -62,5 +62,30 @@ vector<byte> TextureSet::serialise() {
 }
 
 void TextureSet::deserialise(vector<byte> bytes) {
+	unsigned long long position = 0x00;
 
+	this->serialisedID = *reinterpret_cast<void**>(&bytes[position]);
+	position += sizeof(void*);
+
+	unsigned int pathLength = *reinterpret_cast<unsigned int*>(&bytes[position]);
+	position += sizeof(unsigned int);
+
+	std::string ePath = "";
+
+	for (unsigned int i = 0; i < pathLength; i++) {
+		ePath += *reinterpret_cast<char*>(&bytes[position]);
+		position += sizeof(char);
+	}
+
+	this->path = (char*)ePath.c_str();
+
+	unsigned int numTextures = *reinterpret_cast<unsigned int*>(&bytes[position]);
+	position += sizeof(unsigned int);
+
+	for (unsigned int i = 0; i < numTextures; i++) {
+		this->relatedSerialisedIDs.push_back(*reinterpret_cast<void**>(&bytes[position]));
+		position += sizeof(void*);
+	}
+
+	this->deserialisedSize = sizeof(void*) + sizeof(unsigned int) + sizeof(unsigned int) + sizeof(void*);
 }

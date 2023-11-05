@@ -63,3 +63,7 @@ vector<byte> Component::serialise() {
 void Component::deserialise(vector<byte> bytes) {
 
 }
+
+unsigned int Component::getType() {
+	return this->type;
+}

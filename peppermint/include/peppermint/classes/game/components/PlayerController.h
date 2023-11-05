@@ -27,6 +27,9 @@ namespace peppermint {
 		namespace components {
 			class PlayerController : public Component {
 			public:
+				PlayerController() {
+					this->type = Component::PLAYER_CONTROLLER;
+				}
 
 				float speed = 5.0f;
 				float snapRange = 0.001f;
@@ -55,8 +58,6 @@ namespace peppermint {
 			private:
 				vec3 moveStartPosition;
 				void updateInputStatus();
-			protected:
-				static const unsigned int type = 0x04;
 			};
 		}
 	}

@@ -21,6 +21,9 @@ namespace peppermint {
 			void saveAssetFile(char* filename);
 			void saveAssetFile(const char* filename);
 
+			void loadAssetFile(char* filename);
+			void loadAssetFile(const char* filename);
+
 			vector<byte> serialise();
 			void deserialise(vector<byte> bytes);
 		private:

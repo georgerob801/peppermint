@@ -44,16 +44,16 @@ void Tileset::generateDefaultTextureMappings() {
 vector<byte> Tileset::serialise() {
 	vector<byte> out;
 
-	void* id = this;
-	byte* idB = reinterpret_cast<byte*>(&id);
-	for (unsigned int i = 0; i < sizeof(void*); i++) {
-		out.push_back(idB[i]);
-	}
-
 	unsigned int typeCast = (unsigned int)this->type;
 	byte* typeB = reinterpret_cast<byte*>(&typeCast);
 	for (unsigned int i = 0; i < sizeof(unsigned int); i++) {
 		out.push_back(typeB[i]);
+	}
+
+	void* id = this;
+	byte* idB = reinterpret_cast<byte*>(&id);
+	for (unsigned int i = 0; i < sizeof(void*); i++) {
+		out.push_back(idB[i]);
 	}
 
 	unsigned int length = 0;
@@ -130,5 +130,48 @@ vector<byte> Tileset::serialise() {
 }
 
 void Tileset::deserialise(vector<byte> bytes) {
+	unsigned long long position = 0x00;
 
+	this->serialisedID = *reinterpret_cast<void**>(&bytes[position]);
+	position += sizeof(void*);
+
+	unsigned int pathLength = *reinterpret_cast<unsigned int*>(&bytes[position]);
+	position += sizeof(unsigned int);
+
+	std::string ePath = "";
+
+	for (unsigned int i = 0; i < pathLength; i++) {
+		ePath += *reinterpret_cast<char*>(&bytes[position]);
+		position += sizeof(char);
+	}
+
+	this->path = (char*)ePath.c_str();
+
+	this->tileSize.x = *reinterpret_cast<float*>(&bytes[position]);
+	position += sizeof(float);
+	this->tileSize.y = *reinterpret_cast<float*>(&bytes[position]);
+	position += sizeof(float);
+
+	unsigned int numTextureSets = *reinterpret_cast<unsigned int*>(&bytes[position]);
+	position += sizeof(unsigned int);
+
+	for (unsigned int i = 0; i < numTextureSets; i++) {
+		this->relatedSerialisedIDs.push_back(*reinterpret_cast<void**>(&bytes[position]));
+		position += sizeof(void*);
+	}
+
+	unsigned int numTextureMappings = *reinterpret_cast<unsigned int*>(&bytes[position]);
+	position += sizeof(unsigned int);
+
+	for (unsigned int i = 0; i < numTextureMappings; i++) {
+		float x = *reinterpret_cast<float*>(&bytes[position]);
+		position += sizeof(float);
+		float y = *reinterpret_cast<float*>(&bytes[position]);
+		position += sizeof(float);
+		this->textureMappings.push_back(TileTextureMapping() = {
+			.centre = vec2(x, y)
+		});
+	}
+
+	this->deserialisedSize = sizeof(void*) + sizeof(unsigned int) + (2 * sizeof(float)) + sizeof(unsigned int) + (numTextureSets * sizeof(void*)) + sizeof(unsigned int) + (numTextureMappings * (2 * sizeof(float)));
 }

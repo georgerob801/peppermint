@@ -10,8 +10,13 @@ namespace peppermint {
 	public:
 		virtual vector<byte> serialise() = 0;
 		virtual void deserialise(vector<byte>) = 0;
-	protected:
 
+		void* serialisedID;
+		vector<void*> relatedSerialisedIDs;
+
+		unsigned long long getDeserialisedSize();
+	protected:
+		unsigned long long deserialisedSize = 0;
 	};
 }
 

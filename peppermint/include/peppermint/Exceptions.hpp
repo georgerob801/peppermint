@@ -63,6 +63,38 @@ namespace peppermint {
 				}
 			};
 		}
+		namespace serialisation {
+			namespace world {
+				class CorruptedFileException : public std::exception {
+				public:
+					char* what() {
+						return (char*)"The provided world file is corrupted.";
+					}
+				};
+
+				class InvalidFileTypeException : public std::exception {
+				public:
+					char* what() {
+						return (char*)"The provided file is not a world file.";
+					}
+				};
+			}
+			namespace asset {
+				class CorruptedFileException : public std::exception {
+				public:
+					char* what() {
+						return (char*)"The provided asset file is corrupted.";
+					}
+				};
+
+				class InvalidFileTypeException : public std::exception {
+				public:
+					char* what() {
+						return (char*)"The provided file is not an asset file.";
+					}
+				};
+			}
+		}
 	}
 }
 

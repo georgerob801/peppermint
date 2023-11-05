@@ -8,6 +8,7 @@ using namespace glm;
 
 Camera::Camera() {
 	this->worldUp = vec3(0.0f, 1.0f, 0.0f);
+	this->type = Component::CAMERA;
 }
 
 #include <format>
@@ -76,5 +77,12 @@ vector<byte> Camera::serialise() {
 }
 
 void Camera::deserialise(vector<byte> bytes) {
+	unsigned long long position = 0x00;
 
+	this->serialisedID = *reinterpret_cast<void**>(&bytes[position]);
+	position += sizeof(void*);
+
+	this->viewScale = *reinterpret_cast<float*>(&bytes[position]);
+
+	this->deserialisedSize = sizeof(void*) + sizeof(float);
 }

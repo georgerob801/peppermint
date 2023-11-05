@@ -29,8 +29,6 @@ namespace peppermint {
 				void deserialise(vector<byte> bytes);
 			private:
 				vec3 worldUp;
-			protected:
-				static const unsigned int type = 0x02;
 			};
 		}
 	}

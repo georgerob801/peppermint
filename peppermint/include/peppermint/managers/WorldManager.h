@@ -28,6 +28,11 @@ namespace peppermint {
 			void saveWorldFile(char* filename);
 			void saveWorldFile(const char* filename);
 
+			void loadWorldFile(char* filename);
+			void loadWorldFile(const char* filename);
+
+			vector<Asset*>* assets;
+
 			vector<byte> serialise();
 			void deserialise(vector<byte> bytes);
 		private:

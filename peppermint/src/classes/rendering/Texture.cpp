@@ -17,10 +17,15 @@ Texture::Texture() : Asset(ASSET_TYPE::TEXTURE) {
 
 Texture::Texture(Asset* asset) : Asset(ASSET_TYPE::TEXTURE) {
 	this->imageAsset = asset;
-	char* path = asset->path;
-	unsigned char* data = stbi_load(path, &this->width, &this->height, &this->nrChannels, 0);
 
 	glGenTextures(1, &this->glTextureLocation);
+	this->loadFromAsset();
+}
+
+void Texture::loadFromAsset() {
+	char* path = this->imageAsset->path;
+	unsigned char* data = stbi_load(path, &this->width, &this->height, &this->nrChannels, 0);
+
 	glActiveTexture(GL_TEXTURE0);
 	this->bind();
 	if (data) {
@@ -54,21 +59,23 @@ void Texture::bind() {
 	glBindTexture(GL_TEXTURE_2D, this->glTextureLocation);
 }
 
-#include <format>
+void Texture::setImageAsset(Asset* asset) {
+	this->imageAsset = asset;
+}
 
 vector<byte> Texture::serialise() {
 	vector<byte> out;
-
-	void* id = this;
-	byte* idB = reinterpret_cast<byte*>(&id);
-	for (unsigned int i = 0; i < sizeof(void*); i++) {
-		out.push_back(idB[i]);
-	}
 
 	unsigned int typeCast = (unsigned int)this->type;
 	byte* typeB = reinterpret_cast<byte*>(&typeCast);
 	for (unsigned int i = 0; i < sizeof(unsigned int); i++) {
 		out.push_back(typeB[i]);
+	}
+
+	void* id = this;
+	byte* idB = reinterpret_cast<byte*>(&id);
+	for (unsigned int i = 0; i < sizeof(void*); i++) {
+		out.push_back(idB[i]);
 	}
 
 	unsigned int length = 0;
@@ -90,5 +97,22 @@ vector<byte> Texture::serialise() {
 }
 
 void Texture::deserialise(vector<byte> bytes) {
+	unsigned long long position = 0x00;
 
+	this->serialisedID = *reinterpret_cast<void**>(&bytes[position]);
+	position += sizeof(void*);
+
+	unsigned int pathLength = *reinterpret_cast<unsigned int*>(&bytes[position]);
+	position += sizeof(unsigned int);
+
+	std::string ePath = "";
+
+	for (unsigned int i = 0; i < pathLength; i++) {
+		ePath += *reinterpret_cast<char*>(&bytes[position]);
+		position += sizeof(char);
+	}
+
+	this->relatedSerialisedIDs.push_back(*reinterpret_cast<void**>(&bytes[position]));
+	
+	this->deserialisedSize = sizeof(void*) + sizeof(unsigned int) + (ePath.size() * sizeof(char)) + sizeof(void*);
 }

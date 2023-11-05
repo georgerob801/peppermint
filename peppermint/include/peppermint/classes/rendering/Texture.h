@@ -14,6 +14,8 @@ namespace peppermint {
 			int getHeight();
 			int getNrChannels();
 			void bind();
+			void loadFromAsset();
+			void setImageAsset(Asset* image);
 
 			vector<byte> serialise();
 			void deserialise(vector<byte> bytes);

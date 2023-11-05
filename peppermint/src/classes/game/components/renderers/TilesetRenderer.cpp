@@ -10,6 +10,7 @@ TilesetRenderer::TilesetRenderer(unsigned int width, unsigned int height) {
 	this->tileTypes = new unsigned short[width * height] { 0 };
 	this->width = width;
 	this->height = height;
+	this->type = Component::TILESET_RENDERER;
 }
 
 TilesetRenderer::~TilesetRenderer() {
@@ -22,6 +23,12 @@ void TilesetRenderer::generateTextures() {
 
 void TilesetRenderer::generateVertices() {
 	this->vertices.clear();
+
+	// only for testing
+	for (unsigned int i = 0; i < this->tileset->textureSets.size(); i++) {
+		this->tileset->textureSets[i]->generateAtlas();
+		this->textures.push_back(this->tileset->textureSets[i]->atlas);
+	}
 
 	vec2 scale = vec2(1.0f / (float)this->tileset->getCurrentTextureSet()->atlas->getWidth(), 1.0f / (float)this->tileset->getCurrentTextureSet()->atlas->getHeight());
 
@@ -47,12 +54,6 @@ void TilesetRenderer::generateVertices() {
 				this->vertices.push_back(square[i]);
 			}
 		}
-	}
-
-	// only for testing
-	for (unsigned int i = 0; i < this->tileset->textureSets.size(); i++) {
-		this->tileset->textureSets[i]->generateAtlas();
-		this->textures.push_back(this->tileset->textureSets[i]->atlas);
 	}
 }
 
@@ -129,5 +130,20 @@ vector<byte> TilesetRenderer::serialise() {
 }
 
 void TilesetRenderer::deserialise(vector<byte> bytes) {
+	unsigned long long position = 0x00;
 
+	this->serialisedID = *reinterpret_cast<void**>(&bytes[position]);
+	position += sizeof(void*);
+
+	this->relatedSerialisedIDs.push_back(*reinterpret_cast<void**>(&bytes[position]));
+	position += sizeof(void*);
+
+	position += 2 * sizeof(unsigned int);
+
+	for (unsigned int i = 0; i < this->width * this->height; i++) {
+		this->tileTypes[i] = *reinterpret_cast<unsigned short*>(&bytes[position]);
+		position += sizeof(unsigned short);
+	}
+
+	this->deserialisedSize = (2 * sizeof(void*)) + (2 * sizeof(unsigned int)) + ((this->width * this->height) * sizeof(unsigned short));
 }

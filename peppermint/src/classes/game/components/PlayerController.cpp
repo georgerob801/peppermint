@@ -206,5 +206,20 @@ vector<byte> PlayerController::serialise() {
 }
 
 void PlayerController::deserialise(vector<byte> bytes) {
+	unsigned long long position = 0x00;
 
+	this->serialisedID = *reinterpret_cast<void**>(&bytes[position]);
+	position += sizeof(void*);
+
+	this->speed = *reinterpret_cast<float*>(&bytes[position]);
+	position += sizeof(float);
+	this->snapRange = *reinterpret_cast<float*>(&bytes[position]);
+	position += sizeof(float);
+
+	this->facing = (PlayerController::FACING)(*reinterpret_cast<unsigned char*>(&bytes[position]));
+	position += sizeof(unsigned char);
+
+	this->relatedSerialisedIDs.push_back(*reinterpret_cast<void**>(&bytes[position]));
+
+	this->deserialisedSize = sizeof(void*) + (2 * sizeof(float) + sizeof(unsigned char) + sizeof(void*));
 }

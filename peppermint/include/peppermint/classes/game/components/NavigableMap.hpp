@@ -6,6 +6,8 @@
 #include <bitset>
 #include <format>
 
+#include <string>
+
 namespace peppermint {
 	namespace game {
 		namespace components {
@@ -22,6 +24,8 @@ namespace peppermint {
 					this->width = width;
 					this->height = height;
 					this->data = new bool[this->width * this->height];
+
+					this->type = Component::NAVIGABLE_MAP;
 
 					for (unsigned int i = 0; i < this->width * this->height; i++) {
 						this->data[i] = this->navigableType;
@@ -62,14 +66,14 @@ namespace peppermint {
 					unsigned int e = this->type;
 					byte* toAdd = (byte*)reinterpret_cast<char*>(&e);
 
-					for (unsigned int i = 0; i < sizeof(unsigned int) / sizeof(byte); i++) {
+					for (unsigned int i = 0; i < sizeof(unsigned int); i++) {
 						out.push_back(toAdd[i]);
 					}
 
 					void* id = this;
 					byte* toAdd2 = (byte*)reinterpret_cast<char*>(&id);
 
-					for (unsigned int i = 0; i < sizeof(id) / sizeof(byte); i++) {
+					for (unsigned int i = 0; i < sizeof(void*); i++) {
 						out.push_back(toAdd2[i]);
 					}
 
@@ -130,8 +134,26 @@ namespace peppermint {
 						
 					return out;
 				}
-			protected:
-				static const unsigned int type = 0x03;
+				
+				void deserialise(vector<byte> bytes) {
+					unsigned long long position = 0x00;
+
+					this->serialisedID = *reinterpret_cast<void**>(&bytes[position]);
+					position += sizeof(void*);
+
+					position += 2 * sizeof(unsigned int);
+
+					this->navigableType = *reinterpret_cast<bool*>(&bytes[position]);
+					position += sizeof(bool);
+
+					for (unsigned int i = 0; i < this->width * this->height; i++) {
+						byte valueB = bytes[position + (i / 8)];
+
+						this->data[i] = ((unsigned char)valueB & (0b1 << (7 - (i % 8)))) != 0;
+					}
+
+					this->deserialisedSize = sizeof(void*) + (2 * sizeof(unsigned int)) + sizeof(bool) + ((int)ceil((float)(this->width * this->height) / 8.0f));
+				}
 			};
 		}
 	}

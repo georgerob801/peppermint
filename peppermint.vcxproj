@@ -171,6 +171,7 @@
     <ClCompile Include="peppermint\src\classes\rendering\TextureSet.cpp" />
     <ClCompile Include="peppermint\src\classes\game\components\renderers\TilesetRenderer.cpp" />
     <ClCompile Include="peppermint\src\classes\game\TilesetAnimation.cpp" />
+    <ClCompile Include="peppermint\src\Serialisable.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="peppermint\include\peppermint\classes\Asset.h" />

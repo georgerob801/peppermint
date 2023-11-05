@@ -11,6 +11,8 @@ Transform::Transform() {
 	this->rotation = vec3(0.0f, 0.0f, 0.0f);
 	this->scale = vec3(1.0f, 1.0f, 1.0f);
 	this->parent = nullptr;
+
+	this->type = Component::TRANSFORM;
 }
 
 vec3 Transform::getGlobalScale() {
@@ -61,7 +63,7 @@ vector<byte> Transform::serialise() {
 	unsigned int e = this->type;
 	byte* toAdd = (byte*)reinterpret_cast<char*>(&e);
 
-	for (unsigned int i = 0; i < sizeof(unsigned int) / sizeof(byte); i++) {
+	for (unsigned int i = 0; i < sizeof(unsigned int); i++) {
 		out.push_back(toAdd[i]);
 	}
 
@@ -70,35 +72,40 @@ vector<byte> Transform::serialise() {
 	void* id = this;
 	byte* toAdd2 = (byte*)reinterpret_cast<char*>(&id);
 
-	for (unsigned int i = 0; i < sizeof(id) / sizeof(byte); i++) {
+	for (unsigned int i = 0; i < sizeof(void*); i++) {
 		out.push_back(toAdd2[i]);
 	}
 
 	float xPos = this->position.x;
 	thingsToAdd.push_back(reinterpret_cast<byte*>(&xPos));
-	float yPos = this->position.x;
+	float yPos = this->position.y;
 	thingsToAdd.push_back(reinterpret_cast<byte*>(&yPos));
-	float zPos = this->position.x;
+	float zPos = this->position.z;
 	thingsToAdd.push_back(reinterpret_cast<byte*>(&zPos));
 
 	float xRot = this->rotation.x;
 	thingsToAdd.push_back(reinterpret_cast<byte*>(&xRot));
-	float yRot = this->rotation.x;
+	float yRot = this->rotation.y;
 	thingsToAdd.push_back(reinterpret_cast<byte*>(&yRot));
-	float zRot = this->rotation.x;
+	float zRot = this->rotation.z;
 	thingsToAdd.push_back(reinterpret_cast<byte*>(&zRot));
 
 	float xSca = this->scale.x;
 	thingsToAdd.push_back(reinterpret_cast<byte*>(&xSca));
-	float ySca = this->scale.x;
+	float ySca = this->scale.y;
 	thingsToAdd.push_back(reinterpret_cast<byte*>(&ySca));
-	float zSca = this->scale.x;
+	float zSca = this->scale.z;
 	thingsToAdd.push_back(reinterpret_cast<byte*>(&zSca));
 
 	for (unsigned int i = 0; i < thingsToAdd.size(); i++) {
 		for (unsigned int j = 0; j < sizeof(float) / sizeof(byte); j++) {
 			out.push_back(thingsToAdd[i][j]);
 		}
+	}
+
+	byte* parentIDB = reinterpret_cast<byte*>(&this->parent);
+	for (unsigned int i = 0; i < sizeof(void*); i++) {
+		out.push_back(parentIDB[i]);
 	}
 
 	//out += "Component:\n";
@@ -122,5 +129,29 @@ vector<byte> Transform::serialise() {
 }
 
 void Transform::deserialise(vector<byte> bytes) {
+	unsigned long long position = 0x00;
 
+	this->serialisedID = *reinterpret_cast<void**>(&bytes[position]);
+	position += sizeof(void*);
+
+	float values[9];
+
+	for (unsigned int i = 0; i < 9; i++) {
+		values[i] = *reinterpret_cast<float*>(&bytes[position]);
+		position += sizeof(float);
+	}
+
+	this->position.x = values[0];
+	this->position.y = values[1];
+	this->position.z = values[2];
+	this->rotation.x = values[3];
+	this->rotation.y = values[4];
+	this->rotation.z = values[5];
+	this->scale.x = values[6];
+	this->scale.y = values[7];
+	this->scale.z = values[8];
+
+	if (*reinterpret_cast<void**>(&bytes[position]) != nullptr) this->relatedSerialisedIDs.push_back(*reinterpret_cast<void**>(&bytes[position]));
+
+	this->deserialisedSize = sizeof(void*) + (9 * sizeof(float)) + sizeof(void*);
 }

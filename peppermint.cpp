@@ -768,14 +768,26 @@ int main() {
 	player->transform->position.x = 7.0f;
 	player->transform->position.y = 5.0f;
 
-
-
 	// LogManager::warn(worldManager->serialise().c_str());
 	// LogManager::warn(EngineManager::assetManager->serialise().c_str());
 
-	worldManager->saveWorldFile("peppermint/littleroot.pmintworld");
-	EngineManager::assetManager->saveAssetFile("peppermint/.pmintassets");
+	// worldManager->saveWorldFile("peppermint/littleroot.pmintworld");
+	// EngineManager::assetManager->saveAssetFile("peppermint/.pmintassets");
 
+	EngineManager::assetManager->loadAssetFile("peppermint/.pmintassets");
+	worldManager->assets = &EngineManager::assetManager->assets;
+	worldManager->loadWorldFile("peppermint/littleroot.pmintworld");
+
+	Camera* camCompTest = nullptr;
+
+	for (unsigned int i = 0; i < worldManager->gameObjects.size(); i++) {
+		for (unsigned int j = 0; j < worldManager->gameObjects[i]->components.size(); j++) {
+			Camera* test = dynamic_cast<Camera*>(worldManager->gameObjects[i]->components[j]);
+			if (test) camCompTest = test;
+		}
+	}
+
+	EngineManager::windowManager->windows[0]->renderManager->activeCamera = camCompTest;
 
 	engineManager->loop();
 

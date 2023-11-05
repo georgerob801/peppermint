@@ -13,6 +13,10 @@ namespace peppermint {
 		namespace components {
 			class Renderer : public Component {
 			public:
+				Renderer() {
+					this->type = Component::RENDERER;
+				}
+
 				~Renderer();
 
 				vector<peppermint::rendering::Vertex> vertices;
@@ -23,8 +27,6 @@ namespace peppermint {
 				Mesh* generateMesh();
 			private:
 				Mesh* cachedMesh;
-			protected:
-				static const unsigned int type = 0x07;
 			};
 		}
 	}

@@ -11,6 +11,17 @@ namespace peppermint {
 			virtual void awake();
 			virtual void loop();
 
+			enum ComponentType {
+				COMPONENT,
+				TRANSFORM,
+				CAMERA,
+				NAVIGABLE_MAP,
+				PLAYER_CONTROLLER,
+				BASIC_PLAYER_RENDERER,
+				TILESET_RENDERER,
+				RENDERER
+			};
+
 			Component* setGameObject(void* gameObject);
 			void* getGameObject();
 
@@ -24,13 +35,13 @@ namespace peppermint {
 			virtual vector<byte> serialise();
 			void deserialise(vector<byte> bytes);
 
-			void getType();
+			unsigned int getType();
 		private:
 			void* gameObject = nullptr;
 		protected:
 			bool initialised = false;
 			bool enabled = true;
-			static const unsigned int type = 0x00;
+			Component::ComponentType type;
 		};
 	}
 }

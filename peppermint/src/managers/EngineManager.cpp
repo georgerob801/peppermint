@@ -81,9 +81,9 @@ void EngineManager::loop() {
 	glEnable(GL_DEPTH_TEST);
 
 	// just for test camera
-	Transform* cam = ((GameObject*)EngineManager::windowManager->windows[0]->renderManager->activeCamera->getGameObject())->transform;
-	Camera* camComp = EngineManager::windowManager->windows[0]->renderManager->activeCamera;
-	GLFWwindow* win = EngineManager::windowManager->windows[0]->getAddress();
+	// Transform* cam = ((GameObject*)EngineManager::windowManager->windows[0]->renderManager->activeCamera->getGameObject())->transform;
+	// Camera* camComp = EngineManager::windowManager->windows[0]->renderManager->activeCamera;
+	// GLFWwindow* win = EngineManager::windowManager->windows[0]->getAddress();
 
 	for (unsigned int i = 0; i < this->worldManagers.size(); i++) {
 		this->worldManagers[i]->awake();
@@ -139,12 +139,12 @@ void EngineManager::loop() {
 				if (cam->rotation.y <= -glm::pi<float>()) cam->rotation.y = glm::pi<float>() - 0.001f;
 			}*/
 
-			if (glfwGetKey(win, GLFW_KEY_G) == GLFW_PRESS) {
+			/*if (glfwGetKey(win, GLFW_KEY_G) == GLFW_PRESS) {
 				camComp->viewScale += 1.0f * (float)EngineManager::deltaTime;
 			}
 			if (glfwGetKey(win, GLFW_KEY_H) == GLFW_PRESS) {
 				camComp->viewScale -= 1.0f * (float)EngineManager::deltaTime;
-			}
+			}*/
 
 			EngineManager::windowManager->windows[i]->renderFrame();
 			EngineManager::windowManager->windows[i]->swapBuffers();

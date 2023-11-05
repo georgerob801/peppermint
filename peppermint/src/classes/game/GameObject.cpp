@@ -14,11 +14,10 @@ GameObject::GameObject() {
 }
 
 GameObject::~GameObject() {
-	for (int i = 0; i < this->components.size(); i++) {
-		delete this->components[i];
-	}
-	delete &this->components;
-	delete this->transform;
+	this->components.clear();
+
+	// free memory
+	vector<Component*>().swap(this->components);
 }
 
 template <class T> Component* GameObject::addComponent() {
@@ -65,7 +64,7 @@ vector<byte> GameObject::serialise() {
 	void* id = this;
 	byte* toAdd2 = (byte*)reinterpret_cast<char*>(&id);
 
-	for (unsigned int i = 0; i < sizeof(id) / sizeof(byte); i++) {
+	for (unsigned int i = 0; i < sizeof(void*); i++) {
 		out.push_back(toAdd2[i]);
 	}
 
@@ -91,5 +90,23 @@ vector<byte> GameObject::serialise() {
 }
 
 void GameObject::deserialise(vector<byte> bytes) {
+	unsigned long long position = 0x00;
 
+	unsigned int numComponents = *reinterpret_cast<unsigned int*>(&bytes[position]);
+	position += sizeof(unsigned int);
+
+	this->components.reserve(numComponents);
+
+	this->serialisedID = *reinterpret_cast<void**>(&bytes[position]);
+	position += sizeof(void*);
+
+	if (this->serialisedID == nullptr) {
+		throw peppermint::exceptions::serialisation::world::CorruptedFileException();
+	}
+
+	for (unsigned int i = 0; i < numComponents; i++) {
+		this->relatedSerialisedIDs.push_back(*reinterpret_cast<void**>(&bytes[position]));
+		if (this->relatedSerialisedIDs[this->relatedSerialisedIDs.size() - 1] == nullptr) throw peppermint::exceptions::serialisation::world::CorruptedFileException();
+		position += sizeof(void*);
+	}
 }
