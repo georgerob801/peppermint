@@ -153,8 +153,6 @@ void BasicPlayerRenderer::deserialise(vector<byte> bytes) {
 	for (unsigned int i = 0; i < 6; i++) {
 		this->relatedSerialisedIDs.push_back(*reinterpret_cast<void**>(&bytes[position]));
 
-		cout << "id " << i << ": " << *reinterpret_cast<void**>(&bytes[position]) << endl;
-
 		position += sizeof(void*);
 	}
 
