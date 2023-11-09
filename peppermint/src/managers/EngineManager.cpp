@@ -1,7 +1,7 @@
 #include <peppermint/managers/EngineManager.h>
 
 #include <format>
-
+#include <stb_image/stb_image.h>
 #include <peppermint/managers/InputManager.h>
 
 using namespace peppermint::managers;
@@ -85,9 +85,24 @@ void EngineManager::loop() {
 	// Camera* camComp = EngineManager::windowManager->windows[0]->renderManager->activeCamera;
 	// GLFWwindow* win = EngineManager::windowManager->windows[0]->getAddress();
 
+#pragma region window icons
+	stbi_set_flip_vertically_on_load(false);
+	GLFWimage images[2];
+	images[0].pixels = stbi_load("peppermint/resource/window-icon.png", &images[0].width, &images[0].height, 0, 4);
+	images[1].pixels = stbi_load("peppermint/resource/window-icon-small.png", &images[1].width, &images[1].height, 0, 4);
+	
+	for (unsigned int i = 0; i < EngineManager::windowManager->windows.size(); i++) {
+		glfwSetWindowIcon(EngineManager::windowManager->windows[i]->getAddress(), 2, images);
+	}
+
+	stbi_image_free(images[0].pixels);
+	stbi_image_free(images[1].pixels);
+
 	for (unsigned int i = 0; i < this->worldManagers.size(); i++) {
 		this->worldManagers[i]->awake();
 	}
+	stbi_set_flip_vertically_on_load(true);
+#pragma endregion
 
 	while (EngineManager::windowManager->windows.size() != 0) {
 		if (this->status == -1) throw std::exception("Failed to start peppermint.");

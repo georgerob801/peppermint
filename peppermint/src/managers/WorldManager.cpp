@@ -11,6 +11,7 @@
 #include <peppermint/classes/game/components/NavigableMap.hpp>
 #include <peppermint/classes/game/components/PlayerController.h>
 #include <peppermint/classes/game/components/renderers/BasicPlayerRenderer.h>
+#include <peppermint/classes/game/components/renderers/AnimatedTilesetRenderer.h>
 
 #include <algorithm>
 #include <iostream>
@@ -268,6 +269,12 @@ void WorldManager::deserialise(vector<byte> bytes) {
 
 			co->deserialise(subVector);
 			break;
+		case Component::ANIMATED_TILESET_RENDERER:
+			co = new AnimatedTilesetRenderer(*reinterpret_cast<unsigned int*>(&bytes[position + sizeof(void*) + sizeof(void*)]), *reinterpret_cast<unsigned int*>(&bytes[position + sizeof(void*) + sizeof(void*) + sizeof(unsigned int)]));
+			copy(bytes.begin() + position, bytes.end(), subVector.begin());
+
+			co->deserialise(subVector);
+			break;
 		default:
 			throw peppermint::exceptions::serialisation::world::CorruptedFileException();
 		}
@@ -372,6 +379,27 @@ void WorldManager::deserialise(vector<byte> bytes) {
 
 			tr->tileset = (Tileset*)(*index);
 
+			break;
+		}
+		case Component::ANIMATED_TILESET_RENDERER:
+		{
+			AnimatedTilesetRenderer* atr = (AnimatedTilesetRenderer*)componentsToMatch[i];
+			void* toFind = atr->relatedSerialisedIDs[0];
+
+			vector<Asset*>::iterator index = find_if(this->assets->begin(), this->assets->end(), [toFind](Asset* item) { return item->serialisedID == toFind; });
+			if (index == this->assets->end()) throw peppermint::exceptions::serialisation::world::CorruptedFileException();
+
+			atr->tileset = (Tileset*)(*index);
+
+			for (unsigned int j = 1; j < atr->relatedSerialisedIDs.size(); j++) {
+				void* assetToFind = atr->relatedSerialisedIDs[j];
+
+				vector<Asset*>::iterator index2 = find_if(this->assets->begin(), this->assets->end(), [assetToFind](Asset* item) { return item->serialisedID == assetToFind; });
+				if (index2 == this->assets->end()) throw peppermint::exceptions::serialisation::world::CorruptedFileException();
+
+				atr->animations.push_back((TilesetAnimation*)(*index2));
+			}
+			
 			break;
 		}
 		default:

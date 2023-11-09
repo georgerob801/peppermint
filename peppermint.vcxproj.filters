@@ -99,6 +99,9 @@
     <ClCompile Include="peppermint\src\Serialisable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="peppermint\src\classes\game\components\renderers\AnimatedTilesetRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="peppermint\include\stb_image\stb_image.h">
@@ -188,6 +191,12 @@
     <ClInclude Include="peppermint\include\peppermint\classes\Asset.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\classes\game\components\renderers\AnimatedTilesetRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="peppermint\resource\shader\vertex\default.vert" />
@@ -195,5 +204,21 @@
     <None Include="ClassDiagram.cd" />
     <None Include="ClassDiagram1.cd" />
     <None Include="ClassDiagram2.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="peppermint.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="peppermint\resource\icon.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="peppermint\resource\icon.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="peppermint\resource\icon1.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

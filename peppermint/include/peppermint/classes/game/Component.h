@@ -19,7 +19,8 @@ namespace peppermint {
 				PLAYER_CONTROLLER,
 				BASIC_PLAYER_RENDERER,
 				TILESET_RENDERER,
-				RENDERER
+				RENDERER,
+				ANIMATED_TILESET_RENDERER
 			};
 
 			Component* setGameObject(void* gameObject);

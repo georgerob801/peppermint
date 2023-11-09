@@ -144,6 +144,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="peppermint\src\classes\game\components\renderers\AnimatedTilesetRenderer.cpp" />
     <ClCompile Include="peppermint\src\classes\Asset.cpp" />
     <ClCompile Include="peppermint\src\managers\AssetManager.cpp" />
     <ClCompile Include="peppermint\src\classes\game\components\renderers\BasicPlayerRenderer.cpp" />
@@ -174,6 +175,7 @@
     <ClCompile Include="peppermint\src\Serialisable.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="peppermint\include\peppermint\classes\game\components\renderers\AnimatedTilesetRenderer.h" />
     <ClInclude Include="peppermint\include\peppermint\classes\Asset.h" />
     <ClInclude Include="peppermint\include\peppermint\managers\AssetManager.h" />
     <ClInclude Include="peppermint\include\peppermint\classes\game\components\renderers\BasicPlayerRenderer.h" />
@@ -203,6 +205,7 @@
     <ClInclude Include="peppermint\include\peppermint\classes\game\components\renderers\TilesetRenderer.h" />
     <ClInclude Include="peppermint\include\peppermint\classes\game\components\NavigableMap.hpp" />
     <ClInclude Include="peppermint\include\peppermint\classes\game\TilesetAnimation.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
@@ -210,6 +213,14 @@
     <None Include="ClassDiagram2.cd" />
     <None Include="peppermint\resource\shader\fragment\default.frag" />
     <None Include="peppermint\resource\shader\vertex\default.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="peppermint.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="peppermint\resource\icon.ico" />
+    <Image Include="peppermint\resource\icon.png" />
+    <Image Include="peppermint\resource\icon1.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
