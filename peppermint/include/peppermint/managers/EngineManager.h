@@ -36,6 +36,8 @@ namespace peppermint {
 
 			void loop();
 
+			WorldManager* createWorldManager();
+
 			static double deltaTime;
 		private:
 			static double lastFrame;

@@ -21,6 +21,10 @@ void TilesetRenderer::generateTextures() {
 	this->tileset->generateTextures();
 }
 
+void TilesetRenderer::setTileAt(unsigned int x, unsigned int y, unsigned short value) {
+	this->tileTypes[y * this->width + x] = value;
+}
+
 void TilesetRenderer::generateVertices() {
 	this->vertices.clear();
 
@@ -61,6 +65,12 @@ void TilesetRenderer::awake() {
 	if (this->requiresRemesh) {
 		this->generateVertices();
 		this->requiresRemesh = false;
+	}
+}
+
+void TilesetRenderer::fill(unsigned short value) {
+	for (unsigned int i = 0; i < this->width * this->height; i++) {
+		this->tileTypes[i] = value;
 	}
 }
 

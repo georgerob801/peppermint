@@ -35,6 +35,7 @@ namespace peppermint {
 
 			vector<byte> serialise();
 			void deserialise(vector<byte> bytes);
+			Camera* getFirstCamera();
 		private:
 			
 		};

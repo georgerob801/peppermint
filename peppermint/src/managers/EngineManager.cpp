@@ -77,6 +77,13 @@ double EngineManager::vSyncTime() {
 	return glfwGetTime() - EngineManager::lastFrame;
 }
 
+WorldManager* EngineManager::createWorldManager() {
+	WorldManager* wm = new WorldManager();
+	this->worldManagers.push_back(wm);
+
+	return wm;
+}
+
 void EngineManager::loop() {
 	glEnable(GL_DEPTH_TEST);
 

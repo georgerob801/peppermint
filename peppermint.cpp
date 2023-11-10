@@ -35,9 +35,10 @@ int main() {
 	engineManager = new EngineManager();
 	if (engineManager->status == -1) return -1;
 	engineManager->worldManagers.push_back(new WorldManager());
+
+	engineManager->windowManager->getWindow()->setName("Definitely Pokémon Emerald");
 	
 	WorldManager* worldManager = engineManager->worldManagers[engineManager->activeWorldManager];
-
 
 #pragma region pokemon world
 	GameObject* baseLayer = worldManager->createGameObject();
@@ -570,20 +571,231 @@ int main() {
 	// worldManager->saveWorldFile("peppermint/littleroot.pmintworld");
 	// EngineManager::assetManager->saveAssetFile("peppermint/.pmintassets");
 
-	EngineManager::assetManager->loadAssetFile("peppermint/.pmintassets");
-	worldManager->assets = &EngineManager::assetManager->assets;
-	worldManager->loadWorldFile("peppermint/littleroot.pmintworld");
+	// EngineManager::assetManager->loadAssetFile("peppermint/.pmintassets");
+	// worldManager->assets = &EngineManager::assetManager->assets;
+	// worldManager->loadWorldFile("peppermint/littleroot.pmintworld");
 
-	Camera* camCompTest = nullptr;
+	// EngineManager::windowManager->windows[0]->renderManager->activeCamera = worldManager->getFirstCamera();
 
-	for (unsigned int i = 0; i < worldManager->gameObjects.size(); i++) {
-		for (unsigned int j = 0; j < worldManager->gameObjects[i]->components.size(); j++) {
-			Camera* test = dynamic_cast<Camera*>(worldManager->gameObjects[i]->components[j]);
-			if (test) camCompTest = test;
+
+
+#pragma region house inside
+
+	// --------------------------- TODO ----------------------------
+	// create one of the insides of a house in order to test warping
+	// -------------------------------------------------------------
+
+	engineManager->activeWorldManager = 1;
+	WorldManager* houseMan = engineManager->createWorldManager();
+
+	GameObject* houseBaseLayer = houseMan->createGameObject();
+	TilesetRenderer* houseBaseLayerRenderer = new TilesetRenderer(11, 9);
+	houseBaseLayerRenderer->tileset = worldTileset;
+	GameObject* houseUpperLayer = houseMan->createGameObject();
+	TilesetRenderer* houseUpperLayerRenderer = new TilesetRenderer(11, 9);
+	GameObject* houseMidLayer = houseMan->createGameObject();
+	TilesetRenderer* houseMidLayerRenderer = new TilesetRenderer(11, 9);
+	houseUpperLayerRenderer->tileset = worldTileset;
+	houseMidLayerRenderer->tileset = worldTileset;
+	houseUpperLayer->transform->parent = houseBaseLayer->transform->parent;
+	houseMidLayer->transform->parent = houseBaseLayer->transform->parent;
+	houseUpperLayer->components.push_back(houseUpperLayerRenderer);
+	houseMidLayer->components.push_back(houseMidLayerRenderer);
+	houseUpperLayer->transform->position.z = 5.0f;
+	houseMidLayer->transform->position.z = 0.5f;
+	houseUpperLayerRenderer->fill(1);
+	houseMidLayerRenderer->fill(1);
+
+
+	NavigableMap* hNavMap = new NavigableMap(11, 9);
+	houseBaseLayer->components.push_back(hNavMap);
+
+
+	for (unsigned int i = 0; i < 11; i++) {
+		for (unsigned int j = 0; j < 9; j++) {
+			houseBaseLayerRenderer->setTileAt(i, j, 35);
 		}
 	}
 
-	EngineManager::windowManager->windows[0]->renderManager->activeCamera = camCompTest;
+	for (unsigned int i = 0; i < 9; i++) {
+		houseBaseLayerRenderer->setTileAt(0, i, 33);
+	}
+
+	houseBaseLayerRenderer->setTileAt(1, 0, 42);
+	houseBaseLayerRenderer->setTileAt(2, 0, 43);
+	houseBaseLayerRenderer->setTileAt(3, 0, 43);
+	houseBaseLayerRenderer->setTileAt(4, 0, 43);
+	houseBaseLayerRenderer->setTileAt(5, 0, 43);
+	houseBaseLayerRenderer->setTileAt(6, 0, 44);
+	houseBaseLayerRenderer->setTileAt(1, 1, 42 + numTilesPerRow);
+	houseBaseLayerRenderer->setTileAt(2, 1, 43 + numTilesPerRow);
+	houseBaseLayerRenderer->setTileAt(3, 1, 43 + numTilesPerRow);
+	houseBaseLayerRenderer->setTileAt(4, 1, 43 + numTilesPerRow);
+	houseBaseLayerRenderer->setTileAt(5, 1, 43 + numTilesPerRow);
+	houseBaseLayerRenderer->setTileAt(6, 1, 44 + numTilesPerRow);
+	houseBaseLayerRenderer->setTileAt(1, 2, 42 + numTilesPerRow);
+	houseBaseLayerRenderer->setTileAt(2, 2, 43 + numTilesPerRow);
+	houseBaseLayerRenderer->setTileAt(3, 2, 43 + numTilesPerRow);
+	houseBaseLayerRenderer->setTileAt(4, 2, 43 + numTilesPerRow);
+	houseBaseLayerRenderer->setTileAt(5, 2, 43 + numTilesPerRow);
+	houseBaseLayerRenderer->setTileAt(6, 2, 44 + numTilesPerRow);
+	houseBaseLayerRenderer->setTileAt(1, 3, 42 + (2 * numTilesPerRow));
+	houseBaseLayerRenderer->setTileAt(2, 3, 43 + (2 * numTilesPerRow));
+	houseBaseLayerRenderer->setTileAt(3, 3, 43 + (2 * numTilesPerRow));
+	houseBaseLayerRenderer->setTileAt(4, 3, 43 + (2 * numTilesPerRow));
+	houseBaseLayerRenderer->setTileAt(5, 3, 43 + (2 * numTilesPerRow));
+	houseBaseLayerRenderer->setTileAt(6, 3, 44 + (2 * numTilesPerRow));
+
+
+
+	houseMidLayerRenderer->setTileAt(2, 3, 43 + (4 * numTilesPerRow));
+	houseMidLayerRenderer->setTileAt(3, 3, 44 + (4 * numTilesPerRow));
+	houseMidLayerRenderer->setTileAt(4, 3, 45 + (4 * numTilesPerRow));
+
+	houseMidLayerRenderer->setTileAt(2, 4, 43 + (5 * numTilesPerRow));
+	houseMidLayerRenderer->setTileAt(3, 4, 44 + (5 * numTilesPerRow));
+	houseMidLayerRenderer->setTileAt(4, 4, 45 + (5 * numTilesPerRow));
+	for (unsigned int i = 2; i < 5; i++) {
+		hNavMap->makeUnnavigable(i, 4);
+	}
+
+
+
+	houseUpperLayerRenderer->setTileAt(4, 5, 45 + (6 * numTilesPerRow));
+
+	houseBaseLayerRenderer->setTileAt(8, 0, 40 + (2 * numTilesPerRow));
+	houseBaseLayerRenderer->setTileAt(9, 0, 41 + (2 * numTilesPerRow));
+
+	for (unsigned int i = 0; i < 7; i++) {
+		houseBaseLayerRenderer->setTileAt(i, 8, 34 + numTilesPerRow);
+		houseBaseLayerRenderer->setTileAt(i, 7, 35 + numTilesPerRow);
+
+		hNavMap->makeUnnavigable(i, 8);
+		hNavMap->makeUnnavigable(i, 7);
+
+		if (i == 2 || i >= 5) {
+			houseBaseLayerRenderer->setTileAt(i, 8, 36 + numTilesPerRow);
+			houseBaseLayerRenderer->setTileAt(i, 7, 36);
+		}
+	}
+
+	houseMidLayerRenderer->setTileAt(2, 1, 33 + numTilesPerRow);
+	houseMidLayerRenderer->setTileAt(2, 2, 33 + numTilesPerRow);
+	houseMidLayerRenderer->setTileAt(5, 1, 32 + numTilesPerRow);
+	houseMidLayerRenderer->setTileAt(5, 2, 32 + numTilesPerRow);
+	
+	houseMidLayerRenderer->setTileAt(3, 1, 41 + (3 * numTilesPerRow));
+	houseMidLayerRenderer->setTileAt(4, 1, 42 + (3 * numTilesPerRow));
+	houseMidLayerRenderer->setTileAt(3, 2, 41 + (4 * numTilesPerRow));
+	houseMidLayerRenderer->setTileAt(4, 2, 42 + (4 * numTilesPerRow));
+
+	for (unsigned int i = 2; i < 6; i++) {
+		for (unsigned int j = 1; j < 3; j++) {
+			hNavMap->makeUnnavigable(i, j);
+		}
+	}
+
+	for (unsigned int i = 0; i < 5; i++) {
+		houseMidLayerRenderer->setTileAt(0 + i, 6, 37 + i);
+		houseMidLayerRenderer->setTileAt(0 + i, 7, 37 + i + numTilesPerRow);
+
+		hNavMap->makeUnnavigable(i, 6);
+	}
+
+	for (unsigned int i = 1; i < 5; i++) {
+		houseBaseLayerRenderer->setTileAt(i, 5, 34);
+		houseBaseLayerRenderer->setTileAt(i, 6, 33);
+	}
+
+	houseBaseLayerRenderer->setTileAt(5, 6, 34);
+	houseBaseLayerRenderer->setTileAt(6, 6, 34);
+
+	houseBaseLayerRenderer->setTileAt(7, 5, 43 + (3 * numTilesPerRow));
+	houseBaseLayerRenderer->setTileAt(8, 5, 44 + (3 * numTilesPerRow));
+	houseBaseLayerRenderer->setTileAt(9, 5, 45 + (3 * numTilesPerRow));
+	houseBaseLayerRenderer->setTileAt(10, 5, 34);
+
+	for (unsigned int i = 7; i < 11; i++) {
+		houseBaseLayerRenderer->setTileAt(i, 8, 45 + i - 7 + (2 * numTilesPerRow));
+		houseBaseLayerRenderer->setTileAt(i, 7, 45 + i - 7 + numTilesPerRow);
+		houseBaseLayerRenderer->setTileAt(i, 6, 45 + i - 7);
+
+		hNavMap->makeUnnavigable(i, 8);
+		hNavMap->makeUnnavigable(i, 7);
+		hNavMap->makeUnnavigable(i, 6);
+	}
+
+	hNavMap->makeNavigable(8, 6);
+
+	for (unsigned int i = 8; i < 11; i++) {
+		houseBaseLayerRenderer->setTileAt(i, 8, 1);
+	}
+
+
+	
+
+
+
+	houseBaseLayer->components.push_back(houseBaseLayerRenderer);
+
+	houseBaseLayerRenderer->generateVertices();
+	houseUpperLayerRenderer->generateVertices();
+	houseMidLayerRenderer->generateVertices();
+
+
+
+
+
+	BasicPlayerRenderer* hPlayerRenderer = new BasicPlayerRenderer(1, 2);
+	hPlayerRenderer->tileset = playerTileset;
+
+	hPlayerRenderer->up = testUp;
+	hPlayerRenderer->down = testDown;
+	hPlayerRenderer->left = testLeft;
+	hPlayerRenderer->right = testRight;
+	hPlayerRenderer->tileTypes[0] = 4;
+	hPlayerRenderer->tileTypes[1] = 0;
+
+	GameObject* hPlayerRenderOffset = houseMan->createGameObject();
+
+	hPlayerRenderer->generateVertices();
+
+	hPlayerRenderOffset->components.push_back(hPlayerRenderer);
+	hPlayerRenderOffset->transform->position.z = 5.0f;
+
+	GameObject* housePlayer = houseMan->createGameObject();
+
+	PlayerController* hController = new PlayerController();
+	hController->setGameObject(housePlayer);
+	hController->navMap = hNavMap;
+	hController->speed = 5.0f;
+
+	housePlayer->components.push_back(hController);
+
+	hPlayerRenderer->pc = hController;
+
+	hPlayerRenderOffset->transform->parent = housePlayer->transform;
+
+
+
+
+	GameObject* houseCam = houseMan->createGameObject();
+	Camera* houseCamComp = new Camera();
+	houseCamComp->setGameObject(houseCam);
+	houseCam->components.push_back(houseCamComp);
+	houseCamComp->updateCameraVectors();
+
+	houseCam->transform->position.z = 10.0f;
+	houseCam->transform->rotation = vec3(0.0f, -half_pi<float>(), 0.0f);
+
+	houseCam->transform->parent = housePlayer->transform;
+
+	EngineManager::windowManager->windows[0]->renderManager->activeCamera = houseMan->getFirstCamera();
+
+
+#pragma endregion
+
+
 
 	engineManager->loop();
 

@@ -407,3 +407,13 @@ void WorldManager::deserialise(vector<byte> bytes) {
 		}
 	}
 }
+
+Camera* WorldManager::getFirstCamera() {
+	for (unsigned int i = 0; i < this->gameObjects.size(); i++) {
+		for (unsigned int j = 0; j < this->gameObjects[i]->components.size(); j++) {
+			Camera* test = dynamic_cast<Camera*>(this->gameObjects[i]->components[j]);
+			if (test) return test;
+		}
+	}
+	return nullptr;
+}

@@ -18,12 +18,15 @@ namespace peppermint {
 		GLFWwindow* getAddress();
 		void makeCurrentContext();
 
-		int* getSize();
+		void getSize(int* thing);
 
 		void swapBuffers();
 		bool shouldClose();
 
 		void renderFrame();
+
+		void setName(const char* name);
+		void setName(char* name);
 	private:
 		GLFWwindow* glfwWindow;
 	};

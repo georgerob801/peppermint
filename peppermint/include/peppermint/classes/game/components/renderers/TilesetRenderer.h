@@ -24,8 +24,12 @@ namespace peppermint {
 
 				unsigned short* tileTypes;
 
+				void setTileAt(unsigned int x, unsigned int y, unsigned short value);
+
 				void generateVertices();
 				void generateTextures();
+
+				void fill(unsigned short value);
 
 				vector<byte> serialise();
 				void deserialise(vector<byte> bytes);

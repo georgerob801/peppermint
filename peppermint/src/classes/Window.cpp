@@ -40,7 +40,9 @@ Window::Window(int width, int height, char* title, GLFWmonitor* monitor, GLFWwin
 	LogManager::debug(std::format("Created render manager for {}", (void*)this));
 
 	LogManager::debug(std::format("Setting resize handler for {}", (void*)this));
-	onResize(this->glfwWindow, this->getSize()[0], this->getSize()[1]);
+	int size[2];
+	this->getSize(size);
+	onResize(this->glfwWindow, size[0], size[1]);
 	glfwSetFramebufferSizeCallback(this->glfwWindow, onResize);
 }
 
@@ -57,10 +59,8 @@ GLFWwindow* Window::getAddress() {
 	return this->glfwWindow;
 }
 
-int* Window::getSize() {
-	int size[2] = { 0, 0 };
-	glfwGetWindowSize(this->getAddress(), &size[0], &size[1]);
-	return size;
+void Window::getSize(int* thing) {
+	glfwGetWindowSize(this->getAddress(), &thing[0], &thing[1]);
 }
 
 void Window::swapBuffers() {
@@ -73,6 +73,13 @@ bool Window::shouldClose() {
 
 void Window::renderFrame() {
 	this->makeCurrentContext();
-	int* size = this->getSize();
 	this->renderManager->renderFrame();
+}
+
+void Window::setName(const char* name) {
+	this->setName((char*)name);
+}
+
+void Window::setName(char* name) {
+	glfwSetWindowTitle(this->getAddress(), name);
 }
