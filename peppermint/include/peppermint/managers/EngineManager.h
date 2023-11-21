@@ -25,8 +25,8 @@ namespace peppermint {
 			static WindowManager* windowManager;
 			static AssetManager* assetManager;
 
-			std::vector<WorldManager*> worldManagers;
-			int activeWorldManager = NULL;
+			static std::vector<WorldManager*> worldManagers;
+			static unsigned int activeWorldManager;
 
 			EngineManager();
 			~EngineManager();
@@ -36,7 +36,7 @@ namespace peppermint {
 
 			void loop();
 
-			WorldManager* createWorldManager();
+			static WorldManager* createWorldManager();
 
 			static double deltaTime;
 		private:

@@ -117,6 +117,57 @@ void PlayerController::loop() {
 			if (this->facing == RIGHT) go->transform->position.x -= 1;
 		}
 	}
+
+	if ((length(go->transform->position - this->lastLocation) >= 1.0f || this->facing != this->lastFacing) && this->navMap != nullptr) {
+		unsigned int acWm = EngineManager::activeWorldManager;
+		this->onChangeTile();
+		if (EngineManager::activeWorldManager == acWm) this->lastLocation = vec3(std::round(go->transform->position.x), std::round(go->transform->position.y), std::round(go->transform->position.z));
+	}
+
+	this->lastFacing = this->facing;
+}
+
+void PlayerController::onChangeTile() {
+	// check warp cooldown
+	if (glfwGetTime() - lastWarp < warpCooldown) return;
+
+	// check for warp tiles
+	GameObject* go = (GameObject*)this->getGameObject();
+
+	unsigned int x = (unsigned int)std::round(go->transform->position.x); // tileset positions
+	unsigned int y = (unsigned int)std::round(go->transform->position.y);
+
+	//unsigned int upperX = x + 0.05;
+	//unsigned int lowerX = x - 0.05;
+	//unsigned int upperY = y + 0.05;
+	//unsigned int lowerY = y - 0.05;
+
+	vector<WarpTile*>::iterator index = find_if(this->navMap->warpTiles.begin(), this->navMap->warpTiles.end(), [x, y, this](WarpTile* item) {
+		GameObject* go = (GameObject*)item->getGameObject();
+
+		if (!item->requiresFacing) return go->transform->position.x == x && go->transform->position.y == y;
+		else return go->transform->position.x == x && go->transform->position.y == y && this->facing == (PlayerController::FACING)item->facingToGo;
+		// return go->transform->position.x >= lowerX && go->transform->position.x <= upperX && go->transform->position.y >= lowerY && go->transform->position.y <= upperY;
+	});
+
+	// stop if no warp tile
+	if (index == this->navMap->warpTiles.end()) return;
+
+	// unload current world
+	EngineManager::worldManagers[EngineManager::activeWorldManager]->unload();
+
+	// load new world
+	EngineManager::activeWorldManager = (*index)->destinationWorld;
+	EngineManager::worldManagers[EngineManager::activeWorldManager]->initialiseFromWorldFile();
+
+
+	// get first player controller + set position
+	WorldManager* wm = EngineManager::worldManagers[EngineManager::activeWorldManager];
+
+	PlayerController* pc = wm->getFirstComponent<PlayerController>();
+	((GameObject*)pc->getGameObject())->transform->position = (*index)->destinationCharacterPosition;
+	pc->facing = (PlayerController::FACING)((*index)->facingAtDestination);
+	pc->lastWarp = glfwGetTime();
 }
 
 void PlayerController::updateInputStatus() {

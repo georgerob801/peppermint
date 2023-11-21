@@ -1,6 +1,7 @@
 #include <peppermint/managers/RenderManager.h>
 
 #include <peppermint/classes/Window.h>
+#include <peppermint/managers/EngineManager.h>
 
 using namespace peppermint;
 using namespace peppermint::managers;
@@ -24,6 +25,12 @@ void RenderManager::renderFrame() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	while (this->activeRenderStack->renderItems.size() != 0) {
+		// ignore if from wrong world (eg last frame before a world change)
+		if (this->activeRenderStack->renderItems[0].fromWorld != EngineManager::worldManagers[EngineManager::activeWorldManager]) {
+			this->activeRenderStack->renderItems.erase(this->activeRenderStack->renderItems.begin());
+			continue;
+		}
+
 		this->activeRenderStack->renderItems[0].shader->setMat4f((char*)"model", this->activeRenderStack->renderItems[0].go->transform->getMatrix());
 		this->activeRenderStack->renderItems[0].shader->setMat4f((char*)"view", this->activeCamera->getViewMatrix());
 		float* scale = &this->activeCamera->viewScale;

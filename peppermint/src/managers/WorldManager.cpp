@@ -19,8 +19,19 @@
 
 using namespace peppermint::managers;
 
+WorldManager::WorldManager() {
+	this->filePath = new Asset(Asset::PPMINT_WORLD_FILE);
+	this->filePath->path = (char*)"";
+}
+
+WorldManager::WorldManager(char* filePath) {
+	this->filePath = new Asset(Asset::PPMINT_WORLD_FILE);
+	this->filePath->path = filePath;
+}
+
 // only runs once so not as painfully laggy
 void WorldManager::awake() {
+	this->stopProcessingWorld = false;
 	for (unsigned int i = 0; i < this->gameObjects.size(); i++) {
 		for (unsigned int j = 0; j < this->gameObjects[i]->components.size(); j++) {
 			this->gameObjects[i]->components[j]->awake();
@@ -40,8 +51,9 @@ void WorldManager::sortByZ() {
 void WorldManager::start() {
 	for (unsigned int i = 0; i < this->gameObjects.size(); i++) {
 		for (unsigned int j = 0; j < this->gameObjects[i]->components.size(); j++) {
-			if (this->gameObjects[i]->components[j]->isEnabled()) {
+			if (this->gameObjects[i]->components[j]->isEnabled() && !this->gameObjects[i]->components[j]->isInitialised()) {
 				this->gameObjects[i]->components[j]->start();
+				this->gameObjects[i]->components[j]->initialise();
 			}
 		}
 	}
@@ -50,8 +62,11 @@ void WorldManager::start() {
 // this will also be exponentially more laggy but worse
 void WorldManager::loop(Window* window) {
 	for (unsigned int i = 0; i < this->gameObjects.size(); i++) {
+		if (this->stopProcessingWorld) break;
 		for (unsigned int j = 0; j < this->gameObjects[i]->components.size(); j++) {
+			if (this->stopProcessingWorld) break;
 			this->gameObjects[i]->components[j]->loop();
+			if (this->stopProcessingWorld) break;
 
 			if (Renderer* rendererComponent = dynamic_cast<Renderer*>(this->gameObjects[i]->components[j])) {
 				peppermint::rendering::RenderItem renderItem;
@@ -62,13 +77,15 @@ void WorldManager::loop(Window* window) {
 						.go = this->gameObjects[i],
 						.mesh = rendererComponent->getOrGenerateMesh(),
 						.uvOffset = tilesetAnimationRendererComponent->getUVOffset(),
-						.textureToUse = tilesetAnimationRendererComponent->getTexOffset()
+						.textureToUse = tilesetAnimationRendererComponent->getTexOffset(),
+						.fromWorld = this
 					};
 				} else {
 					renderItem = {
 						.shader = shader,
 						.go = this->gameObjects[i],
 						.mesh = rendererComponent->getOrGenerateMesh(),
+						.fromWorld = this
 					};
 				}
 
@@ -97,6 +114,25 @@ void WorldManager::saveWorldFile(char* filename) {
 	if (serialised.size() > 0) worldFile.write(reinterpret_cast<const char*>(&serialised[0]), serialised.size());
 
 	worldFile.close();
+}
+
+void WorldManager::initialiseFromWorldFile() {
+	// cout << "would initialise from " << this->filePath->path << " here" << endl;
+	this->initialised = false;
+	this->loadWorldFile(this->filePath->path);
+	this->initialised = true;
+}
+
+void WorldManager::setWorldFileAsset(Asset* item) {
+	this->filePath = item;
+}
+
+void WorldManager::unload() {
+	for (unsigned int i = 0; i < this->gameObjects.size(); i++) {
+		delete this->gameObjects[i];
+	}
+	this->stopProcessingWorld = true;
+	this->initialised = false;
 }
 
 vector<byte> WorldManager::serialise() {
@@ -223,7 +259,7 @@ void WorldManager::deserialise(vector<byte> bytes) {
 	unsigned int numComponents = *reinterpret_cast<unsigned int*>(&bytes[position]);
 	componentsToMatch.reserve(numComponents);
 	position += sizeof(unsigned int);
-
+	
 	for (unsigned int i = 0; i < numComponents; i++) {
 		Component::ComponentType coType = (Component::ComponentType)(*reinterpret_cast<unsigned int*>(&bytes[position]));
 		position += sizeof(unsigned int);
@@ -275,6 +311,12 @@ void WorldManager::deserialise(vector<byte> bytes) {
 
 			co->deserialise(subVector);
 			break;
+		case Component::WARP_TILE:
+			co = new WarpTile();
+			copy(bytes.begin() + position, bytes.end(), subVector.begin());
+
+			co->deserialise(subVector);
+			break;
 		default:
 			throw peppermint::exceptions::serialisation::world::CorruptedFileException();
 		}
@@ -292,9 +334,11 @@ void WorldManager::deserialise(vector<byte> bytes) {
 
 			if (comp == componentsToMatch.end()) throw peppermint::exceptions::serialisation::world::CorruptedFileException();
 
-			this->gameObjects[i]->components.push_back(*comp);
+			/*this->gameObjects[i]->components.push_back(*comp);
 
-			(*comp)->setGameObject((void*)this->gameObjects[i]);
+			(*comp)->setGameObject((void*)this->gameObjects[i]);*/
+
+			this->gameObjects[i]->addComponent(*comp);
 
 			if ((*comp)->getType() == Component::TRANSFORM) {
 				this->gameObjects[i]->transform = (Transform*)(*comp);
@@ -349,8 +393,6 @@ void WorldManager::deserialise(vector<byte> bytes) {
 
 			bpr->tileset = (Tileset*)(*tilesetIndex);
 
-
-
 			vector<TilesetAnimation*> anims;
 
 			for (unsigned int j = 2; j < bpr->relatedSerialisedIDs.size(); j++) {
@@ -367,6 +409,9 @@ void WorldManager::deserialise(vector<byte> bytes) {
 			bpr->left = anims[2];
 			bpr->right = anims[3];
 
+			bpr->generateTextures();
+			bpr->generateVertices();
+
 			break;
 		}
 		case Component::TILESET_RENDERER:
@@ -378,6 +423,9 @@ void WorldManager::deserialise(vector<byte> bytes) {
 			if (index == this->assets->end()) throw peppermint::exceptions::serialisation::world::CorruptedFileException();
 
 			tr->tileset = (Tileset*)(*index);
+
+			tr->generateTextures();
+			tr->generateVertices();
 
 			break;
 		}
@@ -400,6 +448,24 @@ void WorldManager::deserialise(vector<byte> bytes) {
 				atr->animations.push_back((TilesetAnimation*)(*index2));
 			}
 			
+			atr->generateTextures();
+			atr->generateVertices();
+
+			break;
+		}
+		case Component::NAVIGABLE_MAP:
+		{
+			NavigableMap* nvm = (NavigableMap*)componentsToMatch[i];
+
+			for (unsigned int j = 0; j < componentsToMatch[i]->relatedSerialisedIDs.size(); j++) {
+				void* toFind = nvm->relatedSerialisedIDs[j];
+
+				vector<Component*>::iterator index = find_if(componentsToMatch.begin(), componentsToMatch.end(), [toFind](Component* item) { return item->serialisedID == toFind; });
+				if (index == componentsToMatch.end()) throw peppermint::exceptions::serialisation::world::CorruptedFileException();
+
+				nvm->warpTiles.push_back((WarpTile*)(*index));
+			}
+
 			break;
 		}
 		default:

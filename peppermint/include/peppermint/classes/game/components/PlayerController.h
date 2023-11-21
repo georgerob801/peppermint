@@ -53,10 +53,17 @@ namespace peppermint {
 				void loop();
 				currentlyPressingStruct getActiveKeys();
 
+				virtual void onChangeTile();
+
+				double lastWarp = 0;
+				double warpCooldown = 0.3;
+
 				vector<byte> serialise();
 				void deserialise(vector<byte> bytes);
 			private:
 				vec3 moveStartPosition;
+				vec3 lastLocation;
+				FACING lastFacing;
 				void updateInputStatus();
 			};
 		}

@@ -9,6 +9,12 @@ using namespace peppermint::rendering;
 using namespace peppermint::managers;
 using namespace std;
 
+Mesh::~Mesh() {
+	glDeleteBuffers(1, &this->EBO);
+	glDeleteBuffers(1, &this->VBO);
+	glDeleteBuffers(1, &this->VAO);
+}
+
 vector<Vertex> Mesh::SQUARE() {
 	vector<Vertex> out;
 	Vertex vert1 = {

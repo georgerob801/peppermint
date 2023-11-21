@@ -34,12 +34,13 @@ int main() {
 
 	engineManager = new EngineManager();
 	if (engineManager->status == -1) return -1;
-	engineManager->worldManagers.push_back(new WorldManager());
+	// EngineManager::worldManagers.push_back(new WorldManager());
 
 	engineManager->windowManager->getWindow()->setName("Definitely Pokémon Emerald");
 	
-	WorldManager* worldManager = engineManager->worldManagers[engineManager->activeWorldManager];
-
+	/*
+	WorldManager* worldManager = EngineManager::worldManagers[EngineManager::activeWorldManager];
+	
 #pragma region pokemon world
 	GameObject* baseLayer = worldManager->createGameObject();
 	GameObject* abovePlayerLayer = worldManager->createGameObject();
@@ -567,6 +568,19 @@ int main() {
 	player->transform->position.x = 7.0f;
 	player->transform->position.y = 5.0f;
 
+	GameObject* overWarp = worldManager->createGameObject();
+	WarpTile* wp3 = new WarpTile();
+	overWarp->addComponent(wp3);
+
+	overWarp->transform->position.x = 12;
+	overWarp->transform->position.y = 8;
+	wp3->destinationWorld = 1;
+	wp3->destinationCharacterPosition.x = 8;
+	wp3->destinationCharacterPosition.y = 0;
+	wp3->requiresFacing = true;
+	wp3->facingToGo = WarpTile::UP;
+
+	navMap->warpTiles.push_back(wp3);
 
 	// worldManager->saveWorldFile("peppermint/littleroot.pmintworld");
 	// EngineManager::assetManager->saveAssetFile("peppermint/.pmintassets");
@@ -577,15 +591,13 @@ int main() {
 
 	// EngineManager::windowManager->windows[0]->renderManager->activeCamera = worldManager->getFirstCamera();
 
-
-
 #pragma region house inside
 
 	// --------------------------- TODO ----------------------------
 	// create one of the insides of a house in order to test warping
 	// -------------------------------------------------------------
 
-	engineManager->activeWorldManager = 1;
+	EngineManager::activeWorldManager = 1;
 	WorldManager* houseMan = engineManager->createWorldManager();
 
 	GameObject* houseBaseLayer = houseMan->createGameObject();
@@ -744,6 +756,36 @@ int main() {
 
 
 
+	GameObject* warpGo = houseMan->createGameObject();
+	WarpTile* wp = new WarpTile();
+	warpGo->addComponent(wp);
+
+	warpGo->transform->position.x = 8;
+	warpGo->transform->position.y = 0;
+	wp->destinationWorld = 0;
+	wp->destinationCharacterPosition.x = 12;
+	wp->destinationCharacterPosition.y = 8;
+	wp->requiresFacing = true;
+	wp->facingToGo = WarpTile::DOWN;
+	wp->facingAtDestination = WarpTile::DOWN;
+
+	hNavMap->warpTiles.push_back(wp);
+
+
+	GameObject* warpGo2 = houseMan->createGameObject();
+	WarpTile* wp2 = new WarpTile();
+	warpGo2->addComponent(wp2);
+
+	warpGo2->transform->position.x = 9;
+	warpGo2->transform->position.y = 0;
+	wp2->destinationWorld = 0;
+	wp2->destinationCharacterPosition.x = 12;
+	wp2->destinationCharacterPosition.y = 8;
+	wp2->requiresFacing = true;
+	wp2->facingToGo = WarpTile::DOWN;
+	wp2->facingAtDestination = WarpTile::DOWN;
+
+	hNavMap->warpTiles.push_back(wp2);
 
 
 	BasicPlayerRenderer* hPlayerRenderer = new BasicPlayerRenderer(1, 2);
@@ -785,7 +827,7 @@ int main() {
 	houseCam->components.push_back(houseCamComp);
 	houseCamComp->updateCameraVectors();
 
-	houseCam->transform->position.z = 10.0f;
+	houseCam->transform->position = vec3(0.5f, 0.7f, 10.0f);
 	houseCam->transform->rotation = vec3(0.0f, -half_pi<float>(), 0.0f);
 
 	houseCam->transform->parent = housePlayer->transform;
@@ -795,8 +837,38 @@ int main() {
 
 #pragma endregion
 
+	
 
+	EngineManager::assetManager->saveAssetFile("peppermint/.pmintassets");
+	worldManager->saveWorldFile("peppermint/littleroot.pmintworld");
+	houseMan->saveWorldFile("peppermint/littleroot-house1.pmintworld");
+	
+	// houseMan->assets = &EngineManager::assetManager->assets;
+	// worldManager->loadWorldFile("peppermint/littleroot.pmintworld");
+	// houseMan->loadWorldFile("peppermint/littleroot-house1.pmintworld");
+	*/
 
+	
+	EngineManager::assetManager->loadAssetFile("peppermint/.pmintassets");
+
+	WorldManager* wm0 = EngineManager::createWorldManager();
+	Asset* wm0FileAsset = new Asset(Asset::PPMINT_WORLD_FILE);
+	wm0FileAsset->path = (char*)"peppermint/littleroot.pmintworld";
+	wm0->setWorldFileAsset(wm0FileAsset);
+
+	WorldManager* wm1 = EngineManager::createWorldManager();
+	Asset* wm1FileAsset = new Asset(Asset::PPMINT_WORLD_FILE);
+	wm1FileAsset->path = (char*)"peppermint/littleroot-house1.pmintworld";
+	wm1->setWorldFileAsset(wm1FileAsset);
+	
+	for (unsigned int i = 0; i < EngineManager::worldManagers.size(); i++) {
+		EngineManager::worldManagers[i]->assets = &EngineManager::assetManager->assets;
+	}
+
+	EngineManager::activeWorldManager = 1;
+	wm1->initialiseFromWorldFile();
+	EngineManager::windowManager->windows[0]->renderManager->activeCamera = wm1->getFirstCamera();
+	
 	engineManager->loop();
 
 	delete engineManager;

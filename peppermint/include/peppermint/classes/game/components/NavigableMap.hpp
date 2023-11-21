@@ -5,6 +5,7 @@
 #include <peppermint/Exceptions.hpp>
 #include <bitset>
 #include <format>
+#include <peppermint/classes/game/components/WarpTile.h>
 
 #include <string>
 
@@ -19,6 +20,8 @@ namespace peppermint {
 				bool navigableType = true;
 
 				bool* data;
+
+				vector<WarpTile*> warpTiles;
 
 				NavigableMap(unsigned int width, unsigned int height) {
 					this->width = width;
@@ -88,6 +91,19 @@ namespace peppermint {
 						}
 					}
 
+					unsigned int numWarp = this->warpTiles.size();
+					byte* numWarpB = reinterpret_cast<byte*>(&numWarp);
+					for (unsigned int i = 0; i < sizeof(unsigned int); i++) {
+						out.push_back(numWarpB[i]);
+					}
+
+					for (unsigned int i = 0; i < this->warpTiles.size(); i++) {
+						byte* warpIDB = reinterpret_cast<byte*>(&this->warpTiles[i]);
+						for (unsigned int j = 0; j < sizeof(void*); j++) {
+							out.push_back(warpIDB[j]);
+						}
+					}
+
 					vector<byte*> boolsToAdd;
 					boolsToAdd.push_back(reinterpret_cast<byte*>(&this->navigableType));
 
@@ -143,6 +159,14 @@ namespace peppermint {
 
 					position += 2 * sizeof(unsigned int);
 
+					unsigned int numWarpTiles = *reinterpret_cast<unsigned int*>(&bytes[position]);
+					position += sizeof(unsigned int);
+
+					for (unsigned int i = 0; i < numWarpTiles; i++) {
+						this->relatedSerialisedIDs.push_back(*reinterpret_cast<void**>(&bytes[position]));
+						position += sizeof(void*);
+					}
+
 					this->navigableType = *reinterpret_cast<bool*>(&bytes[position]);
 					position += sizeof(bool);
 
@@ -152,7 +176,7 @@ namespace peppermint {
 						this->data[i] = ((unsigned char)valueB & (0b1 << (7 - (i % 8)))) != 0;
 					}
 
-					this->deserialisedSize = sizeof(void*) + (2 * sizeof(unsigned int)) + sizeof(bool) + ((int)ceil((float)(this->width * this->height) / 8.0f));
+					this->deserialisedSize = sizeof(void*) + (2 * sizeof(unsigned int)) + sizeof(unsigned int) + (numWarpTiles * sizeof(void*)) + sizeof(bool) + ((int)ceil((float)(this->width * this->height) / 8.0f));
 				}
 			};
 		}

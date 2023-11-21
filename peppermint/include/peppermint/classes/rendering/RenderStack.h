@@ -14,6 +14,7 @@ namespace peppermint {
 			Mesh* mesh = nullptr;
 			vec2 uvOffset = vec2(0.0f, 0.0f);
 			int textureToUse = 0;
+			void* fromWorld = nullptr;
 		};
 
 		class RenderStack {

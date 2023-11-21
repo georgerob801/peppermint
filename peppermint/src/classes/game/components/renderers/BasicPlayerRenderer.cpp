@@ -30,28 +30,24 @@ void BasicPlayerRenderer::loop() {
 		}
 
 		offset = this->up->getUVOffsetAtStep(this->up->stepAtTime(glfwGetTime() - this->animationStart));
-		
 	} else if (this->pc->currentlyMoving.backward) {
 		if (this->animationStart == 0) {
 			this->animationStart = glfwGetTime();
 		}
 
 		offset = this->down->getUVOffsetAtStep(this->down->stepAtTime(glfwGetTime() - this->animationStart));
-		
 	} else if (this->pc->currentlyMoving.left) {
 		if (this->animationStart == 0) {
 			this->animationStart = glfwGetTime();
 		}
 
 		offset = this->left->getUVOffsetAtStep(this->left->stepAtTime(glfwGetTime() - this->animationStart));
-		
 	} else if (this->pc->currentlyMoving.right) {
 		if (this->animationStart == 0) {
 			this->animationStart = glfwGetTime();
 		}
 
 		offset = this->right->getUVOffsetAtStep(this->right->stepAtTime(glfwGetTime() - this->animationStart));
-		
 	} else {
 		if ((!cps.forward && !cps.backward && !cps.left && !cps.right) || this->pc->attemptingCollidingMove) this->animationStart = 0;
 

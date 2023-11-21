@@ -20,21 +20,15 @@ GameObject::~GameObject() {
 	vector<Component*>().swap(this->components);
 }
 
-template <class T> Component* GameObject::addComponent() {
-	if (!std::is_base_of(Component, T)) {
-		throw IsNotComponentException();
+void GameObject::addComponent(Component* comp) {
+	vector<Component*>::iterator index = find(this->components.begin(), this->components.end(), comp);
+
+	if (index != this->components.end()) {
+		throw AlreadyHasComponentException();
 	}
 
-	for (int i = 0; i < this->components.size(); i++) {
-		if (typeid(this->components[i]) == typeid(T)) {
-			throw AlreadyHasComponentException();
-		}
-	}
-
-	T* newComponent = new T();
-	this->components.push_back(newComponent);
-
-	return newComponent;
+	this->components.push_back(comp);
+	comp->setGameObject((void*)this);
 }
 
 template<class T> Component* GameObject::getComponent() {

@@ -16,7 +16,8 @@ namespace peppermint {
 			VERTEX_SHADER_SOURCE,
 			TEXTURE_SET,
 			TEXTURE,
-			TILESET
+			TILESET,
+			PPMINT_WORLD_FILE
 		};
 
 		ASSET_TYPE type;

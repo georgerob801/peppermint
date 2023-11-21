@@ -19,7 +19,7 @@ namespace peppermint {
 			GameObject();
 			~GameObject();
 
-			template<class T> Component* addComponent();
+			void addComponent(Component* comp);
 
 			template<class T> Component* getComponent();
 
