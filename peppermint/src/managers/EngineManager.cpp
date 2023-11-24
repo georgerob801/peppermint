@@ -1,3 +1,5 @@
+#include <glad/glad.h>
+#define GLFW_INCLUDE_NONE
 #include <peppermint/managers/EngineManager.h>
 
 #include <format>
@@ -89,6 +91,18 @@ WorldManager* EngineManager::createWorldManager() {
 	return wm;
 }
 
+void EngineManager::goToWorld(unsigned int worldIndex) {
+	// unload current world
+	EngineManager::worldManagers[EngineManager::activeWorldManager]->unload();
+
+	// load new world
+	EngineManager::activeWorldManager = worldIndex;
+	EngineManager::worldManagers[EngineManager::activeWorldManager]->initialiseFromWorldFile();
+	EngineManager::worldManagers[EngineManager::activeWorldManager]->stopProcessingWorld = false;
+
+	EngineManager::windowManager->windows[0]->renderManager->activeCamera = EngineManager::worldManagers[EngineManager::activeWorldManager]->getFirstCamera();
+}
+
 void EngineManager::loop() {
 	glEnable(GL_DEPTH_TEST);
 
@@ -112,15 +126,21 @@ void EngineManager::loop() {
 	stbi_set_flip_vertically_on_load(true);
 #pragma endregion
 
+	unsigned int lastWmI = this->activeWorldManager;
+
 	while (EngineManager::windowManager->windows.size() != 0) {
-		if (this->status == -1) throw std::exception("Failed to start peppermint.");
+		if (this->status == -1) throw std::exception("Failed to run peppermint.");
 
 		this->updateDeltaTime();
 
 		for (int i = 0; i < EngineManager::windowManager->windows.size(); i++) {
 			InputManager::setWindow(EngineManager::windowManager->windows[i]);
 
-			unsigned int lastWmI = this->activeWorldManager;
+			//if (this->activeWorldManager != lastWmI) {
+			//	EngineManager::windowManager->windows[i]->renderManager->activeCamera = EngineManager::worldManagers[EngineManager::activeWorldManager]->getFirstCamera();
+			//}
+
+			lastWmI = this->activeWorldManager;
 
 			// awake
 			if (!this->worldManagers[this->activeWorldManager]->initialised) {
@@ -130,21 +150,19 @@ void EngineManager::loop() {
 			}
 
 			// discard frame if world changed, restart loop process
-			if (this->activeWorldManager != lastWmI) break;
+			if (this->activeWorldManager != lastWmI) continue;
 
 			// start
 			this->worldManagers[this->activeWorldManager]->start();
 
 			// discard frame if world changed, restart loop process
-			if (this->activeWorldManager != lastWmI) break;
+			if (this->activeWorldManager != lastWmI) continue;
 
 			// loop
 			this->worldManagers[this->activeWorldManager]->loop(EngineManager::windowManager->windows[i]);
-			
-			cout << this->activeWorldManager << endl;
 
 			// discard frame if world changed, restart loop process
-			if (this->activeWorldManager != lastWmI) break;
+			if (this->activeWorldManager != lastWmI) continue;
 
 			EngineManager::windowManager->windows[i]->renderFrame();
 			EngineManager::windowManager->windows[i]->swapBuffers();

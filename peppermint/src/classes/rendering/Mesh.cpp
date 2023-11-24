@@ -11,6 +11,7 @@ using namespace std;
 
 Mesh::~Mesh() {
 	glDeleteBuffers(1, &this->EBO);
+	cout << "deleting mesh" << endl;
 	glDeleteBuffers(1, &this->VBO);
 	glDeleteBuffers(1, &this->VAO);
 }

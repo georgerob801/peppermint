@@ -128,11 +128,16 @@ void WorldManager::setWorldFileAsset(Asset* item) {
 }
 
 void WorldManager::unload() {
+	LogManager::debug(format("Unloading world manager at {}", (void*)this));
 	for (unsigned int i = 0; i < this->gameObjects.size(); i++) {
+		LogManager::debug(format("Unloading game object #{}", i));
 		delete this->gameObjects[i];
 	}
+	LogManager::debug(format("Unloaded all {} game objects", this->gameObjects.size()));
+	vector<GameObject*>().swap(this->gameObjects);
 	this->stopProcessingWorld = true;
 	this->initialised = false;
+	LogManager::info(format("Unloaded world at {}", (void*)this));
 }
 
 vector<byte> WorldManager::serialise() {
@@ -219,6 +224,8 @@ void WorldManager::loadWorldFile(char* filename) {
 	}
 
 	this->deserialise(allBytes);
+
+	LogManager::info(format("Loaded world at {}", (void*)this));
 }
 
 void WorldManager::deserialise(vector<byte> bytes) {
@@ -338,11 +345,21 @@ void WorldManager::deserialise(vector<byte> bytes) {
 
 			(*comp)->setGameObject((void*)this->gameObjects[i]);*/
 
-			this->gameObjects[i]->addComponent(*comp);
-
 			if ((*comp)->getType() == Component::TRANSFORM) {
+				// delete default transform component
+				this->gameObjects[i]->components.erase(this->gameObjects[i]->components.begin());
+				delete this->gameObjects[i]->transform;
+
+				// set new one
 				this->gameObjects[i]->transform = (Transform*)(*comp);
+				this->gameObjects[i]->prependComponent(*comp);
+			} else {
+				this->gameObjects[i]->addComponent(*comp);
 			}
+
+			//if ((*comp)->getType() == Component::CAMERA) {
+			//	LogManager::warn(std::format("{}\n\t\t\t\t  {}", (*comp)->getGameObject(), (void*)((GameObject*)(*comp)->getGameObject())->transform));
+			//}
 		}
 	}
 

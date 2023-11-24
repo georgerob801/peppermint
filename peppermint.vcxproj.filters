@@ -102,6 +102,9 @@
     <ClCompile Include="peppermint\src\classes\game\components\renderers\AnimatedTilesetRenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="peppermint\src\classes\game\components\WarpTile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="peppermint\include\stb_image\stb_image.h">
@@ -195,6 +198,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\classes\game\components\WarpTile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

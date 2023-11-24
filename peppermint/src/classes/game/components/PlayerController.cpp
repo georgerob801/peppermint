@@ -151,22 +151,24 @@ void PlayerController::onChangeTile() {
 	});
 
 	// stop if no warp tile
-	if (index == this->navMap->warpTiles.end()) return;
+	if (index >= this->navMap->warpTiles.end()) return;
 
-	// unload current world
-	EngineManager::worldManagers[EngineManager::activeWorldManager]->unload();
+	// switch to world
+	unsigned int destination = (*index)->destinationWorld;
 
-	// load new world
-	EngineManager::activeWorldManager = (*index)->destinationWorld;
-	EngineManager::worldManagers[EngineManager::activeWorldManager]->initialiseFromWorldFile();
+	// get things before they are deleted
+	vec3 destCharPos = (*index)->destinationCharacterPosition;
+	PlayerController::FACING facing = (PlayerController::FACING)((*index)->facingAtDestination);
+
+	EngineManager::goToWorld(destination);
 
 
 	// get first player controller + set position
 	WorldManager* wm = EngineManager::worldManagers[EngineManager::activeWorldManager];
 
 	PlayerController* pc = wm->getFirstComponent<PlayerController>();
-	((GameObject*)pc->getGameObject())->transform->position = (*index)->destinationCharacterPosition;
-	pc->facing = (PlayerController::FACING)((*index)->facingAtDestination);
+	((GameObject*)pc->getGameObject())->transform->position = destCharPos;
+	pc->facing = facing;
 	pc->lastWarp = glfwGetTime();
 }
 

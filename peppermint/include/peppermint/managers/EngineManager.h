@@ -1,9 +1,6 @@
 #ifndef PPMINT_ENGINE_MANAGER_H
 #define PPMINT_ENGINE_MANAGER_H
 
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-
 #include <vector>
 
 #include <peppermint/managers/LogManager.h>
@@ -35,6 +32,8 @@ namespace peppermint {
 			double vSyncTime();
 
 			void loop();
+
+			static void goToWorld(unsigned int worldIndex);
 
 			static WorldManager* createWorldManager();
 

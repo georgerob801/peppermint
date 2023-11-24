@@ -14,10 +14,18 @@ GameObject::GameObject() {
 }
 
 GameObject::~GameObject() {
+	// cout << "here (gameobject)" << endl;
+	for (unsigned int i = 0; i < this->components.size(); i++) {
+		delete this->components[i];
+	}
 	this->components.clear();
 
 	// free memory
 	vector<Component*>().swap(this->components);
+}
+
+void GameObject::prependComponent(Component* comp) {
+	this->components.insert(this->components.begin(), comp);
 }
 
 void GameObject::addComponent(Component* comp) {
