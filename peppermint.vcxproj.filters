@@ -39,7 +39,7 @@
     <ClCompile Include="peppermint\src\classes\Window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="peppermint\src\classes\rendering\RenderStack.cpp">
+    <ClCompile Include="peppermint\src\classes\rendering\RenderQueue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="peppermint\src\managers\WorldManager.cpp">
@@ -105,6 +105,9 @@
     <ClCompile Include="peppermint\src\classes\game\components\WarpTile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="peppermint\src\classes\game\components\renderers\SpriteRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="peppermint\include\stb_image\stb_image.h">
@@ -125,7 +128,7 @@
     <ClInclude Include="peppermint\include\peppermint\classes\Window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="peppermint\include\peppermint\classes\rendering\RenderStack.h">
+    <ClInclude Include="peppermint\include\peppermint\classes\rendering\RenderQueue.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="peppermint\include\peppermint\managers\WorldManager.h">
@@ -203,13 +206,16 @@
     <ClInclude Include="peppermint\include\peppermint\classes\game\components\WarpTile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\classes\game\components\renderers\SpriteRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\classes\game\Toggleable.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="peppermint\resource\shader\vertex\default.vert" />
     <None Include="peppermint\resource\shader\fragment\default.frag" />
-    <None Include="ClassDiagram.cd" />
-    <None Include="ClassDiagram1.cd" />
-    <None Include="ClassDiagram2.cd" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="peppermint.rc">

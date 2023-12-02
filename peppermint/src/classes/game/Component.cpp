@@ -25,18 +25,6 @@ void* Component::getGameObject() {
 	return this->gameObject;
 }
 
-void Component::enable() {
-	this->enabled = true;
-}
-
-void Component::disable() {
-	this->enabled = false;
-}
-
-bool Component::isEnabled() {
-	return this->enabled;
-}
-
 vector<byte> Component::serialise() {
 	vector<byte> out;
 

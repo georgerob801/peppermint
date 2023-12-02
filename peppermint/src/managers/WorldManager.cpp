@@ -2,7 +2,7 @@
 #include <type_traits>
 
 #include <peppermint/classes/game/components/renderers/Renderer.h>
-#include <peppermint/classes/rendering/RenderStack.h>
+#include <peppermint/classes/rendering/RenderQueue.h>
 
 #include <peppermint/classes/rendering/TilesetAnimationStateInfomation.hpp>
 
@@ -20,13 +20,13 @@
 using namespace peppermint::managers;
 
 WorldManager::WorldManager() {
-	this->filePath = new Asset(Asset::PPMINT_WORLD_FILE);
-	this->filePath->path = (char*)"";
+	this->worldAsset = new Asset(Asset::PPMINT_WORLD_FILE);
+	this->worldAsset->path = (char*)"";
 }
 
 WorldManager::WorldManager(char* filePath) {
-	this->filePath = new Asset(Asset::PPMINT_WORLD_FILE);
-	this->filePath->path = filePath;
+	this->worldAsset = new Asset(Asset::PPMINT_WORLD_FILE);
+	this->worldAsset->path = filePath;
 }
 
 // only runs once so not as painfully laggy
@@ -63,10 +63,13 @@ void WorldManager::start() {
 void WorldManager::loop(Window* window) {
 	for (unsigned int i = 0; i < this->gameObjects.size(); i++) {
 		if (this->stopProcessingWorld) break;
+		if (!this->gameObjects[i]->isEnabled()) continue;
 		for (unsigned int j = 0; j < this->gameObjects[i]->components.size(); j++) {
 			if (this->stopProcessingWorld) break;
+			if (!this->gameObjects[i]->components[j]->isEnabled()) continue;
 			this->gameObjects[i]->components[j]->loop();
 			if (this->stopProcessingWorld) break;
+			if (!this->gameObjects[i]->components[j]->isEnabled()) continue;
 
 			if (Renderer* rendererComponent = dynamic_cast<Renderer*>(this->gameObjects[i]->components[j])) {
 				peppermint::rendering::RenderItem renderItem;
@@ -89,7 +92,7 @@ void WorldManager::loop(Window* window) {
 					};
 				}
 
-				window->renderManager->activeRenderStack->renderItems.push_back(renderItem);
+				window->renderManager->activeRenderQueue->renderItems.push_back(renderItem);
 			}
 		}
 	}
@@ -102,12 +105,8 @@ GameObject* WorldManager::createGameObject() {
 	return go;
 }
 
-void WorldManager::saveWorldFile(const char* filename) {
-	this->saveWorldFile((char*)filename);
-}
-
-void WorldManager::saveWorldFile(char* filename) {
-	std::ofstream worldFile(filename, std::ios::binary | std::ios::trunc);
+void WorldManager::saveWorldFile() {
+	std::ofstream worldFile(this->worldAsset->path, std::ios::binary | std::ios::trunc);
 
 	vector<byte> serialised = this->serialise();
 
@@ -117,14 +116,13 @@ void WorldManager::saveWorldFile(char* filename) {
 }
 
 void WorldManager::initialiseFromWorldFile() {
-	// cout << "would initialise from " << this->filePath->path << " here" << endl;
 	this->initialised = false;
-	this->loadWorldFile(this->filePath->path);
+	this->loadWorldFile();
 	this->initialised = true;
 }
 
 void WorldManager::setWorldFileAsset(Asset* item) {
-	this->filePath = item;
+	this->worldAsset = item;
 }
 
 void WorldManager::unload() {
@@ -198,12 +196,8 @@ vector<byte> WorldManager::serialise() {
 	return out;
 }
 
-void WorldManager::loadWorldFile(const char* filename) {
-	this->loadWorldFile((char*)filename);
-}
-
-void WorldManager::loadWorldFile(char* filename) {
-	std::ifstream worldFile(filename, std::ios::binary | std::ios::in);
+void WorldManager::loadWorldFile() {
+	std::ifstream worldFile(this->worldAsset->path, std::ios::binary | std::ios::in);
 	worldFile.unsetf(std::ios::skipws);
 
 	std::streampos fileSize;

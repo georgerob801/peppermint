@@ -12,17 +12,40 @@
 namespace peppermint {
 	namespace game {
 		namespace components {
+			/// <summary>
+			/// Component for determining where things can and can't move.
+			/// </summary>
 			class NavigableMap : public Component {
 			public:
+				/// <summary>
+				/// The width of this NavigableMap.
+				/// </summary>
 				unsigned int width = NULL;
+				/// <summary>
+				/// The height of this NavigableMap.
+				/// </summary>
 				unsigned int height = NULL;
 
+				/// <summary>
+				/// Determines whether true or false values represent a tile that can be moved to.
+				/// </summary>
 				bool navigableType = true;
 
+				/// <summary>
+				/// A pointer to the first true/false value.
+				/// </summary>
 				bool* data;
 
+				/// <summary>
+				/// A vector of all warp tiles on this NavigableMap.
+				/// </summary>
 				vector<WarpTile*> warpTiles;
 
+				/// <summary>
+				/// Create a new NavigableMap.
+				/// </summary>
+				/// <param name="width">The desired width of the NavigableMap.</param>
+				/// <param name="height">The desired height of the NavigableMap.</param>
 				NavigableMap(unsigned int width, unsigned int height) {
 					this->width = width;
 					this->height = height;
@@ -35,10 +58,18 @@ namespace peppermint {
 					}
 				}
 
+				/// <summary>
+				/// Destroy a NavigableMap.
+				/// </summary>
 				~NavigableMap() {
 					delete this->data;
 				}
 
+				/// <summary>
+				/// Make a specific tile navigable.
+				/// </summary>
+				/// <param name="x">The x coordinate of the tile.</param>
+				/// <param name="y">The y coordinate of the tile.</param>
 				void makeNavigable(unsigned int x, unsigned int y) {
 					if (x >= this->width || y >= this->height) throw peppermint::exceptions::component::InvalidCoordinateException();
 
@@ -47,6 +78,11 @@ namespace peppermint {
 					this->data[index] = this->navigableType;
 				}
 
+				/// <summary>
+				/// Make a specific tile unnavigable.
+				/// </summary>
+				/// <param name="x">The x coordinate of the tile.</param>
+				/// <param name="y">The y coordinate of the tile.</param>
 				void makeUnnavigable(unsigned int x, unsigned int y) {
 					if (x >= this->width || y >= this->height) throw peppermint::exceptions::component::InvalidCoordinateException();
 
@@ -55,6 +91,12 @@ namespace peppermint {
 					this->data[index] = !this->navigableType;
 				}
 
+				/// <summary>
+				/// Determine whether a specific tile can be navigated to.
+				/// </summary>
+				/// <param name="x">The x coordinate of the tile.</param>
+				/// <param name="y">The y coordinate of the tile.</param>
+				/// <returns></returns>
 				bool isNavigable(unsigned int x, unsigned int y) {
 					if (x >= this->width || y >= this->height) throw peppermint::exceptions::component::InvalidCoordinateException();
 

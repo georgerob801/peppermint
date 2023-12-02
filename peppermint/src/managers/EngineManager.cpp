@@ -2,20 +2,26 @@
 #define GLFW_INCLUDE_NONE
 #include <peppermint/managers/EngineManager.h>
 
+#include <peppermint/Exceptions.hpp>
+
 #include <format>
 #include <stb_image/stb_image.h>
 #include <peppermint/managers/InputManager.h>
+
+#include <fstream>
 
 using namespace peppermint::managers;
 
 double EngineManager::deltaTime;
 double EngineManager::lastFrame;
+peppermint::Asset* EngineManager::gameFile;
 
 AssetManager* EngineManager::assetManager = new AssetManager();
 WindowManager* EngineManager::windowManager = new WindowManager();
 
 vector<WorldManager*> EngineManager::worldManagers = vector<WorldManager*>();
 unsigned int EngineManager::activeWorldManager = 0;
+unsigned int EngineManager::initialWorldIndex = 0;
 
 EngineManager::EngineManager() {
 	this->status = 0;
@@ -70,6 +76,8 @@ EngineManager::~EngineManager() {
 	LogManager::debug("Terminating GLFW");
 	glfwTerminate();
 	LogManager::debug("Terminated GLFW");
+	LogManager::debug("Deleting AssetManager");
+	delete EngineManager::assetManager;
 	LogManager::debug("Deleting EngineManager");
 	delete EngineManager::windowManager;
 }
@@ -179,4 +187,147 @@ void EngineManager::loop() {
 
 		glfwPollEvents();
 	}
+}
+
+void EngineManager::setGameFile(Asset* gameFile) {
+	EngineManager::gameFile = gameFile;
+}
+
+void EngineManager::saveGameFile() {
+	if (EngineManager::gameFile == nullptr) throw peppermint::exceptions::serialisation::game::NoGameFilePathException();
+
+	std::ofstream gameFileFS(EngineManager::gameFile->path, std::ios::binary | std::ios::trunc);
+
+	vector<byte> out;
+
+	out.push_back((byte)0x03);
+	out.push_back((byte)0x00);
+
+	while (out.size() < 16) out.push_back((byte)0x00);
+
+	// asset path
+	std::string assetPathStr(EngineManager::assetManager->assetFileAsset->path);
+	unsigned int assetPathLen = assetPathStr.size();
+	for (unsigned int i = 0; i < sizeof(unsigned int); i++) {
+		out.push_back(reinterpret_cast<byte*>(&assetPathLen)[i]);
+	}
+
+	// asset path str?
+	for (unsigned int i = 0; i < assetPathLen; i++) {
+		out.push_back(reinterpret_cast<byte*>(&assetPathStr[i])[0]);
+	}
+
+	// number of world files
+	unsigned int numWorldFiles = EngineManager::worldManagers.size();
+	byte* numWorldFilesB = reinterpret_cast<byte*>(&numWorldFiles);
+	for (unsigned int i = 0; i < sizeof(unsigned int); i++) {
+		out.push_back(numWorldFilesB[i]);
+	}
+
+	// initial world index
+	byte* initialWorldIndexB = reinterpret_cast<byte*>(&EngineManager::initialWorldIndex);
+	for (unsigned int i = 0; i < sizeof(unsigned int); i++) {
+		out.push_back(initialWorldIndexB[i]);
+	}
+
+	// the actual world file asset ids
+	for (unsigned int i = 0; i < EngineManager::worldManagers.size(); i++) {
+		byte* wmAIDB = reinterpret_cast<byte*>(&EngineManager::worldManagers[i]->worldAsset);
+		for (unsigned int j = 0; j < sizeof(void*); j++) {
+			out.push_back(wmAIDB[j]);
+		}
+	}
+
+	if (out.size() > 0) gameFileFS.write(reinterpret_cast<const char*>(&out[0]), out.size());
+}
+
+void EngineManager::loadFromGameFile() {
+	std::ifstream gameFile(EngineManager::gameFile->path, std::ios::binary | std::ios::in);
+	gameFile.unsetf(std::ios::skipws);
+
+	std::streampos fileSize;
+
+	gameFile.seekg(0, std::ios::end);
+	fileSize = gameFile.tellg();
+	gameFile.seekg(0, std::ios::beg);
+
+	std::vector<unsigned char> chars;
+	chars.reserve(fileSize);
+
+	chars.insert(chars.begin(), std::istream_iterator<unsigned char>(gameFile), std::istream_iterator<unsigned char>());
+	
+	std::vector<byte> bytes;
+	bytes.reserve(fileSize);
+	for (unsigned int i = 0; i < chars.size(); i++) {
+		bytes.push_back((byte)chars[i]);
+	}
+
+	if (bytes.size() < 16) {
+		throw peppermint::exceptions::serialisation::game::CorruptedFileException();
+	}
+
+	if (bytes[0x00] != (byte)0x03) {
+		throw peppermint::exceptions::serialisation::game::InvalidFileTypeException();
+	}
+
+	EngineManager::worldManagers.clear();
+	vector<WorldManager*>().swap(EngineManager::worldManagers);
+
+	delete EngineManager::assetManager;
+
+	unsigned long long position = 0x10;
+
+	unsigned int assetFilePathLength = *reinterpret_cast<unsigned int*>(&bytes[position]);
+	position += sizeof(unsigned int);
+
+	std::string assetFilePath = "";
+	for (unsigned int i = 0; i < assetFilePathLength; i++) {
+		assetFilePath += *reinterpret_cast<char*>(&bytes[position]);
+		position += sizeof(char);
+	}
+
+	// LOAD THE ASSET MANAGER HERE
+	Asset* assetManagerAsset = new Asset(Asset::PPMINT_ASSET_FILE);
+	// memory managed by asset deconstructor
+	char* assetManagerPathCStr = new char();
+	assetManagerPathCStr = (char*)assetFilePath.c_str();
+	assetManagerAsset->path = assetManagerPathCStr;
+
+	AssetManager* am = new AssetManager();
+	EngineManager::assetManager = am;
+	am->loadAssetFile(assetManagerAsset);
+
+	// eeee
+
+	unsigned int numWorldAssets = *reinterpret_cast<unsigned int*>(&bytes[position]);
+	position += sizeof(unsigned int);
+
+	EngineManager::initialWorldIndex = *reinterpret_cast<unsigned int*>(&bytes[position]);
+	position += sizeof(unsigned int);
+
+	vector<void*> worldAssetIDs;
+	worldAssetIDs.reserve(numWorldAssets);
+
+	for (unsigned int i = 0; i < numWorldAssets; i++) {
+		worldAssetIDs.push_back(*reinterpret_cast<void**>(&bytes[position]));
+		position += sizeof(void*);
+	}
+
+	// LOAD ACTUAL WORLDS HERE
+	for (unsigned int i = 0; i < worldAssetIDs.size(); i++) {
+		// find asset
+		void* worldAssetID = worldAssetIDs[i];
+		vector<Asset*>::iterator index = find_if(EngineManager::assetManager->assets.begin(), EngineManager::assetManager->assets.end(), [worldAssetID](Asset* item) { return item->serialisedID == worldAssetID; });
+
+		if (index == EngineManager::assetManager->assets.end()) throw peppermint::exceptions::serialisation::world::CorruptedFileException();
+
+		WorldManager* wm = EngineManager::createWorldManager();
+		wm->assets = &EngineManager::assetManager->assets;
+		wm->setWorldFileAsset(*index);
+	}
+
+	LogManager::info("Loaded game");
+
+	LogManager::debug(format("Going to initial world (index {})", EngineManager::initialWorldIndex));
+	EngineManager::goToWorld(EngineManager::initialWorldIndex);
 }

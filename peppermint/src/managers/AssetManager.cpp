@@ -20,6 +20,8 @@ AssetManager::~AssetManager() {
 	for (unsigned int i = 0; i < this->assets.size(); i++) {
 		delete assets[i];
 	}
+
+	this->assets.clear();
 }
 
 peppermint::Asset* AssetManager::newAsset(peppermint::Asset::ASSET_TYPE type) {
@@ -38,14 +40,8 @@ void AssetManager::unregisterAsset(Asset* asset) {
 	if (pos != this->assets.end()) this->assets.erase(pos);
 }
 
-
-
-void AssetManager::saveAssetFile(const char* filename) {
-	this->saveAssetFile((char*)filename);
-}
-
-void AssetManager::saveAssetFile(char* filename) {
-	std::ofstream assetFile(filename, std::ios::out | std::ios::binary);
+void AssetManager::saveAssetFile() {
+	std::ofstream assetFile(this->assetFileAsset->path, std::ios::out | std::ios::binary);
 
 	vector<byte> serialised = this->serialise();
 
@@ -87,12 +83,9 @@ vector<byte> AssetManager::serialise() {
 	return out;
 }
 
-void AssetManager::loadAssetFile(const char* filename) {
-	this->loadAssetFile((char*)filename);
-}
-
-void AssetManager::loadAssetFile(char* filename) {
-	std::ifstream assetFile(filename, std::ios::binary | std::ios::in);
+void AssetManager::loadAssetFile(Asset* assetFileIn) {
+	this->assetFileAsset = assetFileIn;
+	std::ifstream assetFile(assetFileIn->path, std::ios::binary | std::ios::in);
 	assetFile.unsetf(std::ios::skipws);
 
 	std::streampos fileSize;
@@ -145,6 +138,9 @@ void AssetManager::deserialise(vector<byte> bytes) {
 		case Asset::IMAGE:
 		case Asset::FRAGMENT_SHADER_SOURCE:
 		case Asset::VERTEX_SHADER_SOURCE:
+		case Asset::PPMINT_ASSET_FILE:
+		case Asset::PPMINT_GAME_FILE:
+		case Asset::PPMINT_WORLD_FILE:
 			asset = new Asset(type);
 			copy(bytes.begin() + position, bytes.end(), subVector.begin());
 

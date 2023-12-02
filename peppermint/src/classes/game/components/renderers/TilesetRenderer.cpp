@@ -27,12 +27,15 @@ void TilesetRenderer::setTileAt(unsigned int x, unsigned int y, unsigned short v
 
 void TilesetRenderer::generateVertices() {
 	this->vertices.clear();
+	vector<Vertex>().swap(this->vertices);
 
 	// only for testing
 	for (unsigned int i = 0; i < this->tileset->textureSets.size(); i++) {
 		this->tileset->textureSets[i]->generateAtlas();
 		this->textures.push_back(this->tileset->textureSets[i]->atlas);
 	}
+
+
 
 	vec2 scale = vec2(1.0f / (float)this->tileset->getCurrentTextureSet()->atlas->getWidth(), 1.0f / (float)this->tileset->getCurrentTextureSet()->atlas->getHeight());
 

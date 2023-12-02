@@ -1,6 +1,5 @@
 #include <iostream>
 
-
 #include <stb_image/stb_image.h>
 
 #include <peppermint/managers/LogManager.h>
@@ -25,16 +24,25 @@ using namespace peppermint::managers;
 #include <peppermint/classes/game/components/renderers/BasicPlayerRenderer.h>
 #include <peppermint/classes/game/components/renderers/AnimatedTilesetRenderer.h>
 
+#include <peppermint/classes/game/components/renderers/SpriteRenderer.h>
+
 using namespace peppermint::game::components;
 
 EngineManager* engineManager;
+
+// TODO: OPENAL YOU IDIOT
+
+/* TODO TIMEEEE
+* TODO: openal
+* TODO: sprite renderer component
+* TODO: 
+*/
 
 int main() {
 	stbi_set_flip_vertically_on_load(true);
 
 	engineManager = new EngineManager();
 	if (engineManager->status == -1) return -1;
-	// EngineManager::worldManagers.push_back(new WorldManager());
 
 	engineManager->windowManager->getWindow()->setName("Definitely Pokémon Emerald");
 	
@@ -848,16 +856,18 @@ int main() {
 	// houseMan->loadWorldFile("peppermint/littleroot-house1.pmintworld");
 	*/
 
-	
-	EngineManager::assetManager->loadAssetFile("peppermint/.pmintassets");
+	/*
+	Asset* assetFile = EngineManager::assetManager->newAsset(Asset::PPMINT_GAME_FILE);
+	assetFile->path = (char*)"peppermint/.pmintassets";
+	EngineManager::assetManager->loadAssetFile(assetFile);
 
 	WorldManager* wm0 = EngineManager::createWorldManager();
-	Asset* wm0FileAsset = new Asset(Asset::PPMINT_WORLD_FILE);
+	Asset* wm0FileAsset = EngineManager::assetManager->newAsset(Asset::PPMINT_WORLD_FILE);
 	wm0FileAsset->path = (char*)"peppermint/littleroot.pmintworld";
 	wm0->setWorldFileAsset(wm0FileAsset);
 
 	WorldManager* wm1 = EngineManager::createWorldManager();
-	Asset* wm1FileAsset = new Asset(Asset::PPMINT_WORLD_FILE);
+	Asset* wm1FileAsset = EngineManager::assetManager->newAsset(Asset::PPMINT_WORLD_FILE);
 	wm1FileAsset->path = (char*)"peppermint/littleroot-house1.pmintworld";
 	wm1->setWorldFileAsset(wm1FileAsset);
 	
@@ -867,8 +877,60 @@ int main() {
 
 	EngineManager::activeWorldManager = 1;
 	wm1->initialiseFromWorldFile();
+
 	EngineManager::windowManager->windows[0]->renderManager->activeCamera = wm1->getFirstCamera();
 	
+	Asset* gameFileAsset = EngineManager::assetManager->newAsset(Asset::PPMINT_GAME_FILE);
+	gameFileAsset->path = (char*)"peppermint/pokemon.pmint";
+	EngineManager::setGameFile(gameFileAsset);
+
+
+	
+	EngineManager::goToWorld(0);
+	wm0->worldAsset->path = (char*)"peppermint/new/littleroot.world";
+	wm0->saveWorldFile();
+	EngineManager::goToWorld(1);
+	wm1->worldAsset->path = (char*)"peppermint/new/littleroot-1.world";
+	wm1->saveWorldFile();
+	EngineManager::saveGameFile();
+	EngineManager::assetManager->saveAssetFile();*/
+
+
+	Asset* gameFileAsset = new Asset(Asset::PPMINT_GAME_FILE);
+	gameFileAsset->path = (char*)"peppermint/pokemon.pmint";
+	engineManager->setGameFile(gameFileAsset);
+
+	EngineManager::loadFromGameFile();
+
+
+	WorldManager* wm = EngineManager::worldManagers[0];
+
+	GameObject* go = wm->createGameObject();
+
+	SpriteRenderer* sr = new SpriteRenderer();
+	Asset* imageAsset = EngineManager::assetManager->newAsset(Asset::IMAGE);
+	imageAsset->path = (char*)"peppermint/resource/texture.png";
+	
+	Texture* tex = new Texture(imageAsset);
+
+	TextureSet* texSet = new TextureSet();
+	texSet->addTexture(tex);
+
+	sr->textureSet = texSet;
+
+	go->addComponent(sr);
+
+	sr->size = vec2(79, 28);
+
+	sr->generateTextures();
+	sr->generateVertices();
+
+	go->transform->position.z = 1.0f;
+	go->transform->position.x = 1.0f;
+	go->transform->position.y = 1.0f;
+
+	go->transform->parent = ((GameObject*)wm->getFirstComponent<PlayerController>()->getGameObject())->transform;
+
 	engineManager->loop();
 
 	delete engineManager;
