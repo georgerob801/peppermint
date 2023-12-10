@@ -29,6 +29,10 @@ WorldManager::WorldManager(char* filePath) {
 	this->worldAsset->path = filePath;
 }
 
+WorldManager::~WorldManager() {
+	this->unload();
+}
+
 // only runs once so not as painfully laggy
 void WorldManager::awake() {
 	this->stopProcessingWorld = false;

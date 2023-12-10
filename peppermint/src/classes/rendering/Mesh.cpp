@@ -10,10 +10,15 @@ using namespace peppermint::managers;
 using namespace std;
 
 Mesh::~Mesh() {
+	LogManager::debug(format("Deleting EBO at {}", this->EBO));
 	glDeleteBuffers(1, &this->EBO);
-	cout << "deleting mesh" << endl;
+	LogManager::debug(format("Deleted EBO at {}", this->EBO));
+	LogManager::debug(format("Deleting VBO at {}", this->VBO));
 	glDeleteBuffers(1, &this->VBO);
+	LogManager::debug(format("Deleted VBO at {}", this->VBO));
+	LogManager::debug(format("Deleting VAO at {}", this->VAO));
 	glDeleteBuffers(1, &this->VAO);
+	LogManager::debug(format("Deleted VAO at {}", this->VAO));
 }
 
 vector<Vertex> Mesh::SQUARE() {

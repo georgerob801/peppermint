@@ -9,6 +9,10 @@ namespace peppermint {
 		class Component : public Serialisable, public Toggleable {
 		public:
 			/// <summary>
+			/// Destroy this Component.
+			/// </summary>
+			virtual ~Component();
+			/// <summary>
 			/// Runs once when this Component is first activated in a world.
 			/// </summary>
 			virtual void start();
@@ -35,7 +39,9 @@ namespace peppermint {
 				RENDERER,
 				ANIMATED_TILESET_RENDERER,
 				WARP_TILE,
-				SPRITE_RENDERER
+				SPRITE_RENDERER,
+				SOUND_SOURCE,
+				SOUND_LISTENER
 			};
 
 			/// <summary>

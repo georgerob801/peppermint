@@ -28,7 +28,8 @@ namespace peppermint {
 			TILESET,
 			PPMINT_WORLD_FILE,
 			PPMINT_GAME_FILE,
-			PPMINT_ASSET_FILE
+			PPMINT_ASSET_FILE,
+			SOUND
 		};
 
 		/// <summary>

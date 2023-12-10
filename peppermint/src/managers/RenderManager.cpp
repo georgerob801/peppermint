@@ -34,7 +34,7 @@ void RenderManager::renderFrame() {
 		this->activeRenderQueue->renderItems[0].shader->setMat4f((char*)"model", this->activeRenderQueue->renderItems[0].go->transform->getMatrix());
 		this->activeRenderQueue->renderItems[0].shader->setMat4f((char*)"view", this->activeCamera->getViewMatrix());
 		float* scale = &this->activeCamera->viewScale;
-		this->activeRenderQueue->renderItems[0].shader->setMat4f((char*)"projection", /*perspective(glm::quarter_pi<float>(), 16.0f / 9.0f, 0.1f, 100.0f));*/  ortho(-8.0f * *scale, 8.0f * *scale, -4.5f * *scale, 4.5f * *scale, 0.1f, 100.0f));
+		this->activeRenderQueue->renderItems[0].shader->setMat4f((char*)"projection", /*perspective(glm::quarter_pi<float>(), 16.0f / 9.0f, 0.1f, 100.0f)); */ ortho(-8.0f * *scale, 8.0f * *scale, -4.5f * *scale, 4.5f * *scale, 0.1f, 100.0f));
 
 		this->activeRenderQueue->renderItems[0].shader->setInt((char*)"material.useTexture", this->activeRenderQueue->renderItems[0].textureToUse);
 		this->activeRenderQueue->renderItems[0].shader->setVec2f((char*)"material.offset", this->activeRenderQueue->renderItems[0].uvOffset);

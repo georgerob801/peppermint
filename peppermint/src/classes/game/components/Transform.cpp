@@ -49,8 +49,8 @@ mat4 Transform::getMatrix() {
 	out = rotate(out, adjustedRotation.y, vec3(0.0f, 1.0f, 0.0f));
 	out = rotate(out, adjustedRotation.z, vec3(0.0f, 0.0f, 1.0f));
 
-	out = glm::scale(out, this->getGlobalScale());
 	out = glm::translate(out, this->getGlobalPosition());
+	out = glm::scale(out, this->getGlobalScale());
 
 	return out;
 }

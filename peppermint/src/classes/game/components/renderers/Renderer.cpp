@@ -4,7 +4,6 @@ using namespace peppermint::game::components;
 
 #include <iostream>
 Renderer::~Renderer() {
-	cout << "here (renderer)" << endl;
 	delete this->cachedMesh;
 }
 

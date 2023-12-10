@@ -26,6 +26,13 @@ using namespace peppermint::managers;
 
 #include <peppermint/classes/game/components/renderers/SpriteRenderer.h>
 
+#include <peppermint/classes/sound/SoundDevice.h>
+#include <peppermint/classes/sound/SoundBufferManager.h>
+#include <peppermint/classes/game/components/SoundSource.h>
+#include <peppermint/classes/game/components/SoundListener.h>
+
+#include <peppermint/Exceptions.hpp>
+
 using namespace peppermint::game::components;
 
 EngineManager* engineManager;
@@ -34,8 +41,7 @@ EngineManager* engineManager;
 
 /* TODO TIMEEEE
 * TODO: openal
-* TODO: sprite renderer component
-* TODO: 
+* TODO: possibly attempt to only use one VAO per world 
 */
 
 int main() {
@@ -909,7 +915,7 @@ int main() {
 
 	SpriteRenderer* sr = new SpriteRenderer();
 	Asset* imageAsset = EngineManager::assetManager->newAsset(Asset::IMAGE);
-	imageAsset->path = (char*)"peppermint/resource/texture.png";
+	imageAsset->path = (char*)"peppermint/resource/sangini.png";
 	
 	Texture* tex = new Texture(imageAsset);
 
@@ -920,18 +926,60 @@ int main() {
 
 	go->addComponent(sr);
 
-	sr->size = vec2(79, 28);
-
 	sr->generateTextures();
+
+	sr->size = vec2(texSet->atlas->getWidth(), texSet->atlas->getHeight());
+	sr->position = vec2(233.5f, 133.0f);
+
 	sr->generateVertices();
 
 	go->transform->position.z = 1.0f;
-	go->transform->position.x = 1.0f;
-	go->transform->position.y = 1.0f;
+	go->transform->position.x = 12.0f;
+	go->transform->position.y = 17.0f;
 
-	go->transform->parent = ((GameObject*)wm->getFirstComponent<PlayerController>()->getGameObject())->transform;
+	// go->transform->scale = vec3(6.0f, 0.5f, 1.0f);
 
-	engineManager->loop();
+	go->transform->parent = ((GameObject*)wm->getFirstComponent<AnimatedTilesetRenderer>()->getGameObject())->transform;
+
+	
+
+	Asset* testSoundAsset = EngineManager::assetManager->newAsset(Asset::SOUND);
+	testSoundAsset->path = (char*)"peppermint/resource/sound/test.wav";
+
+	SoundBufferManager* sbm = EngineManager::soundManager->sbm;
+
+	peppermint::sound::Sound* testSound = sbm->addSound(testSoundAsset);
+
+	Asset* musicAsset = EngineManager::assetManager->newAsset(Asset::SOUND);
+	musicAsset->path = (char*)"peppermint/resource/sound/littleroot.mp3";
+	peppermint::sound::Sound* music = sbm->addSound(musicAsset);
+
+	SoundSource* ss = new SoundSource();
+	SoundSource* mss = new SoundSource();
+
+	go->addComponent(ss);
+
+	ss->sound = testSound;
+	ss->setLoop(true);
+	ss->play();
+
+	mss->sound = music;
+	mss->setLoop(true);
+	mss->setGain(0.3f);
+	// mss->play();
+
+	SoundListener* sl = new SoundListener();
+
+	((GameObject*)wm->getFirstComponent<PlayerController>()->getGameObject())->addComponent(sl);
+	((GameObject*)wm->getFirstComponent<PlayerController>()->getGameObject())->addComponent(mss);
+
+	try {
+		engineManager->loop();
+	} catch (std::exception e) {
+		LogManager::critical(e.what());
+		delete engineManager;
+		return -1;
+	}
 
 	delete engineManager;
 

@@ -2,6 +2,7 @@
 #define PPMINT_EXCEPTIONS_H
 
 #include <iostream>
+#include <format>
 
 namespace peppermint {
 	namespace exceptions {
@@ -11,8 +12,8 @@ namespace peppermint {
 			/// </summary>
 			class AlreadyHasComponentException : public std::exception {
 			public:
-				char* what() {
-					return (char*)"This game object already has a component of that type.";
+				virtual const char* what() const noexcept override {
+					return "This game object already has a component of that type.";
 				}
 			};
 			/// <summary>
@@ -20,8 +21,8 @@ namespace peppermint {
 			/// </summary>
 			class ComponentNotFoundException : public std::exception {
 			public:
-				char* what() {
-					return (char*)"This game object does not have a component of that type.";
+				virtual const char* what() const noexcept override {
+					return "This game object does not have a component of that type.";
 				}
 			};
 			/// <summary>
@@ -29,8 +30,8 @@ namespace peppermint {
 			/// </summary>
 			class IsNotComponentException : public std::exception {
 			public:
-				char* what() {
-					return (char*)"The provided type was not a component.";
+				virtual const char* what() const noexcept override {
+					return "The provided type was not a component.";
 				}
 			};
 		}
@@ -41,8 +42,8 @@ namespace peppermint {
 				/// </summary>
 				class CannotOpenFileException : public std::exception {
 				public:
-					char* what() {
-						return (char*)"Cannot open file.";
+					virtual const char* what() const noexcept override {
+						return "Cannot open file.";
 					}
 				};
 			}
@@ -53,8 +54,8 @@ namespace peppermint {
 				/// </summary>
 				class InvalidTextureSetIndexException : public std::exception {
 				public:
-					char* what() {
-						return (char*)"Invalid texture set index.";
+					virtual const char* what() const noexcept override {
+						return "Invalid texture set index.";
 					}
 				};
 			}
@@ -65,8 +66,8 @@ namespace peppermint {
 				/// </summary>
 				class CannotLoadTextureException : public std::exception {
 				public:
-					char* what() {
-						return (char*)"Cannot load texture.";
+					virtual const char* what() const noexcept override {
+						return "Cannot load texture.";
 					}
 				};
 			}
@@ -77,8 +78,8 @@ namespace peppermint {
 			/// </summary>
 			class InvalidCoordinateException : public std::exception {
 			public:
-				char* what() {
-					return (char*)"The coordinates provided were out of range.";
+				virtual const char* what() const noexcept override {
+					return "The coordinates provided were out of range.";
 				}
 			};
 		}
@@ -89,8 +90,8 @@ namespace peppermint {
 				/// </summary>
 				class CorruptedFileException : public std::exception {
 				public:
-					char* what() {
-						return (char*)"The provided game file is corrupted.";
+					virtual const char* what() const noexcept override {
+						return "The provided game file is corrupted.";
 					}
 				};
 				/// <summary>
@@ -98,8 +99,8 @@ namespace peppermint {
 				/// </summary>
 				class InvalidFileTypeException : public std::exception {
 				public:
-					char* what() {
-						return (char*)"The provided file is not a game file.";
+					virtual const char* what() const noexcept override {
+						return "The provided file is not a game file.";
 					}
 				};
 				/// <summary>
@@ -107,8 +108,8 @@ namespace peppermint {
 				/// </summary>
 				class NoGameFilePathException : public std::exception {
 				public:
-					char* what() {
-						return (char*)"No game file path (asset) has been set.";
+					virtual const char* what() const noexcept override {
+						return "No game file path (asset) has been set.";
 					}
 				};
 			}
@@ -118,8 +119,8 @@ namespace peppermint {
 				/// </summary>
 				class CorruptedFileException : public std::exception {
 				public:
-					char* what() {
-						return (char*)"The provided world file is corrupted.";
+					virtual const char* what() const noexcept override {
+						return "The provided world file is corrupted.";
 					}
 				};
 				/// <summary>
@@ -127,8 +128,8 @@ namespace peppermint {
 				/// </summary>
 				class InvalidFileTypeException : public std::exception {
 				public:
-					char* what() {
-						return (char*)"The provided file is not a world file.";
+					virtual const char* what() const noexcept override {
+						return "The provided file is not a world file.";
 					}
 				};
 			}
@@ -138,8 +139,8 @@ namespace peppermint {
 				/// </summary>
 				class CorruptedFileException : public std::exception {
 				public:
-					char* what() {
-						return (char*)"The provided asset file is corrupted.";
+					virtual const char* what() const noexcept override {
+						return "The provided asset file is corrupted.";
 					}
 				};
 				/// <summary>
@@ -147,8 +148,99 @@ namespace peppermint {
 				/// </summary>
 				class InvalidFileTypeException : public std::exception {
 				public:
-					char* what() {
-						return (char*)"The provided file is not an asset file.";
+					virtual const char* what() const noexcept override {
+						return "The provided file is not an asset file.";
+					}
+				};
+			}
+		}
+		namespace sound {
+			namespace device {
+				/// <summary>
+				/// Thrown when there is no device available with a specified name.
+				/// </summary>
+				class NoDeviceAvailableException : public std::exception {
+				public:
+					virtual const char* what() const noexcept override {
+						return "There is no audio device available.";
+					}
+				};
+				/// <summary>
+				/// Thrown when a sound context cannot be created.
+				/// </summary>
+				class CannotCreateContextException : public std::exception {
+				public:
+					virtual const char* what() const noexcept override {
+						return "Could not create a sound context.";
+					}
+				};
+				/// <summary>
+				/// Thrown when a sound context cannot be removed.
+				/// </summary>
+				class CannotRemoveContextException : public std::exception {
+				public:
+					virtual const char* what() const noexcept override {
+						return "Could not remove sound context.";
+					}
+				};
+				/// <summary>
+				/// Thrown when a sound device cannot be closed.
+				/// </summary>
+				class CannotCloseDeviceException : public std::exception {
+				public:
+					virtual const char* what() const noexcept override {
+						return "Could not close sound device.";
+					}
+				};
+			}
+			namespace file {
+				/// <summary>
+				/// Thrown when a sound file cannot be opened.
+				/// </summary>
+				class CannotOpenFileException : public std::exception {
+				public:
+					virtual const char* what() const noexcept override {
+						return "Could not open a sound file.";
+					}
+				};
+				/// <summary>
+				/// Thrown when a sound file has either less than 1 sample or more samples than can be used.
+				/// </summary>
+				class BadSampleCountException : public std::exception {
+				public:
+					virtual const char* what() const noexcept override {
+						return "Unusable number of samples in a sound file.";
+					}
+				};
+				/// <summary>
+				/// Thrown when a sound file has less than 1 or more than 4 channels.
+				/// </summary>
+				class UnsupportedChannelCountException : public std::exception {
+				public:
+					virtual const char* what() const noexcept override {
+						return "An audio file has an unsupported number of channels.";
+					}
+				};
+				/// <summary>
+				/// Thrown when the samples in a sound file could not be read.
+				/// </summary>
+				class CouldNotReadSamplesException : public std::exception {
+				public:
+					virtual const char* what() const noexcept override {
+						return "Could not read the samples in a sound file.";
+					}
+				};
+			}
+			namespace openal {
+				/// <summary>
+				/// Catch-all exception for OpenAL errors.
+				/// </summary>
+				class GenericException : public std::exception {
+				public:
+					std::string message;
+					GenericException(std::string message) { this->message = "OpenAL Error: " + message; };
+					virtual const char* what() const noexcept override {
+						return message.c_str();
 					}
 				};
 			}

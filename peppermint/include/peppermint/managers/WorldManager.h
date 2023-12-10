@@ -27,6 +27,11 @@ namespace peppermint {
 			WorldManager(char* filePath);
 
 			/// <summary>
+			/// Destroy this WorldManager.
+			/// </summary>
+			~WorldManager();
+
+			/// <summary>
 			/// A vector containing poitner to all GameObjects used by this WorldManager.
 			/// </summary>
 			std::vector<GameObject*> gameObjects;

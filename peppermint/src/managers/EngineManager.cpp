@@ -18,6 +18,7 @@ peppermint::Asset* EngineManager::gameFile;
 
 AssetManager* EngineManager::assetManager = new AssetManager();
 WindowManager* EngineManager::windowManager = new WindowManager();
+SoundManager* EngineManager::soundManager = new SoundManager();
 
 vector<WorldManager*> EngineManager::worldManagers = vector<WorldManager*>();
 unsigned int EngineManager::activeWorldManager = 0;
@@ -37,9 +38,9 @@ EngineManager::EngineManager() {
 	// glfwWindowHint(GLFW_SAMPLES, 4);
 
 	LogManager::debug(std::format("Set OpenGL version to {}.{}", majorVersion, minorVersion));
-	LogManager::debug("Setting OpenGL to core profile.");
+	LogManager::debug("Setting OpenGL to core profile");
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	LogManager::debug("Set OpenGL to core profile.");
+	LogManager::debug("Set OpenGL to core profile");
 
 	if (windowManager->status == -1) {
 		LogManager::critical("Failed to create window manager");
@@ -63,6 +64,10 @@ EngineManager::EngineManager() {
 	}
 	LogManager::debug("Initialised GLAD successfully");
 
+	LogManager::debug("Initialising SoundManager");
+	this->soundManager->initialiseWithDefaults();
+	LogManager::info("Initialised SoundManager successfully");
+
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_BLEND);
@@ -76,10 +81,22 @@ EngineManager::~EngineManager() {
 	LogManager::debug("Terminating GLFW");
 	glfwTerminate();
 	LogManager::debug("Terminated GLFW");
+	LogManager::debug("Deleting WorldManagers");
+	for (unsigned int i = 0; i < this->worldManagers.size(); i++) {
+		delete this->worldManagers[i];
+		LogManager::debug(format("Deleted WorldManager at {}", (void*)this->worldManagers[i]));
+	}
+	LogManager::debug("Deleted WorldManagers");
 	LogManager::debug("Deleting AssetManager");
 	delete EngineManager::assetManager;
-	LogManager::debug("Deleting EngineManager");
+	LogManager::debug("Deleted AssetManager");
+	LogManager::debug("Deleting WindowManager");
 	delete EngineManager::windowManager;
+	LogManager::debug("Deleted WindowManager");
+	LogManager::debug("Deleting SoundManager");
+	delete EngineManager::soundManager;
+	LogManager::debug("Deleted SoundManager");
+	LogManager::debug("Deleting EngineManager");
 }
 
 void EngineManager::updateDeltaTime() {

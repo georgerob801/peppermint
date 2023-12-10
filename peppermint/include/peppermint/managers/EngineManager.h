@@ -7,6 +7,7 @@
 #include <peppermint/managers/WindowManager.h>
 #include <peppermint/managers/WorldManager.h>
 #include <peppermint/managers/AssetManager.h>
+#include <peppermint/managers/SoundManager.h>
 
 namespace peppermint {
 	namespace managers {
@@ -46,6 +47,10 @@ namespace peppermint {
 			/// A pointer to the AssetManager to use.
 			/// </summary>
 			static AssetManager* assetManager;
+			/// <summary>
+			/// A pointer to the SoundManager to use.
+			/// </summary>
+			static SoundManager* soundManager;
 
 			/// <summary>
 			/// A vector containing all WorldManagers used by this EngineManager.

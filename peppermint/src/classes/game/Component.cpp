@@ -4,9 +4,12 @@
 
 using namespace peppermint::game;
 
-void Component::start() {}
-void Component::awake() {}
-void Component::loop() {}
+#include <iostream>
+Component::~Component() { }
+
+void Component::start() { }
+void Component::awake() { }
+void Component::loop() { }
 
 void Component::initialise() {
 	this->initialised = true;
