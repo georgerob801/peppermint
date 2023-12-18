@@ -21,7 +21,7 @@ namespace peppermint {
 			/// Create a new Shader.
 			/// </summary>
 			/// <param name="vertexPath">The path to the vertex shader to use. NEEDS TO BE CHANGED TO ASSET</param>
-			/// <param name="fragmentPath">The path to the fragmen shader to use. NEEDS TO BE CHANGED TO ASSET</param>
+			/// <param name="fragmentPath">The path to the fragment shader to use. NEEDS TO BE CHANGED TO ASSET</param>
 			Shader(char* vertexPath, char* fragmentPath);
 
 			/// <summary>

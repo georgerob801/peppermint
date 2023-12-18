@@ -88,45 +88,75 @@ vector<unsigned int> Mesh::SQUARE_INDICES(unsigned int offset) {
 };
 
 void Mesh::draw(Shader* shader) {
-	shader->use();
-	for (unsigned int i = 0; i < this->textures.size(); i++) {
-		glActiveTexture(GL_TEXTURE0 + i);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		shader->setInt((char*)("material.texture" + std::to_string(i)).c_str(), i);
-		this->textures[i]->bind();
-	}
-	glActiveTexture(GL_TEXTURE0);
+	switch (this->type) {
+	case TEXT:
+		// each letter is 6 vertices
+		shader->use();
+		shader->setInt((char*)"text", 15);
+		shader->setVec3f((char*)"textColour", this->vertColour);
+		for (unsigned int i = 0; i < (int)std::ceil((float)this->vertices.size() / (float)6); i++) {
+			// cout << i << endl;
+			// arbitrarily decided to use slot 15 for text textures
+			glActiveTexture(GL_TEXTURE15);
+			this->textures[i]->bind();
 
-	glBindVertexArray(this->VAO);
-	glDrawElements(GL_TRIANGLES, (unsigned int)(this->indices.size()), GL_UNSIGNED_INT, 0);
-	glBindVertexArray(0);
+			glActiveTexture(GL_TEXTURE0);
+			glBindVertexArray(this->VAO);
+			glDrawElements(GL_TRIANGLES, (unsigned int)6, GL_UNSIGNED_INT, (void*)(6 * i * sizeof(unsigned int)));
+		}
+		glBindVertexArray(0);
+		break;
+	case DEFAULT:
+	default:
+		shader->use();
+		for (unsigned int i = 0; i < this->textures.size(); i++) {
+			glActiveTexture(GL_TEXTURE0 + i);
+			shader->setInt((char*)("material.texture" + std::to_string(i)).c_str(), i);
+			this->textures[i]->bind();
+		}
+		glActiveTexture(GL_TEXTURE0);
+
+		glBindVertexArray(this->VAO);
+		glDrawElements(GL_TRIANGLES, (unsigned int)(this->indices.size()), GL_UNSIGNED_INT, 0);
+		glBindVertexArray(0);
+	}
 }
 
 void Mesh::setup() {
-	LogManager::debug("Setting up buffers");
-	glGenVertexArrays(1, &this->VAO);
-	LogManager::debug(format("Created VAO at {}", this->VAO));
-	glGenBuffers(1, &this->VBO);
-	LogManager::debug(format("Created VBO at {}", this->VBO));
-	glGenBuffers(1, &this->EBO);
-	LogManager::debug(format("Created EBO at {}", this->EBO));
+	this->setup(GL_STATIC_DRAW);
+}
+
+void Mesh::setup(unsigned int VBOtype) {
+	if (this->VAO == NULL) {
+		glGenVertexArrays(1, &this->VAO);
+		LogManager::debug(format("Created VAO at {}", this->VAO));
+		glBindVertexArray(this->VAO);
+
+		glGenBuffers(1, &this->VBO);
+		LogManager::debug(format("Created VBO at {}", this->VBO));
+		glBindBuffer(GL_ARRAY_BUFFER, this->VBO);
+
+		glGenBuffers(1, &this->EBO);
+		LogManager::debug(format("Created EBO at {}", this->EBO));
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->EBO);
+
+		glBindVertexArray(this->VAO);
+		// position
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
+		glEnableVertexAttribArray(0);
+
+		// uv
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, uv));
+		glEnableVertexAttribArray(1);
+	}
 
 	glBindVertexArray(this->VAO);
 	glBindBuffer(GL_ARRAY_BUFFER, this->VBO);
 
-	glBufferData(GL_ARRAY_BUFFER, this->vertices.size() * sizeof(Vertex), &this->vertices[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, this->vertices.size() * sizeof(Vertex), &this->vertices[0], VBOtype);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, this->indices.size() * sizeof(unsigned int), &this->indices[0], GL_STATIC_DRAW);
-
-	// position
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
-	glEnableVertexAttribArray(0);
-
-	// uv
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, uv));
-	glEnableVertexAttribArray(1);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, this->indices.size() * sizeof(unsigned int), &this->indices[0], VBOtype);
 
 	glBindVertexArray(0);
 }

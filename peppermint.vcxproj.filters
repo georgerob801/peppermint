@@ -123,6 +123,12 @@
     <ClCompile Include="peppermint\src\classes\game\components\SoundListener.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="peppermint\src\classes\rendering\Text.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="peppermint\src\classes\game\components\renderers\TextRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="peppermint\include\stb_image\stb_image.h">
@@ -245,10 +251,17 @@
     <ClInclude Include="peppermint\include\peppermint\classes\sound\ALErrorCheck.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\classes\rendering\Text.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\classes\game\components\renderers\TextRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="peppermint\resource\shader\vertex\default.vert" />
     <None Include="peppermint\resource\shader\fragment\default.frag" />
+    <None Include="peppermint\resource\shader\fragment\text.frag" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="peppermint.rc">

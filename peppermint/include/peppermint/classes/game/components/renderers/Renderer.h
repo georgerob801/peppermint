@@ -51,11 +51,20 @@ namespace peppermint {
 				/// </summary>
 				/// <returns>A pointer to the generated Mesh.</returns>
 				Mesh* generateMesh();
+
+				/// <summary>
+				/// The type of OpenGL buffer to use.
+				/// </summary>
+				unsigned int bufferType = 0x88E4;
+
+				Mesh::MeshType meshType = Mesh::DEFAULT;
+
+				vec3 vertexColour = vec3(1.0f, 1.0f, 1.0f);
 			private:
 				/// <summary>
 				/// The last Mesh calculated for this component.
 				/// </summary>
-				Mesh* cachedMesh;
+				Mesh* cachedMesh = nullptr;
 			};
 		}
 	}

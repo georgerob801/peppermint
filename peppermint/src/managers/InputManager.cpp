@@ -26,7 +26,7 @@ const int* InputManager::getKeys(INPUT_TYPES type) {
 // todo: fix this algorithm (pointer size issue)
 bool InputManager::active(INPUT_TYPES type) {
 	const int* keys = InputManager::getKeys(type);
-	for (unsigned int i = 0; i < sizeof(*keys) / sizeof(const int); i++) {
+	for (unsigned int i = 0; i < InputManager::getNumKeys(type); i++) {
 		if (glfwGetKey(currentWindow->getAddress(), keys[i]) == GLFW_PRESS) return true;
 	}
 	return false;
@@ -39,4 +39,23 @@ bool InputManager::active(INPUT_TYPES type, MODIFIERS modifier) {
 
 void InputManager::setWindow(Window* win) {
 	InputManager::currentWindow = win;
+}
+
+unsigned int InputManager::getNumKeys(INPUT_TYPES type) {
+	switch (type) {
+	case FORWARD:
+		return InputManager::NUM_KEYS.forward;
+	case BACKWARD:
+		return InputManager::NUM_KEYS.backward;
+	case LEFT:
+		return InputManager::NUM_KEYS.left;
+	case RIGHT:
+		return InputManager::NUM_KEYS.right;
+	case UP:
+		return InputManager::NUM_KEYS.up;
+	case DOWN:
+		return InputManager::NUM_KEYS.down;
+	default:
+		return 0;
+	}
 }

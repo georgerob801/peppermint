@@ -12,37 +12,45 @@ using namespace glm;
 using namespace peppermint;
 using namespace peppermint::managers;
 
-#include <peppermint/classes/game/GameObject.h>
-#include <peppermint/classes/game/components/Camera.h>
-#include <peppermint/classes/game/components/renderers/TilesetRenderer.h>
-#include <peppermint/classes/game/components/Camera.h>
-#include <peppermint/classes/rendering/Texture.h>
-#include <peppermint/classes/rendering/TextureSet.h>
+// #include <glad/glad.h>
 
-#include <peppermint/classes/game/components/NavigableMap.hpp>
+//#include <peppermint/classes/game/GameObject.h>
+//#include <peppermint/classes/game/components/Camera.h>
+//#include <peppermint/classes/game/components/renderers/TilesetRenderer.h>
+//#include <peppermint/classes/game/components/Camera.h>
+//#include <peppermint/classes/rendering/Texture.h>
+//#include <peppermint/classes/rendering/TextureSet.h>
+//
+//#include <peppermint/classes/game/components/NavigableMap.hpp>
 #include <peppermint/classes/game/components/PlayerController.h>
-#include <peppermint/classes/game/components/renderers/BasicPlayerRenderer.h>
-#include <peppermint/classes/game/components/renderers/AnimatedTilesetRenderer.h>
+#include <peppermint/classes/game/components/renderers/TextRenderer.h>
+//#include <peppermint/classes/game/components/renderers/BasicPlayerRenderer.h>
+//#include <peppermint/classes/game/components/renderers/AnimatedTilesetRenderer.h>
 
-#include <peppermint/classes/game/components/renderers/SpriteRenderer.h>
-
-#include <peppermint/classes/sound/SoundDevice.h>
-#include <peppermint/classes/sound/SoundBufferManager.h>
-#include <peppermint/classes/game/components/SoundSource.h>
-#include <peppermint/classes/game/components/SoundListener.h>
+//#include <peppermint/classes/game/components/renderers/SpriteRenderer.h>
+//
+//#include <peppermint/classes/sound/SoundDevice.h>
+//#include <peppermint/classes/sound/SoundBufferManager.h>
+//#include <peppermint/classes/game/components/SoundSource.h>
+//#include <peppermint/classes/game/components/SoundListener.h>
 
 #include <peppermint/Exceptions.hpp>
+
+#include <ft2build.h>
+#include <map>
+#include FT_FREETYPE_H
+
+
 
 using namespace peppermint::game::components;
 
 EngineManager* engineManager;
 
-// TODO: OPENAL YOU IDIOT
-
 /* TODO TIMEEEE
-* TODO: openal
-* TODO: possibly attempt to only use one VAO per world 
+* TODO: script component timeeeeeee
+* TODO: possibly attempt to only use one VAO per world
 */
+
 
 int main() {
 	stbi_set_flip_vertically_on_load(true);
@@ -902,12 +910,11 @@ int main() {
 	EngineManager::assetManager->saveAssetFile();*/
 
 
-	Asset* gameFileAsset = new Asset(Asset::PPMINT_GAME_FILE);
+	/*Asset* gameFileAsset = new Asset(Asset::PPMINT_GAME_FILE);
 	gameFileAsset->path = (char*)"peppermint/pokemon.pmint";
 	engineManager->setGameFile(gameFileAsset);
 
 	EngineManager::loadFromGameFile();
-
 
 	WorldManager* wm = EngineManager::worldManagers[0];
 
@@ -918,8 +925,10 @@ int main() {
 	imageAsset->path = (char*)"peppermint/resource/sangini.png";
 	
 	Texture* tex = new Texture(imageAsset);
+	EngineManager::assetManager->registerAsset(tex);
 
 	TextureSet* texSet = new TextureSet();
+	EngineManager::assetManager->registerAsset(texSet);
 	texSet->addTexture(tex);
 
 	sr->textureSet = texSet;
@@ -961,17 +970,74 @@ int main() {
 
 	ss->sound = testSound;
 	ss->setLoop(true);
-	ss->play();
+	// ss->play();
 
 	mss->sound = music;
 	mss->setLoop(true);
 	mss->setGain(0.3f);
-	// mss->play();
+	mss->play();
 
 	SoundListener* sl = new SoundListener();
 
 	((GameObject*)wm->getFirstComponent<PlayerController>()->getGameObject())->addComponent(sl);
-	((GameObject*)wm->getFirstComponent<PlayerController>()->getGameObject())->addComponent(mss);
+	((GameObject*)wm->getFirstComponent<PlayerController>()->getGameObject())->addComponent(mss);*/
+
+	// EngineManager::saveGameFile();
+	// EngineManager::assetManager->saveAssetFile();
+	// wm->saveWorldFile();
+	// EngineManager::goToWorld(1);
+	// EngineManager::worldManagers[1]->saveWorldFile();
+
+	// EngineManager::saveAll();
+
+	Asset* gameFileAsset = new Asset(Asset::PPMINT_GAME_FILE);
+	gameFileAsset->path = (char*)"peppermint/pokemon.pmint";
+	engineManager->setGameFile(gameFileAsset);
+
+	EngineManager::loadFromGameFile();
+	// EngineManager::worldManagers[EngineManager::activeWorldManager]->getFirstComponent<SoundSource>()->playByDefault = true;
+
+	// EngineManager::saveGameFile();
+	// EngineManager::assetManager->saveAssetFile();
+	// EngineManager::worldManagers[0]->saveWorldFile();
+	// EngineManager::goToWorld(1);
+	// EngineManager::worldManagers[1]->saveWorldFile();
+
+	EngineManager::goToWorld(1);
+
+
+	WorldManager* wm = EngineManager::worldManagers[1];
+
+	Shader* ts = new Shader((char*)"peppermint/resource/shader/vertex/default.vert", (char*)"peppermint/resource/shader/fragment/text.frag");
+	peppermint::rendering::text::FTManager::textShader = ts;
+
+	Asset* fontFile = new Asset(Asset::FONT);
+	fontFile->path = (char*)"peppermint/resource/font/pokemon-emerald.ttf";
+	peppermint::rendering::text::Font* f = peppermint::rendering::text::FTManager::addFont(fontFile);
+
+	TextRenderer* tr = new TextRenderer();
+
+	tr->text = "hello";
+	tr->fontFile = fontFile;
+	tr->pixelSize = 200;
+
+	tr->generateVertices();
+
+	tr->text = "no";
+	tr->generateVertices();
+
+	GameObject* go = wm->createGameObject();
+	go->addComponent(tr);
+
+	go->transform->position = vec3(2.0f, 0.0f, 1.0f);
+	float textScale = 1.0f / (float)tr->pixelSize;
+	go->transform->scale = vec3(textScale, textScale, 1.0f);
+
+	GameObject* parent = (GameObject*)(wm->getFirstComponent<PlayerController>()->getGameObject());
+	go->transform->parent = parent->transform;
+
+
+
 
 	try {
 		engineManager->loop();

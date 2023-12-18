@@ -3,6 +3,15 @@
 
 #include <peppermint/classes/Window.h>
 
+struct NumKeysStruct {
+	unsigned int forward = 2;
+	unsigned int backward = 2;
+	unsigned int left = 2;
+	unsigned int right = 2;
+	unsigned int up = 1;
+	unsigned int down = 1;
+};
+
 namespace peppermint {
 	namespace managers {
 		/// <summary>
@@ -10,6 +19,11 @@ namespace peppermint {
 		/// </summary>
 		class InputManager {
 		public:
+			/// <summary>
+			/// Stores the number of each type of key.
+			/// </summary>
+			static constexpr NumKeysStruct NUM_KEYS = NumKeysStruct();
+
 			/// <summary>
 			/// The keys that correspond to the forwards direction.
 			/// </summary>
@@ -99,6 +113,8 @@ namespace peppermint {
 			/// </summary>
 			/// <param name="win">The Window to set.</param>
 			static void setWindow(Window* win);
+
+			static unsigned int getNumKeys(INPUT_TYPES type);
 		private:
 			/// <summary>
 			/// Get the keys that correspond to an input type.

@@ -21,6 +21,11 @@ namespace peppermint {
 			Texture(Asset* asset);
 
 			/// <summary>
+			/// Destroy this texture.
+			/// </summary>
+			~Texture();
+
+			/// <summary>
 			/// Get the width of this Texture.
 			/// </summary>
 			/// <returns>The width of this Texture.</returns>

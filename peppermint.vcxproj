@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Content Include="peppermint\resource\**">
@@ -123,7 +123,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -141,12 +141,13 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="peppermint\src\classes\game\components\renderers\AnimatedTilesetRenderer.cpp" />
     <ClCompile Include="peppermint\src\classes\Asset.cpp" />
+    <ClCompile Include="peppermint\src\classes\rendering\Text.cpp" />
     <ClCompile Include="peppermint\src\classes\sound\SoundBufferManager.cpp" />
     <ClCompile Include="peppermint\src\managers\AssetManager.cpp" />
     <ClCompile Include="peppermint\src\classes\game\components\renderers\BasicPlayerRenderer.cpp" />
@@ -181,10 +182,12 @@
     <ClCompile Include="peppermint\src\classes\sound\SoundDevice.cpp" />
     <ClCompile Include="peppermint\src\classes\game\components\SoundSource.cpp" />
     <ClCompile Include="peppermint\src\classes\game\components\SoundListener.cpp" />
+    <ClCompile Include="peppermint\src\classes\game\components\renderers\TextRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="peppermint\include\peppermint\classes\game\components\renderers\AnimatedTilesetRenderer.h" />
     <ClInclude Include="peppermint\include\peppermint\classes\Asset.h" />
+    <ClInclude Include="peppermint\include\peppermint\classes\rendering\Text.h" />
     <ClInclude Include="peppermint\include\peppermint\classes\sound\ALErrorCheck.hpp" />
     <ClInclude Include="peppermint\include\peppermint\managers\AssetManager.h" />
     <ClInclude Include="peppermint\include\peppermint\classes\game\components\renderers\BasicPlayerRenderer.h" />
@@ -223,9 +226,11 @@
     <ClInclude Include="peppermint\include\peppermint\classes\sound\SoundBufferManager.h" />
     <ClInclude Include="peppermint\include\peppermint\classes\game\components\SoundSource.h" />
     <ClInclude Include="peppermint\include\peppermint\classes\game\components\SoundListener.h" />
+    <ClInclude Include="peppermint\include\peppermint\classes\game\components\renderers\TextRenderer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="peppermint\resource\shader\fragment\default.frag" />
+    <None Include="peppermint\resource\shader\fragment\text.frag" />
     <None Include="peppermint\resource\shader\vertex\default.vert" />
   </ItemGroup>
   <ItemGroup>

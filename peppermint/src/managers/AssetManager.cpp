@@ -11,6 +11,8 @@
 #include <peppermint/classes/rendering/Tileset.h>
 #include <peppermint/classes/game/TilesetAnimation.h>
 
+#include <peppermint/managers/EngineManager.h>
+
 using namespace peppermint::managers;
 using namespace peppermint::rendering;
 
@@ -106,6 +108,8 @@ void AssetManager::loadAssetFile(Asset* assetFileIn) {
 	}
 
 	this->deserialise(allBytes);
+
+	this->assets.push_back(assetFileIn);
 }
 
 void AssetManager::deserialise(vector<byte> bytes) {
@@ -169,6 +173,14 @@ void AssetManager::deserialise(vector<byte> bytes) {
 			copy(bytes.begin() + position, bytes.end(), subVector.begin());
 
 			asset->deserialise(subVector);
+			break;
+		case Asset::SOUND:
+			asset = new Asset(type);
+			copy(bytes.begin() + position, bytes.end(), subVector.begin());
+
+			asset->deserialise(subVector);
+
+			EngineManager::soundManager->sbm->addSound(asset);
 			break;
 		default:
 			throw peppermint::exceptions::serialisation::asset::CorruptedFileException();

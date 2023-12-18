@@ -29,13 +29,24 @@ namespace peppermint {
 			/// </summary>
 			vec2 uvOffset = vec2(0.0f, 0.0f);
 			/// <summary>
-			/// The index fo the texture set to use.
+			/// The index of the texture set to use.
 			/// </summary>
 			int textureToUse = 0;
 			/// <summary>
 			/// A pointer to the WorldManager this thing came from.
 			/// </summary>
 			void* fromWorld = nullptr;
+		};
+
+		struct TextRenderItem : public RenderItem {
+			/// <summary>
+			/// The colour to render the text.
+			/// </summary>
+			vec3 colour;
+			/// <summary>
+			/// The textures to use to render the text.
+			/// </summary>
+			vector<Texture*> textures;
 		};
 
 		class RenderQueue {

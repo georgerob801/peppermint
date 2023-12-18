@@ -71,6 +71,34 @@ namespace peppermint {
 					}
 				};
 			}
+		
+			namespace text {
+				/// <summary>
+				/// Thrown when FreeType cannot be initialised.
+				/// </summary>
+				class FreeTypeCannotInitialiseException : public std::exception {
+				public:
+					virtual const char* what() const noexcept override {
+						return "FreeType failed to initialise.";
+					}
+				};
+				/// <summary>
+				/// Thrown when a face cannot be loaded.
+				/// </summary>
+				class CannotLoadFaceException : public std::exception {
+				public:
+					virtual const char* what() const noexcept override {
+						return "Failed to create a new FreeType face.";
+					}
+				};
+
+				class CannotLoadGlyphException : public std::exception {
+				public:
+					virtual const char* what() const noexcept override {
+						return "Could not load glyph.";
+					}
+				};
+			}
 		}
 		namespace component {
 			/// <summary>

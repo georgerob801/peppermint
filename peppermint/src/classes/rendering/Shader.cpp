@@ -42,7 +42,7 @@ Shader::Shader(char* vertexPath, char* fragmentPath) {
 		vertexCode = vShaderStream.str();
 		fragmentCode = fShaderStream.str();
 	} catch (ifstream::failure e) {
-		LogManager::error("Failed to open either '{}' or '{}' when creating new shader");
+		LogManager::error(format("Failed to open either '{}' or '{}' when creating new shader", vertexPath, fragmentPath));
 		throw peppermint::exceptions::rendering::shader::CannotOpenFileException();
 	}
 

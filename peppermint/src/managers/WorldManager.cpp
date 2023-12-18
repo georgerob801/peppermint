@@ -12,6 +12,12 @@
 #include <peppermint/classes/game/components/PlayerController.h>
 #include <peppermint/classes/game/components/renderers/BasicPlayerRenderer.h>
 #include <peppermint/classes/game/components/renderers/AnimatedTilesetRenderer.h>
+#include <peppermint/classes/game/components/renderers/SpriteRenderer.h>
+#include <peppermint/classes/game/components/SoundSource.h>
+#include <peppermint/classes/game/components/SoundListener.h>
+#include <peppermint/classes/game/components/renderers/TextRenderer.h>
+
+#include <peppermint/managers/EngineManager.h>
 
 #include <algorithm>
 #include <iostream>
@@ -85,6 +91,13 @@ void WorldManager::loop(Window* window) {
 						.mesh = rendererComponent->getOrGenerateMesh(),
 						.uvOffset = tilesetAnimationRendererComponent->getUVOffset(),
 						.textureToUse = tilesetAnimationRendererComponent->getTexOffset(),
+						.fromWorld = this
+					};
+				} else if (dynamic_cast<Renderer*>(this->gameObjects[i]->components[j])->meshType == Mesh::TEXT) {
+					renderItem = {
+						.shader = peppermint::rendering::text::FTManager::textShader,
+						.go = this->gameObjects[i],
+						.mesh = rendererComponent->getOrGenerateMesh(),
 						.fromWorld = this
 					};
 				} else {
@@ -272,6 +285,8 @@ void WorldManager::deserialise(vector<byte> bytes) {
 		Component* co;
 		vector<byte> subVector(bytes.size() - position);
 
+		// cout << coType << endl;
+
 		switch (coType) {
 		case Component::TRANSFORM:
 			co = new Transform();
@@ -318,6 +333,24 @@ void WorldManager::deserialise(vector<byte> bytes) {
 			break;
 		case Component::WARP_TILE:
 			co = new WarpTile();
+			copy(bytes.begin() + position, bytes.end(), subVector.begin());
+
+			co->deserialise(subVector);
+			break;
+		case Component::SPRITE_RENDERER:
+			co = new SpriteRenderer();
+			copy(bytes.begin() + position, bytes.end(), subVector.begin());
+
+			co->deserialise(subVector);
+			break;
+		case Component::SOUND_SOURCE:
+			co = new SoundSource();
+			copy(bytes.begin() + position, bytes.end(), subVector.begin());
+
+			co->deserialise(subVector);
+			break;
+		case Component::SOUND_LISTENER:
+			co = new SoundListener();
 			copy(bytes.begin() + position, bytes.end(), subVector.begin());
 
 			co->deserialise(subVector);
@@ -480,6 +513,40 @@ void WorldManager::deserialise(vector<byte> bytes) {
 
 				nvm->warpTiles.push_back((WarpTile*)(*index));
 			}
+
+			break;
+		}
+		case Component::SPRITE_RENDERER:
+		{
+			SpriteRenderer* spr = (SpriteRenderer*)componentsToMatch[i];
+
+			void* toFind = spr->relatedSerialisedIDs[0];
+
+			vector<Asset*>::iterator index = find_if(this->assets->begin(), this->assets->end(), [toFind](Asset* item) { return item->serialisedID == toFind; });
+			if (index == this->assets->end()) throw peppermint::exceptions::serialisation::world::CorruptedFileException();
+
+			spr->textureSet = (TextureSet*)(*index);
+
+			spr->generateTextures();
+			spr->generateVertices();
+
+			break;
+		}
+		case Component::SOUND_SOURCE:
+		{
+			SoundSource* ss = (SoundSource*)componentsToMatch[i];
+
+			void* toFind = ss->relatedSerialisedIDs[0];
+
+			vector<Asset*>::iterator index = find_if(this->assets->begin(), this->assets->end(), [toFind](Asset* item) { return item->serialisedID == toFind; });
+
+			if (index == this->assets->end()) throw peppermint::exceptions::serialisation::world::CorruptedFileException();
+
+			vector<Sound*>::iterator soundIndex = find_if(EngineManager::soundManager->sbm->soundBuffers.begin(), EngineManager::soundManager->sbm->soundBuffers.end(), [index](Sound* s) { return (*index)->serialisedID == s->asset->serialisedID; });
+
+			if (soundIndex == EngineManager::soundManager->sbm->soundBuffers.end()) throw peppermint::exceptions::serialisation::world::CorruptedFileException();
+
+			ss->sound = *soundIndex;
 
 			break;
 		}

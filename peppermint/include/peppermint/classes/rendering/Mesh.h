@@ -81,6 +81,20 @@ namespace peppermint {
 			/// Set this Mesh up.
 			/// </summary>
 			void setup();
+			/// <summary>
+			/// Set this Mesh up.
+			/// </summary>
+			/// <param name="VBOtype">The type of VBO to use.</param>
+			void setup(unsigned int VBOtype);
+
+			enum MeshType {
+				DEFAULT,
+				TEXT
+			};
+
+			MeshType type = DEFAULT;
+
+			vec3 vertColour = vec3(0.0f, 1.0f, 0.0f);
 		private:
 			/// <summary>
 			/// Index of this Mesh's vertex array object.

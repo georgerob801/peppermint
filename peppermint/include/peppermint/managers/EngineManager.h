@@ -111,6 +111,10 @@ namespace peppermint {
 			/// Save this EngineManager's game file.
 			/// </summary>
 			static void saveGameFile();
+			/// <summary>
+			/// Saves everything that needs saving.
+			/// </summary>
+			static void saveAll();
 		private:
 			/// <summary>
 			/// The time of the last frame.

@@ -41,7 +41,8 @@ namespace peppermint {
 				WARP_TILE,
 				SPRITE_RENDERER,
 				SOUND_SOURCE,
-				SOUND_LISTENER
+				SOUND_LISTENER,
+				TEXT_RENDERER
 			};
 
 			/// <summary>

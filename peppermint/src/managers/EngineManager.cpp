@@ -8,6 +8,8 @@
 #include <stb_image/stb_image.h>
 #include <peppermint/managers/InputManager.h>
 
+#include <peppermint/classes/rendering/Text.h>
+
 #include <fstream>
 
 using namespace peppermint::managers;
@@ -72,6 +74,12 @@ EngineManager::EngineManager() {
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+	LogManager::debug("Initialising FreeType");
+	peppermint::rendering::text::FTManager::init();
+	LogManager::debug("Initialised FreeType");
 
 	EngineManager::activeWorldManager = 0;
 }
@@ -304,11 +312,11 @@ void EngineManager::loadFromGameFile() {
 	}
 
 	// LOAD THE ASSET MANAGER HERE
+	// TODO: figure out why/how this is getting deleted somewhere (which leads to saving not working if you're saving to a pre-existing thing)
 	Asset* assetManagerAsset = new Asset(Asset::PPMINT_ASSET_FILE);
 	// memory managed by asset deconstructor
-	char* assetManagerPathCStr = new char();
-	assetManagerPathCStr = (char*)assetFilePath.c_str();
-	assetManagerAsset->path = assetManagerPathCStr;
+	assetManagerAsset->path = new char[assetFilePath.size() + 1];
+	strcpy_s(assetManagerAsset->path, assetFilePath.size() + 1, assetFilePath.c_str());
 
 	AssetManager* am = new AssetManager();
 	EngineManager::assetManager = am;
@@ -347,4 +355,13 @@ void EngineManager::loadFromGameFile() {
 
 	LogManager::debug(format("Going to initial world (index {})", EngineManager::initialWorldIndex));
 	EngineManager::goToWorld(EngineManager::initialWorldIndex);
+}
+
+void EngineManager::saveAll() {
+	EngineManager::saveGameFile();
+	EngineManager::assetManager->saveAssetFile();
+
+	for (unsigned int i = 0; i < EngineManager::worldManagers.size(); i++) {
+		EngineManager::worldManagers[i]->saveWorldFile();
+	}
 }

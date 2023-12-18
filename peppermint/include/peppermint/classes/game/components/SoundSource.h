@@ -39,6 +39,7 @@ namespace peppermint {
 				/// </summary>
 				void stop();
 
+				void start();
 				void loop();
 
 				/// <summary>
@@ -62,6 +63,12 @@ namespace peppermint {
 				/// </summary>
 				/// <returns>An ALenum of the source's current state.</returns>
 				ALenum getSourceState();
+
+				bool useDoppler = false;
+				bool playByDefault = false;
+
+				vector<byte> serialise();
+				void deserialise(vector<byte> bytes);
 			private:
 				ALuint sourceIndex;
 				ALuint lastBuffer = 0;

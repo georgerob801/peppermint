@@ -11,15 +11,21 @@ Mesh* Renderer::getOrGenerateMesh() {
 	if (!this->requiresRemeshing && this->cachedMesh != NULL) {
 		return this->cachedMesh;
 	} else {
-		delete this->cachedMesh;
 		this->cachedMesh = this->generateMesh();
+		this->requiresRemeshing = false;
 		return this->cachedMesh;
 	}
 }
 
 Mesh* Renderer::generateMesh() {
-	Mesh* mesh = new Mesh();
+	Mesh* mesh;
+	if (this->cachedMesh == nullptr) mesh = new Mesh();
+	else mesh = this->cachedMesh;
 
+	mesh->type = this->meshType;
+
+	mesh->vertices.clear();
+	vector<Vertex>().swap(mesh->vertices);
 	mesh->vertices = this->vertices;
 
 	mesh->indices.clear();
@@ -32,7 +38,9 @@ Mesh* Renderer::generateMesh() {
 
 	mesh->textures = this->textures;
 
-	mesh->setup();
+	mesh->setup(this->bufferType);
+
+	mesh->vertColour = this->vertexColour;
 
 	return mesh;
 }

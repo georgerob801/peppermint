@@ -22,6 +22,11 @@ namespace peppermint {
 				void loop();
 
 				void setGain(float gain);
+
+				bool useDoppler = false;
+
+				vector<byte> serialise();
+				void deserialise(vector<byte> bytes);
 			private:
 				vec3 lastPosition = vec3(0.0f, 0.0f, 0.0f);
 

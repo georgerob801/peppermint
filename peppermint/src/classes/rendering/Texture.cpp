@@ -10,6 +10,12 @@ using namespace peppermint::rendering;
 Texture::Texture() : Asset(ASSET_TYPE::TEXTURE) {
 	glGenTextures(1, &this->glTextureLocation);
 
+	glActiveTexture(GL_TEXTURE0);
+	this->bind();
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
 	this->height = NULL;
 	this->width = NULL;
 	this->nrChannels = NULL;
@@ -19,7 +25,18 @@ Texture::Texture(Asset* asset) : Asset(ASSET_TYPE::TEXTURE) {
 	this->imageAsset = asset;
 
 	glGenTextures(1, &this->glTextureLocation);
+
+	glActiveTexture(GL_TEXTURE0);
+	this->bind();
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
 	this->loadFromAsset();
+}
+
+Texture::~Texture() {
+	glDeleteTextures(1, &this->glTextureLocation);
 }
 
 void Texture::loadFromAsset() {

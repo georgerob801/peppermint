@@ -12,15 +12,16 @@ namespace peppermint {
 		/// <summary>
 		/// Struct for tracking sound information.
 		/// </summary>
-		struct Sound {
+		class Sound {
+		public:
 			/// <summary>
 			/// The index of the buffer this sound is stored in.
 			/// </summary>
-			ALuint bufferIndex;
+			ALuint bufferIndex = NULL;
 			/// <summary>
 			/// The format this sound is stored in.
 			/// </summary>
-			ALenum format;
+			ALenum format = AL_NONE;
 			/// <summary>
 			/// Information relating to the file this sound came from.
 			/// </summary>
@@ -28,7 +29,7 @@ namespace peppermint {
 			/// <summary>
 			/// A pointer to the asset that stores this sound's path.
 			/// </summary>
-			Asset* asset;
+			Asset* asset = nullptr;
 		};
 
 		class SoundBufferManager {
@@ -56,7 +57,6 @@ namespace peppermint {
 			/// <param name="sound">A pointer to the sound to remove.</param>
 			/// <returns>True/false depending on whether the sound was removed.</returns>
 			bool removeSound(Sound* sound);
-
 			/// <summary>
 			/// Vector containing all sounds currently available for use.
 			/// </summary>
