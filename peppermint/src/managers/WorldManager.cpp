@@ -17,6 +17,9 @@
 #include <peppermint/classes/game/components/SoundListener.h>
 #include <peppermint/classes/game/components/renderers/TextRenderer.h>
 
+#include <peppermint/classes/game/components/ScriptComponent.h>
+#include <peppermint/scripts/ScriptTypes.hpp>
+
 #include <peppermint/managers/EngineManager.h>
 
 #include <algorithm>
@@ -361,6 +364,10 @@ void WorldManager::deserialise(vector<byte> bytes) {
 
 			co->deserialise(subVector);
 			break;
+		case Component::SCRIPT_COMPONENT:
+			copy(bytes.begin() + position, bytes.end(), subVector.begin());
+			co = peppermint::scripts::createScriptComponent(ScriptComponent::getScriptType(vector<byte>(bytes.begin() + position, bytes.end())), subVector);
+			break;
 		default:
 			throw peppermint::exceptions::serialisation::world::CorruptedFileException();
 		}
@@ -570,6 +577,13 @@ void WorldManager::deserialise(vector<byte> bytes) {
 
 			tr->generateVertices();
 
+			break;
+		}
+		case Component::SCRIPT_COMPONENT:
+		{
+			ScriptComponent* sc = (ScriptComponent*)componentsToMatch[i];
+
+			sc->makeConnections(this->assets, &componentsToMatch);
 			break;
 		}
 		default:

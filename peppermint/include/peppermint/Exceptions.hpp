@@ -273,6 +273,14 @@ namespace peppermint {
 				};
 			}
 		}
+		namespace userScripts {
+			class UnknownScriptException : public std::exception {
+			public:
+				virtual const char* what() const noexcept override {
+					return "An unknown component type was requested.";
+				}
+			};
+		}
 	}
 }
 

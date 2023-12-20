@@ -136,6 +136,10 @@ void EngineManager::goToWorld(unsigned int worldIndex) {
 	EngineManager::windowManager->windows[0]->renderManager->activeCamera = EngineManager::worldManagers[EngineManager::activeWorldManager]->getFirstCamera();
 }
 
+WorldManager* EngineManager::getWM() {
+	return EngineManager::worldManagers[EngineManager::activeWorldManager];
+}
+
 void EngineManager::loop() {
 	glEnable(GL_DEPTH_TEST);
 

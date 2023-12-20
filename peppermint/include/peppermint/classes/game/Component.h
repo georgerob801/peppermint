@@ -42,7 +42,8 @@ namespace peppermint {
 				SPRITE_RENDERER,
 				SOUND_SOURCE,
 				SOUND_LISTENER,
-				TEXT_RENDERER
+				TEXT_RENDERER,
+				SCRIPT_COMPONENT
 			};
 
 			/// <summary>

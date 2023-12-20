@@ -129,6 +129,15 @@
     <ClCompile Include="peppermint\src\classes\game\components\renderers\TextRenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="peppermint\src\scripts\TestComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="peppermint\src\classes\game\components\ScriptComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="peppermint\src\scripts\ScriptTypes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="peppermint\include\stb_image\stb_image.h">
@@ -255,6 +264,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="peppermint\include\peppermint\classes\game\components\renderers\TextRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\scripts\ScriptTypes.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\scripts\TestComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\classes\game\components\ScriptComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -90,6 +90,12 @@ namespace peppermint {
 			static void goToWorld(unsigned int worldIndex);
 
 			/// <summary>
+			/// Get the current WorldManager.
+			/// </summary>
+			/// <returns>The current WorldManager</returns>
+			static WorldManager* getWM();
+
+			/// <summary>
 			/// Create a new WorldManager.
 			/// </summary>
 			static WorldManager* createWorldManager();

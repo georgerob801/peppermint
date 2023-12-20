@@ -175,6 +175,7 @@
     <ClCompile Include="peppermint\src\classes\rendering\TextureSet.cpp" />
     <ClCompile Include="peppermint\src\classes\game\components\renderers\TilesetRenderer.cpp" />
     <ClCompile Include="peppermint\src\classes\game\TilesetAnimation.cpp" />
+    <ClCompile Include="peppermint\src\scripts\ScriptTypes.cpp" />
     <ClCompile Include="peppermint\src\Serialisable.cpp" />
     <ClCompile Include="peppermint\src\classes\game\components\WarpTile.cpp" />
     <ClCompile Include="peppermint\src\classes\game\components\renderers\SpriteRenderer.cpp" />
@@ -183,6 +184,8 @@
     <ClCompile Include="peppermint\src\classes\game\components\SoundSource.cpp" />
     <ClCompile Include="peppermint\src\classes\game\components\SoundListener.cpp" />
     <ClCompile Include="peppermint\src\classes\game\components\renderers\TextRenderer.cpp" />
+    <ClCompile Include="peppermint\src\scripts\TestComponent.cpp" />
+    <ClCompile Include="peppermint\src\classes\game\components\ScriptComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="peppermint\include\peppermint\classes\game\components\renderers\AnimatedTilesetRenderer.h" />
@@ -202,6 +205,7 @@
     <ClInclude Include="peppermint\include\peppermint\managers\EngineManager.h" />
     <ClInclude Include="peppermint\include\peppermint\managers\LogManager.h" />
     <ClInclude Include="peppermint\include\peppermint\managers\WindowManager.h" />
+    <ClInclude Include="peppermint\include\peppermint\scripts\ScriptTypes.hpp" />
     <ClInclude Include="peppermint\include\peppermint\Serialisable.h" />
     <ClInclude Include="peppermint\include\stb_image\stb_image.h" />
     <ClInclude Include="peppermint\include\peppermint\managers\RenderManager.h" />
@@ -227,6 +231,8 @@
     <ClInclude Include="peppermint\include\peppermint\classes\game\components\SoundSource.h" />
     <ClInclude Include="peppermint\include\peppermint\classes\game\components\SoundListener.h" />
     <ClInclude Include="peppermint\include\peppermint\classes\game\components\renderers\TextRenderer.h" />
+    <ClInclude Include="peppermint\include\peppermint\scripts\TestComponent.h" />
+    <ClInclude Include="peppermint\include\peppermint\classes\game\components\ScriptComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="peppermint\resource\shader\fragment\default.frag" />

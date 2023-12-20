@@ -42,6 +42,8 @@ void TextRenderer::generateVertices() {
 	float xOffset = 0.0f;
 	float yOffset = 0.0f;
 
+	float relScale = 1.0f / this->pixelSize;
+
 	for (unsigned int i = 0; i < this->text.length(); i++) {
 		// loop over every character (ignoring null terminator)
 		char toProcess = this->text[i];
@@ -65,7 +67,7 @@ void TextRenderer::generateVertices() {
 		float h = c->size.y;
 
 		if (this->autoWrapX) {
-			if (xPos + h > this->maxWidth) {
+			if ((xPos + h) * relScale > this->maxWidth) {
 				// move character to a new line and all the way to the left
 				xOffset = 0.0f;
 				xPos = xOffset + c->bearing.x;
@@ -73,8 +75,6 @@ void TextRenderer::generateVertices() {
 				yOffset -= this->ySpacing * this->pixelSize;
 				yPos = yOffset - (c->size.y - c->bearing.y);
 			}
-
-			cout << toProcess << ": " << xPos << endl;
 		}
 
 		// ignore spaces if first character of line
@@ -84,19 +84,19 @@ void TextRenderer::generateVertices() {
 
 		Vertex vs[4] = {
 			Vertex {
-				vec3(xPos, yPos, 0.0f),
+				vec3(xPos * relScale, yPos * relScale, 0.0f),
 				vec2(0.0f, 1.0f)
 			},
 			Vertex {
-				vec3(xPos + w, yPos, 0.0f),
+				vec3((xPos + w) * relScale, yPos * relScale, 0.0f),
 				vec2(1.0f, 1.0f)
 			},
 			Vertex {
-				vec3(xPos, yPos + h, 0.0f),
+				vec3(xPos * relScale, (yPos + h) * relScale, 0.0f),
 				vec2(0.0f, 0.0f)
 			},
 			Vertex {
-				vec3(xPos + w, yPos + h, 0.0f),
+				vec3((xPos + w) * relScale, (yPos + h) * relScale, 0.0f),
 				vec2(1.0f, 0.0f)
 			}
 		};

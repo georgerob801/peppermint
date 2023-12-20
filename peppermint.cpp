@@ -34,6 +34,15 @@ using namespace peppermint::managers;
 //#include <peppermint/classes/game/components/SoundSource.h>
 //#include <peppermint/classes/game/components/SoundListener.h>
 
+
+
+#include <peppermint/scripts/ScriptTypes.hpp>
+
+
+
+
+
+
 #include <peppermint/Exceptions.hpp>
 
 #include <ft2build.h>
@@ -1038,6 +1047,31 @@ int main() {
 	//EngineManager::worldManagers[1]->saveWorldFile();
 	//EngineManager::goToWorld(0);
 	//EngineManager::worldManagers[0]->saveWorldFile();
+
+
+
+	//WorldManager* wm = EngineManager::worldManagers[0];
+
+	//GameObject* go = wm->createGameObject();
+	//GET_SCRIPT_COMPONENT_TYPE(1)* tc = new GET_SCRIPT_COMPONENT_TYPE(1)();
+
+	//go->addComponent(tc);
+	
+	/*Asset* orig = wm->worldAsset;
+
+	Asset* testStorageAsset = new Asset(Asset::PPMINT_WORLD_FILE);
+	testStorageAsset->path = (char*)"peppermint/component-test.world";
+	wm->worldAsset = testStorageAsset;
+	wm->saveWorldFile();
+
+	wm->worldAsset = orig;*/
+
+	//EngineManager::saveGameFile();
+	//EngineManager::assetManager->saveAssetFile();
+	//EngineManager::worldManagers[0]->saveWorldFile();
+	//EngineManager::goToWorld(1);
+	//EngineManager::worldManagers[1]->saveWorldFile();
+	//EngineManager::goToWorld(0);
 
 
 	try {
