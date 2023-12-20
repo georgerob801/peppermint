@@ -3,6 +3,8 @@
 
 #include <glm/glm.hpp>
 
+#include <peppermint/classes/Asset.h>
+
 using namespace glm;
 
 namespace peppermint {
@@ -10,19 +12,22 @@ namespace peppermint {
 		/// <summary>
 		/// Class for storing shader information.
 		/// </summary>
-		class Shader {
+		class Shader : public Asset {
 		public:
 			/// <summary>
 			/// The OpenGL ID of this Shader.
 			/// </summary>
 			unsigned int id;
-
 			/// <summary>
 			/// Create a new Shader.
 			/// </summary>
-			/// <param name="vertexPath">The path to the vertex shader to use. NEEDS TO BE CHANGED TO ASSET</param>
-			/// <param name="fragmentPath">The path to the fragment shader to use. NEEDS TO BE CHANGED TO ASSET</param>
-			Shader(char* vertexPath, char* fragmentPath);
+			/// <param name="vertex">The path to the vertex shader to use.</param>
+			/// <param name="fragment">The path to the fragment shader to use.</param>
+			Shader(Asset* vertexAsset, Asset* fragmentAsset);
+
+			Shader();
+
+			void loadFromAssets(Asset* vertexAsset, Asset* fragmentAsset);
 
 			/// <summary>
 			/// Use this Shader.
@@ -64,6 +69,12 @@ namespace peppermint {
 			/// <param name="name">The name of the uniform.</param>
 			/// <param name="value">The value to set it to.</param>
 			void setVec2f(char* name, vec2 value) const;
+
+			vector<byte> serialise();
+			void deserialise(vector<byte> bytes);
+		private:
+			Asset* frag;
+			Asset* vert;
 		};
 	}
 }

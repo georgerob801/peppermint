@@ -16,6 +16,8 @@ Character::~Character() {
 
 void FTManager::init() {
 	if (FT_Init_FreeType(&FTManager::ft)) throw peppermint::exceptions::rendering::text::FreeTypeCannotInitialiseException();
+
+	FTManager::textShader = new Shader(new Asset(Asset::VERTEX_SHADER_SOURCE, (char*)"peppermint/resource/shader/vertex/default.vert"), new Asset(Asset::FRAGMENT_SHADER_SOURCE, (char*)"peppermint/resource/shader/fragment/text.frag"));
 }
 
 Font* FTManager::addFont(Asset* fontFile) {

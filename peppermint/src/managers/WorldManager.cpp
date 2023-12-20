@@ -355,6 +355,12 @@ void WorldManager::deserialise(vector<byte> bytes) {
 
 			co->deserialise(subVector);
 			break;
+		case Component::TEXT_RENDERER:
+			co = new TextRenderer();
+			copy(bytes.begin() + position, bytes.end(), subVector.begin());
+
+			co->deserialise(subVector);
+			break;
 		default:
 			throw peppermint::exceptions::serialisation::world::CorruptedFileException();
 		}
@@ -547,6 +553,22 @@ void WorldManager::deserialise(vector<byte> bytes) {
 			if (soundIndex == EngineManager::soundManager->sbm->soundBuffers.end()) throw peppermint::exceptions::serialisation::world::CorruptedFileException();
 
 			ss->sound = *soundIndex;
+
+			break;
+		}
+		case Component::TEXT_RENDERER:
+		{
+			TextRenderer* tr = (TextRenderer*)componentsToMatch[i];
+
+			void* toFind = tr->relatedSerialisedIDs[0];
+
+			vector<Asset*>::iterator index = find_if(this->assets->begin(), this->assets->end(), [toFind](Asset* item) { return item->serialisedID == toFind; });
+
+			if (index == this->assets->end()) throw peppermint::exceptions::serialisation::world::CorruptedFileException();
+
+			tr->fontFile = *index;
+
+			tr->generateVertices();
 
 			break;
 		}

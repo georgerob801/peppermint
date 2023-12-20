@@ -17,7 +17,7 @@ namespace peppermint {
 		/// <summary>
 		/// Enum to determing types of Assets.
 		/// </summary>
-		enum ASSET_TYPE {
+		enum AssetType {
 			NONE,
 			IMAGE,
 			TILESET_ANIMATION,
@@ -30,19 +30,26 @@ namespace peppermint {
 			PPMINT_GAME_FILE,
 			PPMINT_ASSET_FILE,
 			SOUND,
-			FONT
+			FONT,
+			SHADER
 		};
 
 		/// <summary>
 		/// The type of this Asset.
 		/// </summary>
-		ASSET_TYPE type;
+		AssetType type;
 
 		/// <summary>
 		/// Create a new Asset.
 		/// </summary>
 		/// <param name="type">The type of Asset to create.</param>
-		Asset(ASSET_TYPE type);
+		Asset(AssetType type);
+		/// <summary>
+		/// Create a new Asset.
+		/// </summary>
+		/// <param name="type">The type of Asset to create.</param>
+		/// <param name="path">The path of the Asset.</param>
+		Asset(AssetType type, char* path);
 
 		/// <summary>
 		/// Set this Asset's path.

@@ -4,9 +4,14 @@
 
 using namespace peppermint;
 
-Asset::Asset(ASSET_TYPE type) {
+Asset::Asset(AssetType type) {
 	this->type = type;
 	this->path = nullptr;
+}
+
+Asset::Asset(AssetType type, char* path) {
+	this->type = type;
+	this->path = path;
 }
 
 void Asset::setPath(const char* path) {

@@ -39,7 +39,7 @@ namespace peppermint {
 			/// <summary>
 			/// A pointer to the Shader used by all objects in this world.
 			/// </summary>
-			Shader* shader = new Shader((char*)"peppermint/resource/shader/vertex/default.vert", (char*)"peppermint/resource/shader/fragment/default.frag");
+			Shader* shader = new Shader(new Asset(Asset::VERTEX_SHADER_SOURCE, (char*)"peppermint/resource/shader/vertex/default.vert"), new Asset(Asset::FRAGMENT_SHADER_SOURCE, (char*)"peppermint/resource/shader/fragment/default.frag"));
 
 			/// <summary>
 			/// Runs once when the world starts.

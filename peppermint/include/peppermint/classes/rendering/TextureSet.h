@@ -22,7 +22,7 @@ namespace peppermint {
 			/// <summary>
 			/// Create a new TextureSet.
 			/// </summary>
-			TextureSet() : Asset(ASSET_TYPE::TEXTURE_SET) { }
+			TextureSet() : Asset(AssetType::TEXTURE_SET) { }
 
 			/// <summary>
 			/// A vector containing all the Textures this TextureSet uses.

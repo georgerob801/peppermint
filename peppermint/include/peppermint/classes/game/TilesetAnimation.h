@@ -16,7 +16,7 @@ namespace peppermint {
 			/// <summary>
 			/// Create a new TilesetAnimation.
 			/// </summary>
-			TilesetAnimation() : Asset(ASSET_TYPE::TILESET_ANIMATION) { }
+			TilesetAnimation() : Asset(AssetType::TILESET_ANIMATION) { }
 
 			/// <summary>
 			/// The frame to start on.

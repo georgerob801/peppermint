@@ -14,7 +14,16 @@ using namespace peppermint::rendering;
 using namespace peppermint::managers;
 using namespace std;
 
-Shader::Shader(char* vertexPath, char* fragmentPath) {
+Shader::Shader() : Asset(SHADER) {
+
+}
+
+void Shader::loadFromAssets(Asset* vertexAsset, Asset* fragmentAsset) {
+	this->vert = vertexAsset;
+	this->frag = fragmentAsset;
+
+	char* vertexPath = vertexAsset->path;
+	char* fragmentPath = fragmentAsset->path;
 	LogManager::debug(format("Creating a new shader from '{}' and '{}'", vertexPath, fragmentPath));
 	// retrieve source code from paths
 	string vertexCode;
@@ -111,6 +120,10 @@ Shader::Shader(char* vertexPath, char* fragmentPath) {
 	LogManager::info(format("Successfully created new shader with files '{}' and '{}'", vertexPath, fragmentPath));
 }
 
+Shader::Shader(Asset* vertexAsset, Asset* fragmentAsset) : Asset(SHADER) {
+	this->loadFromAssets(vertexAsset, fragmentAsset);
+}
+
 void Shader::use() {
 	glUseProgram(this->id);
 }
@@ -137,4 +150,62 @@ void Shader::setVec3f(char* name, vec3 value) const {
 
 void Shader::setVec2f(char* name, vec2 value) const {
 	glUniform2f(glGetUniformLocation(this->id, name), value.x, value.y);
+}
+
+vector<byte> Shader::serialise() {
+	vector<byte> out;
+
+	// type
+	unsigned int typeCast = (unsigned int)this->type;
+	byte* toAdd = reinterpret_cast<byte*>(&typeCast);
+	for (unsigned int i = 0; i < sizeof(unsigned int); i++) {
+		out.push_back(toAdd[i]);
+	}
+
+	// id
+	void* id = this;
+	toAdd = reinterpret_cast<byte*>(&id);
+	for (unsigned int i = 0; i < sizeof(void*); i++) {
+		out.push_back(toAdd[i]);
+	}
+
+	// path length
+	unsigned int length = 0;
+	toAdd = reinterpret_cast<byte*>(&length);
+	for (unsigned int i = 0; i < sizeof(unsigned int); i++) {
+		out.push_back(toAdd[i]);
+	}
+
+	// vertex asset id
+	toAdd = reinterpret_cast<byte*>(&this->vert);
+	for (unsigned int i = 0; i < sizeof(void*); i++) {
+		out.push_back(toAdd[i]);
+	}
+
+	// fragment asset id
+	toAdd = reinterpret_cast<byte*>(&this->frag);
+	for (unsigned int i = 0; i < sizeof(void*); i++) {
+		out.push_back(toAdd[i]);
+	}
+
+	return out;
+}
+
+void Shader::deserialise(vector<byte> bytes) {
+	unsigned long long position = 0x00;
+
+	this->serialisedID = *reinterpret_cast<void**>(&bytes[position]);
+	position += sizeof(void*);
+
+	unsigned int pathLength = *reinterpret_cast<unsigned int*>(&bytes[position]);
+	position += sizeof(unsigned int);
+
+	// vert
+	this->relatedSerialisedIDs.push_back(*reinterpret_cast<void**>(&bytes[position]));
+	position += sizeof(void*);
+	// frag
+	this->relatedSerialisedIDs.push_back(*reinterpret_cast<void**>(&bytes[position]));
+	position += sizeof(void*);
+
+	this->deserialisedSize = position;
 }

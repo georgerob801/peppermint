@@ -2,6 +2,8 @@
 
 #include <peppermint/Exceptions.hpp>
 
+#include <peppermint/classes/rendering/Text.h>
+
 #include <format>
 #include <iostream>
 #include <fstream>
@@ -26,7 +28,7 @@ AssetManager::~AssetManager() {
 	this->assets.clear();
 }
 
-peppermint::Asset* AssetManager::newAsset(peppermint::Asset::ASSET_TYPE type) {
+peppermint::Asset* AssetManager::newAsset(peppermint::Asset::AssetType type) {
 	Asset* newAsset = new Asset(type);
 	this->registerAsset(newAsset);
 	return newAsset;
@@ -132,7 +134,7 @@ void AssetManager::deserialise(vector<byte> bytes) {
 	position += sizeof(unsigned int);
 
 	for (unsigned int i = 0; i < numAssets; i++) {
-		Asset::ASSET_TYPE type = (Asset::ASSET_TYPE)(*reinterpret_cast<unsigned int*>(&bytes[position]));
+		Asset::AssetType type = (Asset::AssetType)(*reinterpret_cast<unsigned int*>(&bytes[position]));
 		position += sizeof(unsigned int);
 
 		Asset* asset;
@@ -181,6 +183,21 @@ void AssetManager::deserialise(vector<byte> bytes) {
 			asset->deserialise(subVector);
 
 			EngineManager::soundManager->sbm->addSound(asset);
+			break;
+		case Asset::SHADER:
+			asset = new Shader();
+			copy(bytes.begin() + position, bytes.end(), subVector.begin());
+
+			asset->deserialise(subVector);
+			break;
+		case Asset::FONT:
+			asset = new Asset(type);
+			copy(bytes.begin() + position, bytes.end(), subVector.begin());
+
+			asset->deserialise(subVector);
+
+			peppermint::rendering::text::FTManager::addFont(asset);
+
 			break;
 		default:
 			throw peppermint::exceptions::serialisation::asset::CorruptedFileException();
@@ -236,6 +253,26 @@ void AssetManager::deserialise(vector<byte> bytes) {
 				tset->textureSets.push_back((TextureSet*)(*index));
 			}
 
+			break;
+		}
+		case Asset::SHADER:
+		{
+			Shader* sh = (Shader*)this->assets[i];
+
+			void* toFindVert = sh->relatedSerialisedIDs[0];
+			void* toFindFrag = sh->relatedSerialisedIDs[1];
+
+			Asset* vert;
+			Asset* frag;
+
+			vector<Asset*>::iterator index = find_if(this->assets.begin(), this->assets.end(), [toFindVert](Asset* item) { return item->serialisedID == toFindVert; });
+			if (index == this->assets.end()) throw peppermint::exceptions::serialisation::asset::CorruptedFileException();
+			vert = *index;
+			index = find_if(this->assets.begin(), this->assets.end(), [toFindFrag](Asset* item) { return item->serialisedID == toFindFrag; });
+			if (index == this->assets.end()) throw peppermint::exceptions::serialisation::asset::CorruptedFileException();
+			frag = *index;
+
+			sh->loadFromAssets(vert, frag);
 			break;
 		}
 		default:

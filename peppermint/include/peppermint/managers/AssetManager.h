@@ -27,7 +27,7 @@ namespace peppermint {
 			/// </summary>
 			/// <param name="type">The type of Asset to create.</param>
 			/// <returns>A pointer to the new Asset.</returns>
-			Asset* newAsset(Asset::ASSET_TYPE type);
+			Asset* newAsset(Asset::AssetType type);
 			/// <summary>
 			/// Register an Asset.
 			/// </summary>

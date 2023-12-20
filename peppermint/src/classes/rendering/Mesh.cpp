@@ -94,8 +94,7 @@ void Mesh::draw(Shader* shader) {
 		shader->use();
 		shader->setInt((char*)"text", 15);
 		shader->setVec3f((char*)"textColour", this->vertColour);
-		for (unsigned int i = 0; i < (int)std::ceil((float)this->vertices.size() / (float)6); i++) {
-			// cout << i << endl;
+		for (unsigned int i = 0; i < (int)std::ceil((float)this->vertices.size() / (float)4); i++) {
 			// arbitrarily decided to use slot 15 for text textures
 			glActiveTexture(GL_TEXTURE15);
 			this->textures[i]->bind();

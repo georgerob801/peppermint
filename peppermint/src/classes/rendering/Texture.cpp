@@ -7,7 +7,7 @@
 using namespace peppermint::rendering;
 
 
-Texture::Texture() : Asset(ASSET_TYPE::TEXTURE) {
+Texture::Texture() : Asset(AssetType::TEXTURE) {
 	glGenTextures(1, &this->glTextureLocation);
 
 	glActiveTexture(GL_TEXTURE0);
@@ -21,7 +21,7 @@ Texture::Texture() : Asset(ASSET_TYPE::TEXTURE) {
 	this->nrChannels = NULL;
 }
 
-Texture::Texture(Asset* asset) : Asset(ASSET_TYPE::TEXTURE) {
+Texture::Texture(Asset* asset) : Asset(AssetType::TEXTURE) {
 	this->imageAsset = asset;
 
 	glGenTextures(1, &this->glTextureLocation);

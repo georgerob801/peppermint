@@ -909,7 +909,6 @@ int main() {
 	EngineManager::saveGameFile();
 	EngineManager::assetManager->saveAssetFile();*/
 
-
 	/*Asset* gameFileAsset = new Asset(Asset::PPMINT_GAME_FILE);
 	gameFileAsset->path = (char*)"peppermint/pokemon.pmint";
 	engineManager->setGameFile(gameFileAsset);
@@ -1003,40 +1002,42 @@ int main() {
 	// EngineManager::goToWorld(1);
 	// EngineManager::worldManagers[1]->saveWorldFile();
 
-	EngineManager::goToWorld(1);
+	//EngineManager::goToWorld(1);
 
 
-	WorldManager* wm = EngineManager::worldManagers[1];
-
-	Shader* ts = new Shader((char*)"peppermint/resource/shader/vertex/default.vert", (char*)"peppermint/resource/shader/fragment/text.frag");
-	peppermint::rendering::text::FTManager::textShader = ts;
-
-	Asset* fontFile = new Asset(Asset::FONT);
-	fontFile->path = (char*)"peppermint/resource/font/pokemon-emerald.ttf";
-	peppermint::rendering::text::Font* f = peppermint::rendering::text::FTManager::addFont(fontFile);
-
-	TextRenderer* tr = new TextRenderer();
-
-	tr->text = "hello";
-	tr->fontFile = fontFile;
-	tr->pixelSize = 200;
-
-	tr->generateVertices();
-
-	tr->text = "no";
-	tr->generateVertices();
-
-	GameObject* go = wm->createGameObject();
-	go->addComponent(tr);
-
-	go->transform->position = vec3(2.0f, 0.0f, 1.0f);
-	float textScale = 1.0f / (float)tr->pixelSize;
-	go->transform->scale = vec3(textScale, textScale, 1.0f);
-
-	GameObject* parent = (GameObject*)(wm->getFirstComponent<PlayerController>()->getGameObject());
-	go->transform->parent = parent->transform;
+	//WorldManager* wm = EngineManager::worldManagers[1];
 
 
+
+	//Asset* fontFile = EngineManager::assetManager->newAsset(Asset::FONT);
+	//fontFile->path = (char*)"peppermint/resource/font/pokemon-emerald.ttf";
+	//peppermint::rendering::text::Font* f = peppermint::rendering::text::FTManager::addFont(fontFile);
+
+	//TextRenderer* tr = new TextRenderer();
+
+	//// text must be set last (basically call generateVertices last)
+	//tr->fontFile = fontFile;
+	//tr->pixelSize = 200;
+	//tr->autoWrapX = false;
+	//tr->setText("this is incredibly odd");
+
+	//// tr->setText("no");
+
+	//GameObject* go = wm->createGameObject();
+	//go->addComponent(tr);
+
+	//go->transform->position = vec3(2.0f, 0.0f, 1.0f);
+	//float textScale = 1.0f / (float)tr->pixelSize;
+	//go->transform->scale = vec3(textScale, textScale, 1.0f);
+
+	//GameObject* parent = (GameObject*)(wm->getFirstComponent<PlayerController>()->getGameObject());
+	//go->transform->parent = parent->transform;
+
+	//EngineManager::saveGameFile();
+	//EngineManager::assetManager->saveAssetFile();
+	//EngineManager::worldManagers[1]->saveWorldFile();
+	//EngineManager::goToWorld(0);
+	//EngineManager::worldManagers[0]->saveWorldFile();
 
 
 	try {

@@ -18,7 +18,7 @@ namespace peppermint {
 			/// <summary>
 			/// Create a Tileset.
 			/// </summary>
-			Tileset() : Asset(ASSET_TYPE::TILESET) { }
+			Tileset() : Asset(AssetType::TILESET) { }
 
 			// tile coords is centre +- (1/2)(tileset.tileSize)
 			
