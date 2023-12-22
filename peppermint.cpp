@@ -53,8 +53,6 @@ using namespace peppermint::managers;
 
 using namespace peppermint::game::components;
 
-EngineManager* engineManager;
-
 /* TODO TIMEEEE
 * TODO: script component timeeeeeee
 * TODO: possibly attempt to only use one VAO per world
@@ -64,10 +62,10 @@ EngineManager* engineManager;
 int main() {
 	stbi_set_flip_vertically_on_load(true);
 
-	engineManager = new EngineManager();
-	if (engineManager->status == -1) return -1;
+	EngineManager::initialise();
+	if (EngineManager::status == -1) return -1;
 
-	engineManager->windowManager->getWindow()->setName("Definitely Pokémon Emerald");
+	EngineManager::windowManager->getWindow()->setName("Definitely Pokémon Emerald");
 	
 	/*
 	WorldManager* worldManager = EngineManager::worldManagers[EngineManager::activeWorldManager];
@@ -1000,7 +998,7 @@ int main() {
 
 	Asset* gameFileAsset = new Asset(Asset::PPMINT_GAME_FILE);
 	gameFileAsset->path = (char*)"peppermint/pokemon.pmint";
-	engineManager->setGameFile(gameFileAsset);
+	EngineManager::setGameFile(gameFileAsset);
 
 	EngineManager::loadFromGameFile();
 	// EngineManager::worldManagers[EngineManager::activeWorldManager]->getFirstComponent<SoundSource>()->playByDefault = true;
@@ -1075,14 +1073,14 @@ int main() {
 
 
 	try {
-		engineManager->loop();
+		EngineManager::loop();
 	} catch (std::exception e) {
 		LogManager::critical(e.what());
-		delete engineManager;
+		EngineManager::destroy();
 		return -1;
 	}
 
-	delete engineManager;
+	EngineManager::destroy();
 
 	return 0;
 }

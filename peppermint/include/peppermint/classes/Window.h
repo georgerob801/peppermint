@@ -52,6 +52,12 @@ namespace peppermint {
 		void getSize(int* thing);
 
 		/// <summary>
+		/// Get the current size the viewport should be.
+		/// </summary>
+		/// <param name="thing"></param>
+		void getIntendedViewportSize(int* thing);
+
+		/// <summary>
 		/// Swap this Window's buffers.
 		/// </summary>
 		void swapBuffers();

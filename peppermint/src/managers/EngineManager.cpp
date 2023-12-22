@@ -26,8 +26,10 @@ vector<WorldManager*> EngineManager::worldManagers = vector<WorldManager*>();
 unsigned int EngineManager::activeWorldManager = 0;
 unsigned int EngineManager::initialWorldIndex = 0;
 
-EngineManager::EngineManager() {
-	this->status = 0;
+short EngineManager::status = 0;
+
+void EngineManager::initialise() {
+	EngineManager::status = 0;
 	LogManager::info("Started peppermint");
 	LogManager::debug("Initialising GLFW");
 	glfwInit();
@@ -52,7 +54,7 @@ EngineManager::EngineManager() {
 	LogManager::debug(std::format("Created window manager at {}", (void*)windowManager));
 
 	Window* currentWindow = windowManager->createWindow();
-	if (windowManager->status == -1) this->status = -1;
+	if (windowManager->status == -1) EngineManager::status = -1;
 
 	LogManager::debug(std::format("Setting current window to window at {}", (void*)currentWindow));
 	windowManager->setCurrentWindow(currentWindow);
@@ -66,8 +68,15 @@ EngineManager::EngineManager() {
 	}
 	LogManager::debug("Initialised GLAD successfully");
 
+	LogManager::debug("Setting up FBOs");
+	for (unsigned int i = 0; i < EngineManager::windowManager->windows.size(); i++) {
+		LogManager::debug(format("Setting up FBO for window at {}", (void*)EngineManager::windowManager->windows[i]));
+		EngineManager::windowManager->setCurrentWindow(EngineManager::windowManager->windows[i]);
+		EngineManager::windowManager->windows[i]->renderManager->setupFBO();
+	}
+
 	LogManager::debug("Initialising SoundManager");
-	this->soundManager->initialiseWithDefaults();
+	EngineManager::soundManager->initialiseWithDefaults();
 	LogManager::info("Initialised SoundManager successfully");
 
 	glEnable(GL_DEPTH_TEST);
@@ -84,15 +93,15 @@ EngineManager::EngineManager() {
 	EngineManager::activeWorldManager = 0;
 }
 
-EngineManager::~EngineManager() {
+void EngineManager::destroy() {
 	LogManager::info("Terminating peppermint");
 	LogManager::debug("Terminating GLFW");
 	glfwTerminate();
 	LogManager::debug("Terminated GLFW");
 	LogManager::debug("Deleting WorldManagers");
-	for (unsigned int i = 0; i < this->worldManagers.size(); i++) {
-		delete this->worldManagers[i];
-		LogManager::debug(format("Deleted WorldManager at {}", (void*)this->worldManagers[i]));
+	for (unsigned int i = 0; i < EngineManager::worldManagers.size(); i++) {
+		delete EngineManager::worldManagers[i];
+		LogManager::debug(format("Deleted WorldManager at {}", (void*)EngineManager::worldManagers[i]));
 	}
 	LogManager::debug("Deleted WorldManagers");
 	LogManager::debug("Deleting AssetManager");
@@ -163,43 +172,43 @@ void EngineManager::loop() {
 	stbi_set_flip_vertically_on_load(true);
 #pragma endregion
 
-	unsigned int lastWmI = this->activeWorldManager;
+	unsigned int lastWmI = EngineManager::activeWorldManager;
 
 	while (EngineManager::windowManager->windows.size() != 0) {
-		if (this->status == -1) throw std::exception("Failed to run peppermint.");
+		if (EngineManager::status == -1) throw std::exception("Failed to run peppermint.");
 
-		this->updateDeltaTime();
+		EngineManager::updateDeltaTime();
 
 		for (int i = 0; i < EngineManager::windowManager->windows.size(); i++) {
 			InputManager::setWindow(EngineManager::windowManager->windows[i]);
 
-			//if (this->activeWorldManager != lastWmI) {
+			//if (EngineManager::activeWorldManager != lastWmI) {
 			//	EngineManager::windowManager->windows[i]->renderManager->activeCamera = EngineManager::worldManagers[EngineManager::activeWorldManager]->getFirstCamera();
 			//}
 
-			lastWmI = this->activeWorldManager;
+			lastWmI = EngineManager::activeWorldManager;
 
 			// awake
-			if (!this->worldManagers[this->activeWorldManager]->initialised) {
-				EngineManager::windowManager->windows[i]->renderManager->activeCamera = this->worldManagers[this->activeWorldManager]->getFirstCamera();
-				this->worldManagers[this->activeWorldManager]->awake();
-				this->worldManagers[this->activeWorldManager]->initialised = true;
+			if (!EngineManager::worldManagers[EngineManager::activeWorldManager]->initialised) {
+				EngineManager::windowManager->windows[i]->renderManager->activeCamera = EngineManager::worldManagers[EngineManager::activeWorldManager]->getFirstCamera();
+				EngineManager::worldManagers[EngineManager::activeWorldManager]->awake();
+				EngineManager::worldManagers[EngineManager::activeWorldManager]->initialised = true;
 			}
 
 			// discard frame if world changed, restart loop process
-			if (this->activeWorldManager != lastWmI) continue;
+			if (EngineManager::activeWorldManager != lastWmI) continue;
 
 			// start
-			this->worldManagers[this->activeWorldManager]->start();
+			EngineManager::worldManagers[EngineManager::activeWorldManager]->start();
 
 			// discard frame if world changed, restart loop process
-			if (this->activeWorldManager != lastWmI) continue;
+			if (EngineManager::activeWorldManager != lastWmI) continue;
 
 			// loop
-			this->worldManagers[this->activeWorldManager]->loop(EngineManager::windowManager->windows[i]);
+			EngineManager::worldManagers[EngineManager::activeWorldManager]->loop(EngineManager::windowManager->windows[i]);
 
 			// discard frame if world changed, restart loop process
-			if (this->activeWorldManager != lastWmI) continue;
+			if (EngineManager::activeWorldManager != lastWmI) continue;
 
 			EngineManager::windowManager->windows[i]->renderFrame();
 			EngineManager::windowManager->windows[i]->swapBuffers();
@@ -211,8 +220,8 @@ void EngineManager::loop() {
 			}
 		}
 
-		while (this->vSyncTime() < 1.0f / 60.0f) { }
-		// LogManager::debug(std::format("{} fps", round(1.0f / this->vSyncTime())));
+		while (EngineManager::vSyncTime() < 1.0f / 60.0f) { }
+		// LogManager::debug(std::format("{} fps", round(1.0f / EngineManager::vSyncTime())));
 
 		glfwPollEvents();
 	}
@@ -316,7 +325,6 @@ void EngineManager::loadFromGameFile() {
 	}
 
 	// LOAD THE ASSET MANAGER HERE
-	// TODO: figure out why/how this is getting deleted somewhere (which leads to saving not working if you're saving to a pre-existing thing)
 	Asset* assetManagerAsset = new Asset(Asset::PPMINT_ASSET_FILE);
 	// memory managed by asset deconstructor
 	assetManagerAsset->path = new char[assetFilePath.size() + 1];

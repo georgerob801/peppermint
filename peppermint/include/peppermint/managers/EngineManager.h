@@ -21,7 +21,7 @@ namespace peppermint {
 			/// <summary>
 			/// Current status of the EngineManager. Hope that it never goes to -1.
 			/// </summary>
-			short status = 0;
+			static short status;
 
 			/// <summary>
 			/// The index of the first WorldManager to load.
@@ -65,24 +65,26 @@ namespace peppermint {
 			/// Create a new EngineManager.
 			/// </summary>
 			EngineManager();
+			static void initialise();
 			/// <summary>
 			/// Destroy this EngineManager.
 			/// </summary>
 			~EngineManager();
+			static void destroy();
 
 			/// <summary>
 			/// Update the time between frames.
 			/// </summary>
-			void updateDeltaTime();
+			static void updateDeltaTime();
 			/// <summary>
 			/// Get the time since the beginning of this frame.
 			/// </summary>
-			double vSyncTime();
+			static double vSyncTime();
 
 			/// <summary>
 			/// Run the actual engine after setup.
 			/// </summary>
-			void loop();
+			static void loop();
 
 			/// <summary>
 			/// Go to a specified world.

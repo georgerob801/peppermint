@@ -36,9 +36,19 @@ namespace peppermint {
 			RenderQueue* activeRenderQueue;
 
 			/// <summary>
+			/// The shader to use when drawing the screen texture to the screen.
+			/// </summary>
+			Shader* screenShader;
+
+			/// <summary>
 			/// The colour to draw before all other render calls.
 			/// </summary>
 			vec4 backgroundColour;
+
+			/// <summary>
+			/// The index of this RenderManager's FBO.
+			/// </summary>
+			unsigned int FBO;
 
 			/// <summary>
 			/// Create a RenderManager.
@@ -58,8 +68,38 @@ namespace peppermint {
 			/// </summary>
 			/// <param name="cam">The Camera Component to set.</param>
 			void setCamera(Camera* cam);
-		private:
 
+			/// <summary>
+			/// Setup this RenderManager's FBO.
+			/// </summary>
+			void setupFBO();
+
+			/// <summary>
+			/// Bind this RenderManager's FBO.
+			/// </summary>
+			void bindFBO();
+
+			/// <summary>
+			/// Get the index of this RenderManager's colour texture.
+			/// </summary>
+			/// <returns></returns>
+			unsigned int getColourTex();
+
+			/// <summary>
+			/// Resize this RenderManager's attachments to match the current Window size.
+			/// </summary>
+			void resizeFBOAttachments();
+
+			/// <summary>
+			/// Clear any bound FBOs.
+			/// </summary>
+			static void unbindFBOs();
+		private:
+			unsigned int colourTex = NULL;
+			unsigned int RBO = NULL;
+
+			unsigned int fboVAO = NULL;
+			unsigned int fboVBO = NULL;
 		};
 	}
 }

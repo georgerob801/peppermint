@@ -236,8 +236,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="peppermint\resource\shader\fragment\default.frag" />
+    <None Include="peppermint\resource\shader\fragment\screen.frag" />
     <None Include="peppermint\resource\shader\fragment\text.frag" />
     <None Include="peppermint\resource\shader\vertex\default.vert" />
+    <None Include="peppermint\resource\shader\vertex\screen.vert" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="peppermint.rc" />
