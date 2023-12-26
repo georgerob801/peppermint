@@ -1,6 +1,6 @@
-#include <peppermint/classes/rendering/Tileset.h>
+#include <peppermint-preview/classes/rendering/Tileset.h>
 
-#include <peppermint/Exceptions.hpp>
+#include <peppermint-preview/Exceptions.hpp>
 #include <format>
 
 using namespace peppermint::rendering;

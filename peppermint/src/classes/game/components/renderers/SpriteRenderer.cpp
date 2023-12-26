@@ -1,4 +1,4 @@
-#include <peppermint/classes/game/components/renderers/SpriteRenderer.h>
+#include <peppermint-preview/classes/game/components/renderers/SpriteRenderer.h>
 
 using namespace peppermint::game::components;
 

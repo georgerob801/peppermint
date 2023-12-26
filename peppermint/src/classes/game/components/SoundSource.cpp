@@ -1,8 +1,8 @@
-#include <peppermint/classes/game/components/SoundSource.h>
+#include <peppermint-preview/classes/game/components/SoundSource.h>
 
-#include <peppermint/classes/game/GameObject.h>
-#include <peppermint/managers/EngineManager.h>
-#include <peppermint/Exceptions.hpp>
+#include <peppermint-preview/classes/game/GameObject.h>
+#include <peppermint-preview/managers/EngineManager.h>
+#include <peppermint-preview/Exceptions.hpp>
 
 using namespace peppermint::game::components;
 

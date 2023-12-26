@@ -1,12 +1,12 @@
-#include <peppermint/scripts/TestComponent.h>
+#include <peppermint-preview/scripts/TestComponent.h>
 
-#include <peppermint/managers/LogManager.h>
-#include <peppermint/managers/EngineManager.h>
+#include <peppermint-preview/managers/LogManager.h>
+#include <peppermint-preview/managers/EngineManager.h>
 
-#include <peppermint/classes/game/GameObject.h>
+#include <peppermint-preview/classes/game/GameObject.h>
 
-#include <peppermint/classes/game/components/renderers/TextRenderer.h>
-#include <peppermint/classes/game/components/PlayerController.h>
+#include <peppermint-preview/classes/game/components/renderers/TextRenderer.h>
+#include <peppermint-preview/classes/game/components/PlayerController.h>
 
 using namespace peppermint::game::components;
 using namespace peppermint::managers;
@@ -45,8 +45,8 @@ void TestComponent::start() {
 
 void TestComponent::loop() {
 	// CAMERA GO CIRCLEEEEEEE
-	this->cam->transform->position.x = originalOffset.x + sin(0.4f * glfwGetTime());
-	this->cam->transform->position.y = originalOffset.y + cos(0.4f * glfwGetTime());
+	// this->cam->transform->position.x = originalOffset.x + sin(0.4f * glfwGetTime());
+	// this->cam->transform->position.y = originalOffset.y + cos(0.4f * glfwGetTime());
 }
 
 

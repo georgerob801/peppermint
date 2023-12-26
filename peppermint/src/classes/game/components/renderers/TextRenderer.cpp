@@ -1,5 +1,5 @@
-#include <peppermint/classes/game/components/renderers/TextRenderer.h>
-#include <peppermint/managers/LogManager.h>
+#include <peppermint-preview/classes/game/components/renderers/TextRenderer.h>
+#include <peppermint-preview/managers/LogManager.h>
 
 #include <glad/glad.h>
 

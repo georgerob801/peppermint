@@ -1,6 +1,6 @@
-#include <peppermint/classes/game/components/Camera.h>
+#include <peppermint-preview/classes/game/components/Camera.h>
 
-#include <peppermint/classes/game/GameObject.h>
+#include <peppermint-preview/classes/game/GameObject.h>
 
 using namespace peppermint::game;
 using namespace peppermint::game::components;
@@ -12,7 +12,7 @@ Camera::Camera() {
 }
 
 #include <format>
-#include <peppermint/managers/LogManager.h>
+#include <peppermint-preview/managers/LogManager.h>
 
 mat4 Camera::getViewMatrix() {
 	vec3 position = ((GameObject*)this->getGameObject())->transform->getGlobalPosition();

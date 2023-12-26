@@ -1,4 +1,4 @@
-#include <peppermint/classes/game/components/renderers/Renderer.h>
+#include <peppermint-preview/classes/game/components/renderers/Renderer.h>
 
 using namespace peppermint::game::components;
 

@@ -1,8 +1,9 @@
-#include <peppermint/managers/InputManager.h>
+#include <peppermint-preview/managers/InputManager.h>
 
 using namespace peppermint::managers;
 
 peppermint::Window* InputManager::currentWindow = nullptr;
+GLFWwindow* InputManager::inputWindow = nullptr;
 
 const int* InputManager::getKeys(INPUT_TYPES type) {
 	switch (type) {
@@ -27,13 +28,13 @@ const int* InputManager::getKeys(INPUT_TYPES type) {
 bool InputManager::active(INPUT_TYPES type) {
 	const int* keys = InputManager::getKeys(type);
 	for (unsigned int i = 0; i < InputManager::getNumKeys(type); i++) {
-		if (glfwGetKey(currentWindow->getAddress(), keys[i]) == GLFW_PRESS) return true;
+		if (glfwGetKey(InputManager::inputWindow, keys[i]) == GLFW_PRESS) return true;
 	}
 	return false;
 }
 
 bool InputManager::active(INPUT_TYPES type, MODIFIERS modifier) {
-	if (glfwGetKey(currentWindow->getAddress(), modifier) != GLFW_PRESS) return false;
+	if (glfwGetKey(InputManager::inputWindow, modifier) != GLFW_PRESS) return false;
 	return InputManager::active(type);
 }
 

@@ -1,6 +1,6 @@
-#include <peppermint/classes/game/components/renderers/TilesetRenderer.h>
+#include <peppermint-preview/classes/game/components/renderers/TilesetRenderer.h>
 
-#include <peppermint/managers/LogManager.h>
+#include <peppermint-preview/managers/LogManager.h>
 
 using namespace peppermint::managers;
 

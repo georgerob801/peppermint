@@ -1,8 +1,8 @@
-#include <peppermint/classes/sound/SoundBufferManager.h>
+#include <peppermint-preview/classes/sound/SoundBufferManager.h>
 
-#include <peppermint/Exceptions.hpp>
+#include <peppermint-preview/Exceptions.hpp>
 #include <AL/alext.h>
-#include <peppermint/managers/LogManager.h>
+#include <peppermint-preview/managers/LogManager.h>
 
 using namespace peppermint::sound;
 using namespace peppermint::managers;

@@ -1,4 +1,4 @@
-#include <peppermint/managers/LogManager.h>
+#include <peppermint-preview/managers/LogManager.h>
 
 using namespace peppermint::managers;
 using namespace std;

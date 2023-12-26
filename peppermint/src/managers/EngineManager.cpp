@@ -12,6 +12,8 @@
 
 #include <fstream>
 
+#define PPMINT_SKIP_GLFW
+
 using namespace peppermint::managers;
 
 double EngineManager::deltaTime;
@@ -30,9 +32,12 @@ bool EngineManager::outputToScreen = true;
 
 short EngineManager::status = 0;
 
+unsigned int EngineManager::lastWmIS = UINT_MAX;
+
 void EngineManager::initialise() {
 	EngineManager::status = 0;
 	LogManager::info("Started peppermint");
+#ifndef PPMINT_SKIP_GLFW
 	LogManager::debug("Initialising GLFW");
 	glfwInit();
 	LogManager::debug("Initialised GLFW");
@@ -41,8 +46,7 @@ void EngineManager::initialise() {
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, majorVersion);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, minorVersion);
 
-	// glfwWindowHint(GLFW_SAMPLES, 4);
-
+	glfwWindowHint(GLFW_SAMPLES, 4);
 	LogManager::debug(std::format("Set OpenGL version to {}.{}", majorVersion, minorVersion));
 	LogManager::debug("Setting OpenGL to core profile");
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -62,13 +66,24 @@ void EngineManager::initialise() {
 	windowManager->setCurrentWindow(currentWindow);
 	LogManager::debug(std::format("Set current window to window at {}", (void*)currentWindow));
 
-	LogManager::debug("Initialising GLAD");
+	 LogManager::debug("Initialising GLAD");
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
 		LogManager::critical("Failed to initialise GLAD");
 		status = -1;
 		return;
 	}
 	LogManager::debug("Initialised GLAD successfully");
+#else
+	LogManager::debug("Skipping GLFW and OpenGL initialisation (in preview mode)");
+	LogManager::debug("Skipping GLAD initialisation (in preview mode)");
+
+	if (windowManager->status == -1) {
+		LogManager::critical("Failed to create window manager");
+		status = -1;
+		return;
+	}
+	LogManager::debug(std::format("Created window manager at {}", (void*)windowManager));
+#endif
 
 	LogManager::debug("Setting up FBOs");
 	for (unsigned int i = 0; i < EngineManager::windowManager->windows.size(); i++) {
@@ -151,6 +166,55 @@ WorldManager* EngineManager::getWM() {
 	return EngineManager::worldManagers[EngineManager::activeWorldManager];
 }
 
+void EngineManager::loopIteration() {
+	if (EngineManager::status == -1) throw std::exception("Failed to run peppermint.");
+
+	EngineManager::updateDeltaTime();
+
+	for (int i = 0; i < EngineManager::windowManager->windows.size(); i++) {
+		InputManager::setWindow(EngineManager::windowManager->windows[i]);
+
+		//if (EngineManager::activeWorldManager != lastWmI) {
+		//	EngineManager::windowManager->windows[i]->renderManager->activeCamera = EngineManager::worldManagers[EngineManager::activeWorldManager]->getFirstCamera();
+		//}
+
+		lastWmIS = EngineManager::activeWorldManager;
+
+		// awake
+		if (!EngineManager::worldManagers[EngineManager::activeWorldManager]->initialised) {
+			EngineManager::windowManager->windows[i]->renderManager->activeCamera = EngineManager::worldManagers[EngineManager::activeWorldManager]->getFirstCamera();
+			EngineManager::worldManagers[EngineManager::activeWorldManager]->awake();
+			EngineManager::worldManagers[EngineManager::activeWorldManager]->initialised = true;
+		}
+
+		// discard frame if world changed, restart loop process
+		if (EngineManager::activeWorldManager != lastWmIS) continue;
+
+		// start
+		EngineManager::worldManagers[EngineManager::activeWorldManager]->start();
+
+		// discard frame if world changed, restart loop process
+		if (EngineManager::activeWorldManager != lastWmIS) continue;
+
+		// loop
+		EngineManager::worldManagers[EngineManager::activeWorldManager]->loop(EngineManager::windowManager->windows[i]);
+
+		// discard frame if world changed, restart loop process
+		if (EngineManager::activeWorldManager != lastWmIS) continue;
+
+		EngineManager::windowManager->windows[i]->renderFrame();
+		// EngineManager::windowManager->windows[i]->swapBuffers();
+
+		// if (EngineManager::windowManager->windows[i]->shouldClose()) {
+		// 	Window* windowToDelete = EngineManager::windowManager->windows[i];
+		// 	EngineManager::windowManager->windows.erase(EngineManager::windowManager->windows.begin() + i);
+		// 	delete windowToDelete;
+		// }
+	}
+
+	while (EngineManager::vSyncTime() < 1.0f / 60.0f) {}
+}
+
 void EngineManager::loop() {
 	glEnable(GL_DEPTH_TEST);
 
@@ -158,21 +222,6 @@ void EngineManager::loop() {
 	// Transform* cam = ((GameObject*)EngineManager::windowManager->windows[0]->renderManager->activeCamera->getGameObject())->transform;
 	// Camera* camComp = EngineManager::windowManager->windows[0]->renderManager->activeCamera;
 	// GLFWwindow* win = EngineManager::windowManager->windows[0]->getAddress();
-
-#pragma region window icons
-	stbi_set_flip_vertically_on_load(false);
-	GLFWimage images[2];
-	images[0].pixels = stbi_load("peppermint/resource/window-icon.png", &images[0].width, &images[0].height, 0, 4);
-	images[1].pixels = stbi_load("peppermint/resource/window-icon-small.png", &images[1].width, &images[1].height, 0, 4);
-	
-	for (unsigned int i = 0; i < EngineManager::windowManager->windows.size(); i++) {
-		glfwSetWindowIcon(EngineManager::windowManager->windows[i]->getAddress(), 2, images);
-	}
-
-	stbi_image_free(images[0].pixels);
-	stbi_image_free(images[1].pixels);
-	stbi_set_flip_vertically_on_load(true);
-#pragma endregion
 
 	unsigned int lastWmI = EngineManager::activeWorldManager;
 
@@ -213,19 +262,19 @@ void EngineManager::loop() {
 			if (EngineManager::activeWorldManager != lastWmI) continue;
 
 			EngineManager::windowManager->windows[i]->renderFrame();
-			EngineManager::windowManager->windows[i]->swapBuffers();
+			// EngineManager::windowManager->windows[i]->swapBuffers();
 
-			if (EngineManager::windowManager->windows[i]->shouldClose()) {
-				Window* windowToDelete = EngineManager::windowManager->windows[i];
-				EngineManager::windowManager->windows.erase(EngineManager::windowManager->windows.begin() + i);
-				delete windowToDelete;
-			}
+			// if (EngineManager::windowManager->windows[i]->shouldClose()) {
+			// 	Window* windowToDelete = EngineManager::windowManager->windows[i];
+			// 	EngineManager::windowManager->windows.erase(EngineManager::windowManager->windows.begin() + i);
+			// 	delete windowToDelete;
+			// }
 		}
 
 		while (EngineManager::vSyncTime() < 1.0f / 60.0f) { }
 		// LogManager::debug(std::format("{} fps", round(1.0f / EngineManager::vSyncTime())));
 
-		glfwPollEvents();
+		// glfwPollEvents();
 	}
 }
 

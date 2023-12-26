@@ -1,4 +1,4 @@
-#include <peppermint/classes/game/Component.h>
+#include <peppermint-preview/classes/game/Component.h>
 
 #include <format>
 

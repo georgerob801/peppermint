@@ -1,26 +1,26 @@
-#include <peppermint/managers/WorldManager.h>
+#include <peppermint-preview/managers/WorldManager.h>
 #include <type_traits>
 
-#include <peppermint/classes/game/components/renderers/Renderer.h>
-#include <peppermint/classes/rendering/RenderQueue.h>
+#include <peppermint-preview/classes/game/components/renderers/Renderer.h>
+#include <peppermint-preview/classes/rendering/RenderQueue.h>
 
-#include <peppermint/classes/rendering/TilesetAnimationStateInfomation.hpp>
+#include <peppermint-preview/classes/rendering/TilesetAnimationStateInfomation.hpp>
 
-#include <peppermint/Exceptions.hpp>
+#include <peppermint-preview/Exceptions.hpp>
 
-#include <peppermint/classes/game/components/NavigableMap.hpp>
-#include <peppermint/classes/game/components/PlayerController.h>
-#include <peppermint/classes/game/components/renderers/BasicPlayerRenderer.h>
-#include <peppermint/classes/game/components/renderers/AnimatedTilesetRenderer.h>
-#include <peppermint/classes/game/components/renderers/SpriteRenderer.h>
-#include <peppermint/classes/game/components/SoundSource.h>
-#include <peppermint/classes/game/components/SoundListener.h>
-#include <peppermint/classes/game/components/renderers/TextRenderer.h>
+#include <peppermint-preview/classes/game/components/NavigableMap.hpp>
+#include <peppermint-preview/classes/game/components/PlayerController.h>
+#include <peppermint-preview/classes/game/components/renderers/BasicPlayerRenderer.h>
+#include <peppermint-preview/classes/game/components/renderers/AnimatedTilesetRenderer.h>
+#include <peppermint-preview/classes/game/components/renderers/SpriteRenderer.h>
+#include <peppermint-preview/classes/game/components/SoundSource.h>
+#include <peppermint-preview/classes/game/components/SoundListener.h>
+#include <peppermint-preview/classes/game/components/renderers/TextRenderer.h>
 
-#include <peppermint/classes/game/components/ScriptComponent.h>
-#include <peppermint/scripts/ScriptTypes.hpp>
+#include <peppermint-preview/classes/game/components/ScriptComponent.h>
+#include <peppermint-preview/scripts/ScriptTypes.hpp>
 
-#include <peppermint/managers/EngineManager.h>
+#include <peppermint-preview/managers/EngineManager.h>
 
 #include <algorithm>
 #include <iostream>

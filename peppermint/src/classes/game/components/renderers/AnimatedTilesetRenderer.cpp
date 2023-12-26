@@ -1,4 +1,4 @@
-#include <peppermint/classes/game/components/renderers/AnimatedTilesetRenderer.h>
+#include <peppermint-preview/classes/game/components/renderers/AnimatedTilesetRenderer.h>
 
 #include <GLFW/glfw3.h>
 

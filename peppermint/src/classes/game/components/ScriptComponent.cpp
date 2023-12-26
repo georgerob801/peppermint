@@ -1,4 +1,4 @@
-#include <peppermint/classes/game/components/ScriptComponent.h>
+#include <peppermint-preview/classes/game/components/ScriptComponent.h>
 
 using namespace peppermint::game::components;
 

@@ -1,12 +1,12 @@
-#include <peppermint/classes/rendering/Shader.h>
+#include <peppermint-preview/classes/rendering/Shader.h>
 
 #include <glad/glad.h>
 #include <string>
 #include <fstream>
 #include <sstream>
 #include <format>
-#include <peppermint/managers/LogManager.h>
-#include <peppermint/Exceptions.hpp>
+#include <peppermint-preview/managers/LogManager.h>
+#include <peppermint-preview/Exceptions.hpp>
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 

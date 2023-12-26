@@ -1,8 +1,8 @@
-#include <peppermint/classes/sound/SoundDevice.h>
+#include <peppermint-preview/classes/sound/SoundDevice.h>
 
 #include <format>
-#include <peppermint/Exceptions.hpp>
-#include <peppermint/managers/LogManager.h>
+#include <peppermint-preview/Exceptions.hpp>
+#include <peppermint-preview/managers/LogManager.h>
 
 using namespace peppermint::sound;
 using namespace peppermint::managers;

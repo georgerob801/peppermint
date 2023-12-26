@@ -1,8 +1,8 @@
-#include <peppermint/classes/rendering/Mesh.h>
+#include <peppermint-preview/classes/rendering/Mesh.h>
 
 #include <glad/glad.h>
 #include <string>
-#include <peppermint/managers/LogManager.h>
+#include <peppermint-preview/managers/LogManager.h>
 #include <format>
 
 using namespace peppermint::rendering;

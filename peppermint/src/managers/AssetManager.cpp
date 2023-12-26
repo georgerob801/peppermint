@@ -1,19 +1,19 @@
-#include <peppermint/managers/AssetManager.h>
+#include <peppermint-preview/managers/AssetManager.h>
 
-#include <peppermint/Exceptions.hpp>
+#include <peppermint-preview/Exceptions.hpp>
 
-#include <peppermint/classes/rendering/Text.h>
+#include <peppermint-preview/classes/rendering/Text.h>
 
 #include <format>
 #include <iostream>
 #include <fstream>
 
-#include <peppermint/classes/rendering/Texture.h>
-#include <peppermint/classes/rendering/TextureSet.h>
-#include <peppermint/classes/rendering/Tileset.h>
-#include <peppermint/classes/game/TilesetAnimation.h>
+#include <peppermint-preview/classes/rendering/Texture.h>
+#include <peppermint-preview/classes/rendering/TextureSet.h>
+#include <peppermint-preview/classes/rendering/Tileset.h>
+#include <peppermint-preview/classes/game/TilesetAnimation.h>
 
-#include <peppermint/managers/EngineManager.h>
+#include <peppermint-preview/managers/EngineManager.h>
 
 using namespace peppermint::managers;
 using namespace peppermint::rendering;

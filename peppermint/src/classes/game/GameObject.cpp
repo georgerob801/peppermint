@@ -1,6 +1,6 @@
-#include <peppermint/classes/game/GameObject.h>
+#include <peppermint-preview/classes/game/GameObject.h>
 
-#include <peppermint/Exceptions.hpp>
+#include <peppermint-preview/Exceptions.hpp>
 #include <typeinfo>
 #include <type_traits>
 #include <format>

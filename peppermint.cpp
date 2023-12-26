@@ -2,9 +2,9 @@
 
 #include <stb_image/stb_image.h>
 
-#include <peppermint/managers/LogManager.h>
+#include <peppermint-preview/managers/LogManager.h>
 
-#include <peppermint/managers/EngineManager.h>
+#include <peppermint-preview/managers/EngineManager.h>
 
 using namespace std;
 using namespace glm;
@@ -14,36 +14,36 @@ using namespace peppermint::managers;
 
 // #include <glad/glad.h>
 
-//#include <peppermint/classes/game/GameObject.h>
-//#include <peppermint/classes/game/components/Camera.h>
-//#include <peppermint/classes/game/components/renderers/TilesetRenderer.h>
-//#include <peppermint/classes/game/components/Camera.h>
-//#include <peppermint/classes/rendering/Texture.h>
-//#include <peppermint/classes/rendering/TextureSet.h>
+//#include <peppermint-preview/classes/game/GameObject.h>
+//#include <peppermint-preview/classes/game/components/Camera.h>
+//#include <peppermint-preview/classes/game/components/renderers/TilesetRenderer.h>
+//#include <peppermint-preview/classes/game/components/Camera.h>
+//#include <peppermint-preview/classes/rendering/Texture.h>
+//#include <peppermint-preview/classes/rendering/TextureSet.h>
 //
-//#include <peppermint/classes/game/components/NavigableMap.hpp>
-#include <peppermint/classes/game/components/PlayerController.h>
-#include <peppermint/classes/game/components/renderers/TextRenderer.h>
-//#include <peppermint/classes/game/components/renderers/BasicPlayerRenderer.h>
-//#include <peppermint/classes/game/components/renderers/AnimatedTilesetRenderer.h>
+//#include <peppermint-preview/classes/game/components/NavigableMap.hpp>
+#include <peppermint-preview/classes/game/components/PlayerController.h>
+#include <peppermint-preview/classes/game/components/renderers/TextRenderer.h>
+//#include <peppermint-preview/classes/game/components/renderers/BasicPlayerRenderer.h>
+//#include <peppermint-preview/classes/game/components/renderers/AnimatedTilesetRenderer.h>
 
-//#include <peppermint/classes/game/components/renderers/SpriteRenderer.h>
+//#include <peppermint-preview/classes/game/components/renderers/SpriteRenderer.h>
 //
-//#include <peppermint/classes/sound/SoundDevice.h>
-//#include <peppermint/classes/sound/SoundBufferManager.h>
-//#include <peppermint/classes/game/components/SoundSource.h>
-//#include <peppermint/classes/game/components/SoundListener.h>
+//#include <peppermint-preview/classes/sound/SoundDevice.h>
+//#include <peppermint-preview/classes/sound/SoundBufferManager.h>
+//#include <peppermint-preview/classes/game/components/SoundSource.h>
+//#include <peppermint-preview/classes/game/components/SoundListener.h>
 
 
 
-#include <peppermint/scripts/ScriptTypes.hpp>
+#include <peppermint-preview/scripts/ScriptTypes.hpp>
 
 
 
 
 
 
-#include <peppermint/Exceptions.hpp>
+#include <peppermint-preview/Exceptions.hpp>
 
 #include <ft2build.h>
 #include <map>
@@ -64,8 +64,6 @@ int main() {
 
 	EngineManager::initialise();
 	if (EngineManager::status == -1) return -1;
-
-	EngineManager::windowManager->getWindow()->setName("Definitely Pokémon Emerald");
 	
 	/*
 	WorldManager* worldManager = EngineManager::worldManagers[EngineManager::activeWorldManager];

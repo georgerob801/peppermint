@@ -1,6 +1,6 @@
-#include <peppermint/classes/rendering/Text.h>
+#include <peppermint-preview/classes/rendering/Text.h>
 
-#include <peppermint/Exceptions.hpp>
+#include <peppermint-preview/Exceptions.hpp>
 
 #include <glad/glad.h>
 
