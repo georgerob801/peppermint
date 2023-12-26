@@ -62,6 +62,11 @@ namespace peppermint {
 			static unsigned int activeWorldManager;
 
 			/// <summary>
+			/// Determine whether this should actually output anything to a screen.
+			/// </summary>
+			static bool outputToScreen;
+
+			/// <summary>
 			/// Create a new EngineManager.
 			/// </summary>
 			EngineManager();

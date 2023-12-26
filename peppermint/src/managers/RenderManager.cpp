@@ -172,7 +172,7 @@ void RenderManager::renderFrame() {
 		this->activeRenderQueue->renderItems.erase(this->activeRenderQueue->renderItems.begin());
 	}
 
-	if (this->FBO != NULL) {
+	if (this->FBO != NULL && EngineManager::outputToScreen) {
 		int viewportData[4];
 		glGetIntegerv(GL_VIEWPORT, &viewportData[0]);
 		RenderManager::unbindFBOs();

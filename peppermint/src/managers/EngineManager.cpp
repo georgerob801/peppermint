@@ -26,6 +26,8 @@ vector<WorldManager*> EngineManager::worldManagers = vector<WorldManager*>();
 unsigned int EngineManager::activeWorldManager = 0;
 unsigned int EngineManager::initialWorldIndex = 0;
 
+bool EngineManager::outputToScreen = true;
+
 short EngineManager::status = 0;
 
 void EngineManager::initialise() {
