@@ -24,24 +24,24 @@ void SpriteRenderer::generateVertices() {
 
 	for (unsigned int i = 0; i < 4; i++) {
 		vec3* posP = &square[i].position;
+		
 		if (ratio < 1.0f) posP->y *= ratio;
 		else posP->x *= ratio;
 
 		vec2* uvP = &square[i].uv;
 		// make uv go in right place
-		switch (i) {
-		case 0:
-			break;
-		case 1:
-			break;
-		case 2:
-			break;
-		case 3:
-			break;
+		*uvP -= vec2(0.5f, 0.5f);
+		*uvP *= 2;
+		if (uvP->x == -1) {
+			uvP->x = (this->position.x / this->textureSet->atlas->getWidth()) - ((this->size.x / this->textureSet->atlas->getWidth()) / 2.0f);
+		} else {
+			uvP->x = (this->position.x / this->textureSet->atlas->getWidth()) + ((this->size.x / this->textureSet->atlas->getWidth()) / 2.0f);
 		}
-
-		uvP->x *= ((this->position.x / this->textureSet->atlas->getWidth()) + ((this->size.x / this->textureSet->atlas->getWidth()) / 2.0f));
-		uvP->y *= ((this->position.y / this->textureSet->atlas->getHeight()) + ((this->size.y / this->textureSet->atlas->getHeight()) / 2.0f));
+		if (uvP->y == -1) {
+			uvP->y = (this->position.y / this->textureSet->atlas->getHeight()) - ((this->size.y / this->textureSet->atlas->getHeight()) / 2.0f);
+		} else {
+			uvP->y = (this->position.y / this->textureSet->atlas->getHeight()) + ((this->size.y / this->textureSet->atlas->getHeight()) / 2.0f);
+		}
 
 		this->vertices.push_back(square[i]);
 	}

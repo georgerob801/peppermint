@@ -43,14 +43,17 @@ vec3 Transform::getGlobalPosition() {
 }
 
 mat4 Transform::getMatrix() {
-	vec3 adjustedRotation = this->getGlobalRotation();
+	mat4 out(1.0f);
 
-	mat4 out = rotate(mat4(1.0f), adjustedRotation.x, vec3(1.0f, 0.0f, 0.0f));
-	out = rotate(out, adjustedRotation.y, vec3(0.0f, 1.0f, 0.0f));
-	out = rotate(out, adjustedRotation.z, vec3(0.0f, 0.0f, 1.0f));
+	if (this->parent != nullptr) out *= this->parent->getMatrix();
 
-	out = glm::translate(out, this->getGlobalPosition());
-	out = glm::scale(out, this->getGlobalScale());
+	out = glm::translate(out, this->position);
+
+	out = rotate(out, this->rotation.x, vec3(1.0f, 0.0f, 0.0f));
+	out = rotate(out, this->rotation.y, vec3(0.0f, 1.0f, 0.0f));
+	out = rotate(out, this->rotation.z, vec3(0.0f, 0.0f, 1.0f));
+
+	out = glm::scale(out, this->scale);
 
 	return out;
 }
