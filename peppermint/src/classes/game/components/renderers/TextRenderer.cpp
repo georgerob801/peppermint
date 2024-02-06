@@ -1,7 +1,7 @@
 #include <peppermint/classes/game/components/renderers/TextRenderer.h>
 #include <peppermint/managers/LogManager.h>
 
-#include <glad/glad.h>
+#include <glad/glad4.h>
 
 using namespace peppermint::game::components;
 using namespace peppermint::rendering::text;

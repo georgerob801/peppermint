@@ -1002,7 +1002,7 @@ int main() {
 
 	EngineManager::loadFromGameFile();
 
-	EngineManager::goToWorld(1);
+	// EngineManager::goToWorld(1);
 	// EngineManager::worldManagers[EngineManager::activeWorldManager]->getFirstComponent<SoundSource>()->playByDefault = true;
 
 	// EngineManager::saveGameFile();

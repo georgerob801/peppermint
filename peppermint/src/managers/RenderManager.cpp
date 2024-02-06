@@ -1,6 +1,6 @@
 #include <peppermint/managers/RenderManager.h>
 
-#include <glad/glad.h>
+#include <glad/glad4.h>
 #define GLFW_INCLUDE_NONE
 #include <peppermint/classes/Window.h>
 #include <peppermint/managers/EngineManager.h>

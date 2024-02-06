@@ -1,7 +1,7 @@
 #include <peppermint/classes/rendering/Texture.h>
 
 #include <stb_image/stb_image.h>
-#include <glad/glad.h>
+#include <glad/glad4.h>
 #include <peppermint/Exceptions.hpp>
 
 using namespace peppermint::rendering;

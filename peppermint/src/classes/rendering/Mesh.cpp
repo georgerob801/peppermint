@@ -1,6 +1,6 @@
 #include <peppermint/classes/rendering/Mesh.h>
 
-#include <glad/glad.h>
+#include <glad/glad4.h>
 #include <string>
 #include <peppermint/managers/LogManager.h>
 #include <format>

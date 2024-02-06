@@ -33,11 +33,11 @@ namespace peppermint {
 			/// <summary>
 			/// The major version of OpenGL to use.
 			/// </summary>
-			static const int majorVersion = 3;
+			static const int majorVersion = 4;
 			/// <summary>
 			/// The minor version of OpenGL to use.
 			/// </summary>
-			static const int minorVersion = 3;
+			static const int minorVersion = 6;
 
 			/// <summary>
 			/// A pointer to the WindowManager to use.

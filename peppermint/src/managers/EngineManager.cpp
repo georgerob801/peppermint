@@ -1,4 +1,4 @@
-#include <glad/glad.h>
+#include <glad/glad4.h>
 #define GLFW_INCLUDE_NONE
 #include <peppermint/managers/EngineManager.h>
 
