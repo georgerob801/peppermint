@@ -25,8 +25,8 @@ void SpriteRenderer::generateVertices() {
 	for (unsigned int i = 0; i < 4; i++) {
 		vec3* posP = &square[i].position;
 		
-		if (ratio < 1.0f) posP->y *= ratio;
-		else posP->x *= ratio;
+		//if (ratio < 1.0f) posP->y *= ratio;
+		/*else */posP->x *= ratio;
 
 		vec2* uvP = &square[i].uv;
 		// make uv go in right place

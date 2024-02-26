@@ -8,7 +8,7 @@
 #include <peppermint/scripts/TestComponent.h>
 
 #define NUM_SCRIPT_COMPONENT_TYPES 1
-#define SCRIPT_COMPONENT_TYPE_1 peppermint::game::components::TestComponent
+#define SCRIPT_COMPONENT_TYPE_0 peppermint::game::components::TestComponent
 
 #define GET_SCRIPT_COMPONENT_TYPE(n) SCRIPT_COMPONENT_TYPE_ ## n
 #define GET_SCRIPT_COMPONENT_INDEX(n) n ## _SCRIPT_COMPONENT_INDEX

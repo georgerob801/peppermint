@@ -33,6 +33,8 @@ namespace peppermint {
 		/// </summary>
 		/// <returns>The size of this object in bytes when stored.</returns>
 		unsigned long long getDeserialisedSize();
+
+		void** getSerialisedID(void** in);
 	protected:
 		/// <summary>
 		/// The calculated size in bytes of this object.

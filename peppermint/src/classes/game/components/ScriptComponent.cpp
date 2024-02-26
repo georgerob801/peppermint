@@ -56,6 +56,8 @@ void ScriptComponent::deserialise(vector<byte> bytes) {
 	vector<byte> subVector(bytes.begin() + position, bytes.begin() + position + numBytes);
 
 	this->deserialiseData(subVector);
+
+	this->deserialisedSize = position + numBytes;
 }
 
 unsigned int ScriptComponent::getScriptType(vector<byte> bytes) {

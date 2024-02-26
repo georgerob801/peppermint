@@ -138,6 +138,9 @@
     <ClCompile Include="peppermint\src\scripts\ScriptTypes.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="peppermint\src\scripts\HeGoSpin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="peppermint\include\stb_image\stb_image.h">
@@ -273,6 +276,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="peppermint\include\peppermint-preview\classes\game\components\ScriptComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\scripts\HeGoSpin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

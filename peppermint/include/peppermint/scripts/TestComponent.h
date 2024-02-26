@@ -1,7 +1,7 @@
 #ifndef PPMINT_SCRIPTS_TESTCOMPONENT_H
 #define PPMINT_SCRIPTS_TESTCOMPONENT_H
 
-#define TestComponent_SCRIPT_COMPONENT_INDEX 1
+#define TestComponent_SCRIPT_COMPONENT_INDEX 0
 
 #include <peppermint/classes/game/components/ScriptComponent.h>
 

@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="peppermint\src\scripts\HeGoSpin.cpp" />
     <ClCompile Include="peppermint\src\classes\game\components\renderers\AnimatedTilesetRenderer.cpp" />
     <ClCompile Include="peppermint\src\classes\Asset.cpp" />
     <ClCompile Include="peppermint\src\classes\rendering\Text.cpp" />
@@ -188,6 +189,7 @@
     <ClCompile Include="peppermint\src\classes\game\components\ScriptComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="peppermint\include\peppermint\scripts\HeGoSpin.h" />
     <ClInclude Include="peppermint\include\peppermint-preview\classes\game\components\renderers\AnimatedTilesetRenderer.h" />
     <ClInclude Include="peppermint\include\peppermint-preview\classes\Asset.h" />
     <ClInclude Include="peppermint\include\peppermint-preview\classes\rendering\Text.h" />

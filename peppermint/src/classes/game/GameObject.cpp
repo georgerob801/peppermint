@@ -11,6 +11,7 @@ using namespace peppermint::exceptions::gameObject;
 GameObject::GameObject() {
 	this->transform = new Transform();
 	this->components.push_back(transform);
+	this->transform->setGameObject((void*)this);
 }
 
 GameObject::~GameObject() {
@@ -26,6 +27,8 @@ GameObject::~GameObject() {
 
 void GameObject::prependComponent(Component* comp) {
 	this->components.insert(this->components.begin(), comp);
+
+	comp->setGameObject((void*)this);
 }
 
 void GameObject::addComponent(Component* comp) {

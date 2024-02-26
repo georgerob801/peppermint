@@ -6,8 +6,8 @@ peppermint::game::components::ScriptComponent* peppermint::scripts::createScript
 	peppermint::game::components::ScriptComponent* out;
 
 	switch (scriptType) {
-	case 1:
-		out = new GET_SCRIPT_COMPONENT_TYPE(1);
+	case 0:
+		out = new GET_SCRIPT_COMPONENT_TYPE(0);
 		break;
 	default:
 		throw peppermint::exceptions::userScripts::UnknownScriptException();

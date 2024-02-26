@@ -1074,13 +1074,13 @@ int main() {
 	//EngineManager::goToWorld(0);
 
 
-	try {
+	//try {
 		EngineManager::loop();
-	} catch (std::exception e) {
-		LogManager::critical(e.what());
-		EngineManager::destroy();
-		return -1;
-	}
+	//} catch (std::exception e) {
+	//	LogManager::critical(e.what());
+	//	EngineManager::destroy();
+	//	return -1;
+	// }
 
 	EngineManager::destroy();
 
