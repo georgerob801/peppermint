@@ -77,13 +77,6 @@ vector<byte> AssetManager::serialise() {
 		out.insert(out.end(), serialisedAsset.begin(), serialisedAsset.end());
 	}
 
-	//out += "AssetManager:\n";
-	//out += std::format("Assets: {}\n", this->assets.size());
-
-	//for (unsigned int i = 0; i < this->assets.size(); i++) {
-	//	out += this->assets[i]->serialise();
-	//}
-
 	return out;
 }
 

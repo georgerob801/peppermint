@@ -41,8 +41,6 @@ void EngineManager::initialise() {
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, majorVersion);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, minorVersion);
 
-	// glfwWindowHint(GLFW_SAMPLES, 4);
-
 	LogManager::debug(std::format("Set OpenGL version to {}.{}", majorVersion, minorVersion));
 	LogManager::debug("Setting OpenGL to core profile");
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -154,11 +152,6 @@ WorldManager* EngineManager::getWM() {
 void EngineManager::loop() {
 	glEnable(GL_DEPTH_TEST);
 
-	// just for test camera
-	// Transform* cam = ((GameObject*)EngineManager::windowManager->windows[0]->renderManager->activeCamera->getGameObject())->transform;
-	// Camera* camComp = EngineManager::windowManager->windows[0]->renderManager->activeCamera;
-	// GLFWwindow* win = EngineManager::windowManager->windows[0]->getAddress();
-
 #pragma region window icons
 	stbi_set_flip_vertically_on_load(false);
 	GLFWimage images[2];
@@ -183,10 +176,6 @@ void EngineManager::loop() {
 
 		for (int i = 0; i < EngineManager::windowManager->windows.size(); i++) {
 			InputManager::setWindow(EngineManager::windowManager->windows[i]);
-
-			//if (EngineManager::activeWorldManager != lastWmI) {
-			//	EngineManager::windowManager->windows[i]->renderManager->activeCamera = EngineManager::worldManagers[EngineManager::activeWorldManager]->getFirstCamera();
-			//}
 
 			lastWmI = EngineManager::activeWorldManager;
 
@@ -223,7 +212,6 @@ void EngineManager::loop() {
 		}
 
 		while (EngineManager::vSyncTime() < 1.0f / 60.0f) { }
-		// LogManager::debug(std::format("{} fps", round(1.0f / EngineManager::vSyncTime())));
 
 		glfwPollEvents();
 	}

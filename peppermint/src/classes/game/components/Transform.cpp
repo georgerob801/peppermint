@@ -58,8 +58,6 @@ mat4 Transform::getMatrix() {
 	return out;
 }
 
-#include <iostream>
-
 vector<byte> Transform::serialise() {
 	vector<byte> out;
 
@@ -110,23 +108,6 @@ vector<byte> Transform::serialise() {
 	for (unsigned int i = 0; i < sizeof(void*); i++) {
 		out.push_back(parentIDB[i]);
 	}
-
-	//out += "Component:\n";
-	//out += "Type: Transform\n";
-	//out += std::format("ID: {}\n", (void*)this);
-	//out += "Data:\n";
-	//out += "Position:\n";
-	//out += std::format("X: {}\n", this->position.x);
-	//out += std::format("Y: {}\n", this->position.y);
-	//out += std::format("Z: {}\n", this->position.z);
-	//out += "Rotation:\n";
-	//out += std::format("X: {}\n", this->rotation.x);
-	//out += std::format("Y: {}\n", this->rotation.y);
-	//out += std::format("Z: {}\n", this->rotation.z);
-	//out += "Scale:\n";
-	//out += std::format("X: {}\n", this->scale.x);
-	//out += std::format("Y: {}\n", this->scale.y);
-	//out += std::format("Z: {}\n", this->scale.z);
 
 	return out;
 }

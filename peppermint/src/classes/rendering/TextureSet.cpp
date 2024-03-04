@@ -4,7 +4,6 @@
 
 using namespace peppermint::rendering;
 
-// TODO: write this function
 void TextureSet::generateAtlas() {
 	if (this->requiresAtlasGeneration) {
 		this->atlas = this->textures[0];
@@ -49,14 +48,6 @@ vector<byte> TextureSet::serialise() {
 			out.push_back(textureIDB[j]);
 		}
 	}
-
-	//out += "TextureSet:\n";
-	//out += std::format("ID: {}\n", (void*)this);
-	//out += "Textures:\n";
-
-	//for (unsigned int i = 0; i < this->textures.size(); i++) {
-	//	out += std::format("TextureID: {}\n", (void*)this->textures[i]);
-	//}
 
 	return out;
 }

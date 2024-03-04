@@ -19,7 +19,7 @@ void onResize(GLFWwindow* window, int width, int height) {
 		unit = (float)height / 9.0f;
 		offsetX = (float)width - (16 * unit);
 	}
-	// glViewport((int)(offsetX / 2.0f), (int)(offsetY / 2.0f), (int)(16 * unit), (int)(9 * unit));
+
 	glViewport(0, 0, (int)(16 * unit), (int)(9 * unit));
 
 	vector<Window*>::iterator i = find_if(EngineManager::windowManager->windows.begin(), EngineManager::windowManager->windows.end(), [window](Window* item) { return item->getAddress() == window; });

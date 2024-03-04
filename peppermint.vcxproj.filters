@@ -281,6 +281,135 @@
     <ClInclude Include="peppermint\include\peppermint\scripts\HeGoSpin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\classes\game\components\renderers\AnimatedTilesetRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\classes\game\components\renderers\BasicPlayerRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\classes\game\components\renderers\Renderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\classes\game\components\renderers\SpriteRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\classes\game\components\renderers\TextRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\classes\game\components\renderers\TilesetRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\classes\game\components\Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\classes\game\components\NavigableMap.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\classes\game\components\PlayerController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\classes\game\components\ScriptComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\classes\game\components\SoundListener.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\classes\game\components\SoundSource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\classes\game\components\Transform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\classes\game\components\WarpTile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\classes\game\Component.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\classes\game\GameObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\classes\game\TilesetAnimation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\classes\game\Toggleable.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\classes\rendering\Mesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\classes\rendering\RenderQueue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\classes\rendering\Shader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\classes\rendering\Text.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\classes\rendering\Texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\classes\rendering\TextureSet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\classes\rendering\Tileset.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\classes\rendering\TilesetAnimationStateInfomation.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\classes\sound\ALErrorCheck.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\classes\sound\SoundBufferManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\classes\sound\SoundDevice.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\classes\Asset.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\classes\Window.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\managers\AssetManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\managers\EngineManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\managers\InputManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\managers\LogManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\managers\RenderManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\managers\SoundManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\managers\WindowManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\managers\WorldManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\scripts\ScriptTypes.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\scripts\TestComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\Exceptions.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peppermint\include\peppermint\Serialisable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="peppermint\resource\shader\vertex\default.vert" />

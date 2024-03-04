@@ -18,7 +18,6 @@ void BasicPlayerRenderer::start() {
 	this->animationStart = glfwGetTime();
 }
 
-// this logic is so unbelievably cursed but somehow works so i'm not touching it
 void BasicPlayerRenderer::loop() {
 	vec2 scale = vec2(1.0f / (float)this->tileset->getCurrentTextureSet()->atlas->getWidth(), 1.0f / (float)this->tileset->getCurrentTextureSet()->atlas->getHeight());
 	vec2 offset = vec2(0.0f, 0.0f);
@@ -124,16 +123,6 @@ vector<byte> BasicPlayerRenderer::serialise() {
 			out.push_back(shortsToAdd[i][j]);
 		}
 	}
-
-	//out += "Component:\n";
-	//out += "Type: BasicPlayerRenderer\n";
-	//out += "Data:\n";
-
-	//out += std::format("PlayerController: {}\n", (void*)this->pc);
-	//out += std::format("Up: {}\n", (void*)this->up);
-	//out += std::format("Down: {}\n", (void*)this->down);
-	//out += std::format("Left: {}\n", (void*)this->left);
-	//out += std::format("Right: {}\n", (void*)this->right);
 
 	return out;
 }

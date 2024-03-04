@@ -52,6 +52,9 @@ namespace peppermint {
 				/// <returns>A pointer to the generated Mesh.</returns>
 				Mesh* generateMesh();
 
+				virtual void generateVertices() {}
+				virtual void generateTextures() {}
+
 				/// <summary>
 				/// The type of OpenGL buffer to use.
 				/// </summary>

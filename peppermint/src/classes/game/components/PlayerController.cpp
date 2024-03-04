@@ -137,17 +137,11 @@ void PlayerController::onChangeTile() {
 	unsigned int x = (unsigned int)std::round(go->transform->position.x); // tileset positions
 	unsigned int y = (unsigned int)std::round(go->transform->position.y);
 
-	//unsigned int upperX = x + 0.05;
-	//unsigned int lowerX = x - 0.05;
-	//unsigned int upperY = y + 0.05;
-	//unsigned int lowerY = y - 0.05;
-
 	vector<WarpTile*>::iterator index = find_if(this->navMap->warpTiles.begin(), this->navMap->warpTiles.end(), [x, y, this](WarpTile* item) {
 		GameObject* go = (GameObject*)item->getGameObject();
 
 		if (!item->requiresFacing) return go->transform->position.x == x && go->transform->position.y == y;
 		else return go->transform->position.x == x && go->transform->position.y == y && this->facing == (PlayerController::FACING)item->facingToGo;
-		// return go->transform->position.x >= lowerX && go->transform->position.x <= upperX && go->transform->position.y >= lowerY && go->transform->position.y <= upperY;
 	});
 
 	// stop if no warp tile
@@ -210,7 +204,7 @@ vector<byte> PlayerController::serialise() {
 	void* id = this;
 	byte* toAdd2 = (byte*)reinterpret_cast<char*>(&id);
 
-	for (unsigned int i = 0; i < sizeof(id) / sizeof(byte); i++) {
+	for (unsigned int i = 0; i < sizeof(void*) / sizeof(byte); i++) {
 		out.push_back(toAdd2[i]);
 	}
 
@@ -232,28 +226,6 @@ vector<byte> PlayerController::serialise() {
 	for (unsigned int i = 0; i < sizeof(void*); i++) {
 		out.push_back(navMapB[i]);
 	}
-
-	//out += "Component:\n";
-	//out += "Type: PlayerController\n";
-	//out += std::format("ID: {}\n", (void*)this);
-	//out += "Data:\n";
-	//out += std::format("Speed: {}\n", this->speed);
-	//out += std::format("SnapRange: {}\n", this->snapRange);
-
-	//out += std::format("CurrentlyPressing.Forward: {}\n", this->currentlyPressing.forward);
-	//out += std::format("CurrentlyPressing.Backward: {}\n", this->currentlyPressing.backward);
-	//out += std::format("CurrentlyPressing.Left: {}\n", this->currentlyPressing.left);
-	//out += std::format("CurrentlyPressing.Right: {}\n", this->currentlyPressing.right);
-
-	//out += std::format("CurrentlyMoving.Forward: {}\n", this->currentlyMoving.forward);
-	//out += std::format("CurrentlyMoving.Backward: {}\n", this->currentlyMoving.backward);
-	//out += std::format("CurrentlyMoving.Left: {}\n", this->currentlyMoving.left);
-	//out += std::format("CurrentlyMoving.Right: {}\n", this->currentlyMoving.right);
-
-	//out += std::format("Facing: {}\n", this->facing == UP ? "UP" : this->facing == DOWN ? "DOWN" : this->facing == LEFT ? "LEFT" : "RIGHT");
-
-	//out += std::format("NavMap: {}\n", (void*)this->navMap);
-	//out += std::format("AttemptingCollidingMove: {}\n", this->attemptingCollidingMove);
 
 	return out;
 }

@@ -58,12 +58,6 @@ vector<byte> Asset::serialise() {
 		}
 	}
 
-	//out += "Asset:\n";
-	//out += std::format("ID: {}\n", this->id);
-	//out += "Data:\n";
-	//out += std::format("Type: {}\n", (unsigned int)this->type);
-	//out += std::format("Path: {}\n", this->path);
-
 	return out;
 }
 

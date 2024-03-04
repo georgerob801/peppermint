@@ -67,12 +67,6 @@ vector<byte> Camera::serialise() {
 		}
 	}
 
-	//out += "Component:\n";
-	//out += "Type: Camera\n";
-	//out += std::format("ID: {}\n", (void*)this);
-	//out += "Data:\n";
-	//out += std::format("ViewScale: {}\n", this->viewScale);
-
 	return out;
 }
 

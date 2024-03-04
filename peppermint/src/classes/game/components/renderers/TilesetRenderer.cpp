@@ -29,13 +29,10 @@ void TilesetRenderer::generateVertices() {
 	this->vertices.clear();
 	vector<Vertex>().swap(this->vertices);
 
-	// only for testing
 	for (unsigned int i = 0; i < this->tileset->textureSets.size(); i++) {
 		this->tileset->textureSets[i]->generateAtlas();
 		this->textures.push_back(this->tileset->textureSets[i]->atlas);
 	}
-
-
 
 	vec2 scale = vec2(1.0f / (float)this->tileset->getCurrentTextureSet()->atlas->getWidth(), 1.0f / (float)this->tileset->getCurrentTextureSet()->atlas->getHeight());
 
@@ -121,23 +118,6 @@ vector<byte> TilesetRenderer::serialise() {
 			out.push_back(shortsToAdd[i][j]);
 		}
 	}
-
-
-
-	//out += "Component:\n";
-	//out += std::format("Type: TilesetRenderer\n");
-	//out += "Data:\n";
-	//out += std::format("Tileset: {}\n", (void*)this->tileset);
-	//out += std::format("Width: {}\n", this->width);
-	//out += std::format("Height: {}\n", this->height);
-
-	//std::string tileTypeString = "";
-
-	//for (unsigned int i = 0; i < this->width * this->height; i++) {
-	//	tileTypeString += std::format("{},", this->tileTypes[i]);
-	//}
-
-	//out += std::format("Data: {}\n", tileTypeString);
 
 	return out;
 }

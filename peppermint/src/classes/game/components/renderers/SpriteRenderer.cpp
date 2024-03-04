@@ -15,7 +15,6 @@ void SpriteRenderer::generateVertices() {
 	this->vertices.clear();
 	vector<Vertex>().swap(this->vertices);
 
-	// once again should be testing only
 	this->textures.push_back(this->textureSet->atlas);
 
 	vector<Vertex> square = Mesh::SQUARE();
@@ -25,8 +24,7 @@ void SpriteRenderer::generateVertices() {
 	for (unsigned int i = 0; i < 4; i++) {
 		vec3* posP = &square[i].position;
 		
-		//if (ratio < 1.0f) posP->y *= ratio;
-		/*else */posP->x *= ratio;
+		posP->x *= ratio;
 
 		vec2* uvP = &square[i].uv;
 		// make uv go in right place

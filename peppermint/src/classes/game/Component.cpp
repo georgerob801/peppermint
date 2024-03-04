@@ -45,9 +45,6 @@ vector<byte> Component::serialise() {
 		out.push_back(toAdd2[i]);
 	}
 
-	//out += "Component:\n";
-	//out += std::format("ID: {}\n", (void*)this);
-
 	return out;
 }
 

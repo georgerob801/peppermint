@@ -100,9 +100,6 @@ vector<byte> AnimatedTilesetRenderer::serialise() {
 }
 
 void AnimatedTilesetRenderer::deserialise(vector<byte> bytes) {
-	// --------- TODO ----------
-	// DESERIALISE ANIMATION IDS (both here + in WorldManager)
-
 	unsigned long long position = 0x00;
 
 	this->serialisedID = *reinterpret_cast<void**>(&bytes[position]);

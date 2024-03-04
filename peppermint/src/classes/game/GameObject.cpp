@@ -15,7 +15,6 @@ GameObject::GameObject() {
 }
 
 GameObject::~GameObject() {
-	// cout << "here (gameobject)" << endl;
 	for (unsigned int i = 0; i < this->components.size(); i++) {
 		delete this->components[i];
 	}
@@ -74,22 +73,11 @@ vector<byte> GameObject::serialise() {
 	}
 
 	for (unsigned int i = 0; i < this->components.size(); i++) {
-		/*byte* componentBytes = (byte*)static_cast<char*>(static_cast<void*>(this->components[i]));
-		vector<byte> component = this->components[i]->serialise();
-		out.insert(out.end(), component.begin(), component.end());*/
-
 		byte* componentID = reinterpret_cast<byte*>(&this->components[i]);
 		for (unsigned int j = 0; j < sizeof(void*); j++) {
 			out.push_back(componentID[j]);
 		}
 	}
-
-	//out += "GameObject:\n";
-	//out += std::format("Components: {}\n", this->components.size());
-
-	//for (unsigned int i = 0; i < this->components.size(); i++) {
-	//	out += std::format("ID: {}\n", (void*)this->components[i]);
-	//}
 
 	return out;
 }

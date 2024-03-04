@@ -42,7 +42,6 @@ WorldManager::~WorldManager() {
 	this->unload();
 }
 
-// only runs once so not as painfully laggy
 void WorldManager::awake() {
 	this->stopProcessingWorld = false;
 	for (unsigned int i = 0; i < this->gameObjects.size(); i++) {
@@ -60,7 +59,6 @@ void WorldManager::sortByZ() {
 	});
 }
 
-// this will be exponentially more laggy and will require refactoring
 void WorldManager::start() {
 	for (unsigned int i = 0; i < this->gameObjects.size(); i++) {
 		for (unsigned int j = 0; j < this->gameObjects[i]->components.size(); j++) {
@@ -72,7 +70,6 @@ void WorldManager::start() {
 	}
 }
 
-// this will also be exponentially more laggy but worse
 void WorldManager::loop(Window* window) {
 	for (unsigned int i = 0; i < this->gameObjects.size(); i++) {
 		if (this->stopProcessingWorld) break;
@@ -178,10 +175,6 @@ vector<byte> WorldManager::serialise() {
 	for (unsigned int i = 0; i < this->gameObjects.size(); i++) {
 		vector<byte> gameObjectSerialised = this->gameObjects[i]->serialise();
 		out.insert(out.end(), gameObjectSerialised.begin(), gameObjectSerialised.end());
-
-		//while (out.size() % 16 != 0) out.push_back((byte)0x00);
-		//for (unsigned int x = 0; x < 16; x++) out.push_back((byte(0xff)));
-		//for (unsigned int x = 0; x < 16; x++) out.push_back((byte(0x00)));
 	}
 
 	vector<void*> serialisedComponents;
@@ -288,8 +281,6 @@ void WorldManager::deserialise(vector<byte> bytes) {
 		Component* co;
 		vector<byte> subVector(bytes.size() - position);
 
-		// cout << coType << endl;
-
 		switch (coType) {
 		case Component::TRANSFORM:
 			co = new Transform();
@@ -385,10 +376,6 @@ void WorldManager::deserialise(vector<byte> bytes) {
 
 			if (comp == componentsToMatch.end()) throw peppermint::exceptions::serialisation::world::CorruptedFileException();
 
-			/*this->gameObjects[i]->components.push_back(*comp);
-
-			(*comp)->setGameObject((void*)this->gameObjects[i]);*/
-
 			if ((*comp)->getType() == Component::TRANSFORM) {
 				// delete default transform component
 				this->gameObjects[i]->components.erase(this->gameObjects[i]->components.begin());
@@ -400,10 +387,6 @@ void WorldManager::deserialise(vector<byte> bytes) {
 			} else {
 				this->gameObjects[i]->addComponent(*comp);
 			}
-
-			//if ((*comp)->getType() == Component::CAMERA) {
-			//	LogManager::warn(std::format("{}\n\t\t\t\t  {}", (*comp)->getGameObject(), (void*)((GameObject*)(*comp)->getGameObject())->transform));
-			//}
 		}
 	}
 

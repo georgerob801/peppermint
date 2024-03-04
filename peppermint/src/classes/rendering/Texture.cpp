@@ -106,10 +106,6 @@ vector<byte> Texture::serialise() {
 		out.push_back(imageAssetID[i]);
 	}
 
-	//out += "Texture:\n";
-	//out += std::format("ID: {}\n", (void*)this);
-	//out += std::format("ImageAssetID: {}\n", this->imageAsset->id);
-
 	return out;
 }
 

@@ -23,7 +23,6 @@ const int* InputManager::getKeys(INPUT_TYPES type) {
 	}
 }
 
-// todo: fix this algorithm (pointer size issue)
 bool InputManager::active(INPUT_TYPES type) {
 	const int* keys = InputManager::getKeys(type);
 	for (unsigned int i = 0; i < InputManager::getNumKeys(type); i++) {

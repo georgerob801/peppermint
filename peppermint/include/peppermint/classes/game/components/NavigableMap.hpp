@@ -171,24 +171,6 @@ namespace peppermint {
 							out.push_back(bytesToAdd[j]);
 						}
 					}
-
-
-					//out += "Component:\n";
-					//out += "Type: NavigableMap\n";
-					//out += std::format("ID: {}\n", (void*)this);
-					//out += "Data:\n";
-					//out += std::format("ParentTileset: {}\n", (void*)this->parentTileset);
-					//out += std::format("Width: {}\n", this->width);
-					//out += std::format("Height: {}\n", this->height);
-					//out += std::format("NavigableType: {}\n", this->navigableType);
-
-					//std::string dataString = "";
-
-					//for (unsigned int i = 0; i < this->width * this->height; i++) {
-					//	dataString += this->data[i] == this->navigableType ? "1" : "0";
-					//}
-
-					//out += std::format("Data: {}\n", dataString);
 						
 					return out;
 				}

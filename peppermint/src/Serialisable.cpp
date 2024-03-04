@@ -1,4 +1,4 @@
-#include <peppermint-preview/Serialisable.h>
+#include <peppermint/Serialisable.h>
 
 using namespace peppermint;
 
